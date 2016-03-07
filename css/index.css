@@ -1,0 +1,56 @@
+        .container-fluid {
+            padding:0px;
+        }
+        .jumbotron {
+            color:white;
+            height:100vh;
+            margin:0px;
+            background: url("../images/background/index.jpg");
+        }
+        .flexcenter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #index_content {
+            width:30%;
+        }
+        .well {
+            background-color:rgba(0,0,0,0.4);
+        }
+        .form-group input {
+            color:white;
+            background-color:rgba(0,0,0,0.4);
+        }
+        .logo {
+            color: #337ab7;
+            font-size: 5vh;
+        }
+        .logo_large{
+            color: white;
+            font-size: 33vh;
+        }
+        #service_row
+        {
+            padding:2vh;
+        }
+        #about_row{
+            /*background:#f6f6f6;*/
+            background:#337ab7;
+            padding:5vh 0vh 0vh 5vh;
+        }
+        #service_header {
+            color: #337ab7;
+        }
+        #about_header {
+            color:white;
+            margin-bottom:5vh;
+        }
+        .thumbnail {
+            background:#337ab7;
+            border:0;
+            color: white;
+        }
+        .thumbnail img {
+            width:20vh;
+        }
