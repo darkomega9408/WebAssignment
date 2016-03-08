@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Card Demo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .membercard{
+        position: relative;
+        width: 20%;
+        box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .member-name{
+        line-height: 34px;
+        transition: opacity 0.5s;
+      }
+
+      .action-btn{
+        position: absolute;
+        left: 15px;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+
+      .panel-heading:hover > .member-name{
+        opacity: 0;
+      }
+
+      .panel-heading:hover > .action-btn{
+        opacity: 100;
+      }
+
+      .member-avatar{
+        width: 40%;
+        margin: 0 auto;
+      }
+
+      .member-avatar > img{
+        border:3px solid #87ceeb;
+      }
+
+      .info{
+        width: 80%;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="membercard panel panel-default">
+      <div class="panel-heading">
+        <strong class="member-name">Someone's name</strong>
+        <div class="action-btn btn-group">
+          <button class="btn btn-danger">&#10060;</button>
+          <button class="btn btn-default">&#10133;</button>
+          <button class="btn btn-default">&#9998;</button>
+        </div>
+      </div>
+      <div class="panel-body text-center">
+        <div class="member-avatar">
+          <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+        </div>
+        <div class="info">
+          <p>/*name*/</p>
+          <p>/*age*/</p>
+          <p>/*address*/</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
