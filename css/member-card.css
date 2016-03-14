@@ -1,0 +1,36 @@
+.membercard{
+  position: relative;
+  width: 320px;
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: inline-block;
+
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+.panel-heading{
+  text-align: left;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.panel-heading:hover{
+  opacity: 100;
+}
+
+.member-avatar{
+  width: 100px;
+}
+
+.member-avatar > img{
+  border:5px solid blue;
+}
+
+.info{
+  width: 170px;
+}
+
+.membercard .dropdown button{
+  border: none;
+}
