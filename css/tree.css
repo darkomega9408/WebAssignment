@@ -10,7 +10,7 @@ body{
   white-space: nowrap;
 }
 
-.tree ul {
+.tree ul:not(.dropdown-menu) {
 	padding-top: 20px; position: relative;
 
 	transition: all 0.5s;
@@ -29,6 +29,11 @@ body{
 	-moz-transition: all 0.5s;
 }
 
+.tree .dropdown-menu li:after, .tree .dropdown-menu li:last-child::before{
+    position: static;
+    border: none;
+}
+
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{
@@ -44,12 +49,16 @@ body{
 
 /*We need to remove left-right connectors from elements without
 any siblings*/
-.tree li:only-child::after, .tree li:only-child::before {
+.tree li:only-child::before{
+    display: none;
+}
+
+.tree li:only-child::after {
 	display: none;
 }
 
 /*Remove space from the top of single children*/
-.tree li:only-child{ padding-top: 0;}
+.tree li:only-child{ padding-top: 20px;}
 
 /*Remove left connector from first child and
 right connector from last child*/
@@ -69,15 +78,38 @@ right connector from last child*/
 	-moz-border-radius: 5px 0 0 0;
 }
 
-/*Time to add downward connectors from parents*/
-.tree ul ul::before{
-	content: '';
-	position: absolute; top: 0; left: 50%;
-	border-left: 1px solid #ccc;
-	width: 0; height: 20px;
+/*Root node = .tree>ul:not(.dropdown-menu) ul:not(.dropdown-menu):first-child::before but this is a bug and you can't select it*/
+.tree>ul:not(.dropdown-menu)>li>ul:not(.dropdown-menu)::before{
+    height: 40px;
 }
 
-.tree li a{
+
+/*Time to add downward connectors from parents*/
+.tree ul:not(.dropdown-menu) ul:not(.dropdown-menu)::before{
+	content: '';
+	position: absolute; top: -100%; left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0; height: 60px;
+}
+
+.tree ul:not(.dropdown-menu) .dropdown-menu:before{
+    position: static;
+}
+
+.dropdown-menu li:not(.dropdown-menu li){
+    position: static;
+    padding: 0;
+}
+
+.tree .dropdown-menu li::before, .tree .dropdown-menu li::after{
+    position: static;
+}
+
+.dropdown-menu li{
+    display: block;
+}
+
+.tree li:not(.dropdown-menu li) a{
 	border: 1px solid #ccc;
 	padding: 5px 10px;
 	text-decoration: none;
@@ -93,6 +125,12 @@ right connector from last child*/
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
+}
+
+/* Hover dropdown menu redeempt code below */
+
+.tree .dropdown-menu li{
+    padding: 0 5px 0 5px;
 }
 
 /*Time for some hover effects*/
