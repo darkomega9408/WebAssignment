@@ -1,163 +1,124 @@
+/*Now the CSS*/
 * {margin: 0; padding: 0;}
 
 body{
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 1200%;
 }
 
 .tree{
-  height: 100%;
-  white-space: nowrap;
+    height: 100%;
+    white-space: nowrap;
 }
 
 .tree ul {
-	padding-top: 20px;
-    position: relative;
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
+    padding-top: 20px; position: relative;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
 .tree li {
-	float: left; text-align: center;
-	list-style-type: none;
-	position: relative;
-	padding: 20px 5px 0 5px;
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
 
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-}
-
-.tree .dropdown-menu li:after, .tree .dropdown-menu li:last-child::before{
-    position: static;
-    border: none;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{
-	content: '';
-	position: absolute; top: 0; right: 50%;
-	border-top: 1px solid #ccc;
-	width: 50%; height: 60px;
-    margin-top: -40px;
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-top: 1px solid #ccc;
+    width: 50%; height: 20px;
 }
 .tree li::after{
-	right: auto; left: 50%;
-	border-left: 1px solid #ccc;
+    right: auto; left: 50%;
+    border-left: 1px solid #ccc;
 }
 
 /*We need to remove left-right connectors from elements without
 any siblings*/
+/*Modify*/
 .tree li:only-child::before{
+    display: none;
+}
+/*Modify*/
+.tree li:only-child::after  {
     /*display: none;*/
 }
 
-.tree li:only-child::after {
-	display: none;
-}
-
 /*Remove space from the top of single children*/
+/*Modify*/
 .tree li:only-child{ padding-top: 20px;}
+
+/*Modify*/
+.tree li:only-child::after{
+    border-left: 1px solid #ccc !important;
+    border-radius: 0 0 0 0 !important;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
 
 /*Remove left connector from first child and
 right connector from last child*/
 .tree li:first-child::before, .tree li:last-child::after{
-	border: 0 none;
+    border: 0 none;
 }
-
 /*Adding back the vertical connector to the last nodes*/
 .tree li:last-child::before{
-	border-right: 1px solid #ccc;
-	border-radius: 0 5px 0 0;
-	-webkit-border-radius: 0 5px 0 0;
-	-moz-border-radius: 0 5px 0 0;
+    border-right: 1px solid #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
 }
 .tree li:first-child::after{
-	border-radius: 5px 0 0 0;
-	-webkit-border-radius: 5px 0 0 0;
-	-moz-border-radius: 5px 0 0 0;
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+    /*display: block;*/
 }
-
-
-
 
 /*Time to add downward connectors from parents*/
-/*.tree ul:before{
-	content: '';
-	position: absolute; top: -100%; left: 50%;
-	border-left: 1px solid #ccc;
-	width: 0; height: 60px;
-}*/
-
-/*Root node = .tree>ul:not(.dropdown-menu) ul:not(.dropdown-menu):first-child::before but this is a bug and you can't select it*/
-/*.tree>ul:not(.dropdown-menu)>li>ul:not(.dropdown-menu)::before{*/
-    /*height: 40px;*/
-/*}*/
-
-.tree ul:not(.dropdown-menu) .dropdown-menu:before{
-    position: static;
+/*Modify*/
+.tree ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 1px solid #ccc;
+    width: 0; height: 40px;
+    margin-top: -20px;
 }
 
-.dropdown-menu li:not(.dropdown-menu li){
-    position: static;
-    padding: 0;
-}
+.tree li a{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
 
-.tree .dropdown-menu li::before, .tree .dropdown-menu li::after{
-    position: static;
-}
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
 
-.dropdown-menu li{
-    display: block;
-}
-
-.tree li:not(.dropdown-menu li) a{
-	border: 1px solid #ccc;
-	padding: 5px 10px;
-	text-decoration: none;
-	color: #666;
-	font-family: arial, verdana, tahoma;
-	font-size: 11px;
-	display: inline-block;
-
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-}
-
-/* Hover dropdown menu redeempt code below */
-
-.tree .dropdown-menu li{
-    padding: 0 5px 0 5px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
-.tree li a:hover, .tree li a:hover+ul li a {
-	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
-}
-/*Connector styles on hover*/
-.tree li a:hover+ul li::after,
-.tree li a:hover+ul li::before,
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before{
-	border-color:  #94a0b4;
-}
-
-.tree li .membercard{
-
-}
-
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
 .tree li .membercard:hover, .tree li .membercard:hover+ul li .membercard {
-	border: 1px solid red;
+    border: 1px solid red;
 }
 /*Connector styles on hover*/
 .tree li .membercard:hover+ul li::after,
@@ -165,9 +126,8 @@ right connector from last child*/
 .tree li .membercard:hover+ul::before,
 .tree li .membercard:hover+ul ul::before{
     border-width: medium;
-	border-color:  red;
+    border-color:  red;
 }
-
 
 /*------------------*/
 /***Winston Effect***/
