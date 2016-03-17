@@ -22,4 +22,10 @@ $(document).ready(function(){
 
     // Enable tooltip
     $('[data-toggle="tooltip"]').tooltip();
+
+    // Lose focus <a> tag after clicking , otherwise tooltip will be shown forever
+    $(".effect-winston p a").click(function(){
+        $(this).blur();
+    });
+
 });
