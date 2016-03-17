@@ -1,8 +1,5 @@
-/**
- * Created by VINH on 3/17/2016.
- */
-$(document).ready(function(){
-
+$(document).ajaxComplete(function () {
+    console.log("Run membercard.js");
     /*  Add tooltip when hover icon */
     //
     // General
@@ -10,6 +7,7 @@ $(document).ready(function(){
         'data-toggle':'tooltip',
         'data-placement' : 'bottom'
     });
+
     // Edit tooltip
     $('.effect-winston p a:nth-child(1)').attr('title','Edit');
 
@@ -38,6 +36,4 @@ $(document).ready(function(){
         'data-toggle':'modal',
         'data-target':'#modal-delete-user'
     });
-
-
 });
