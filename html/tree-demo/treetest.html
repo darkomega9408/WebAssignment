@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Tree Demo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/tree.css" rel="stylesheet">
+    <link href="../../css/member-card.css" rel="stylesheet">
+
+    <script src="../../js/jquery-2.2.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/tree.js"></script>
+
+    <script>
+
+      function layoutMember(value, fatherName, hasChild) {
+        if (hasChild)
+          $("#childOf" + fatherName).append("<li><div id='" + "contentOf" + value.MemberID  + "'></div>" + "<ul id='childOf" + value.MemberID + "'></ul></li>");
+        else
+          $("#childOf" + fatherName).append("<li><div id='" + "contentOf" + value.MemberID  + "'></div>" + "</li>");
+
+        $("#contentOf" + value.MemberID).load("../card-demo/membercard-demo.html .membercard", function() {
+          var membercard = document.getElementById("contentOf" + value.MemberID);
+          membercard.getElementsByClassName("memberName")[0].innerHTML = value.Name;
+          membercard.getElementsByClassName("memberBirthDate")[0].innerHTML = value.BirthDate;
+          membercard.getElementsByClassName("memberBirthPlace")[0].innerHTML = value.BirthPlace;
+        });
+
+
+      }
+
+      $(document).ready(function(){
+        $.ajax({
+          url: 'GetListMember.php',
+          type: 'GET',
+          dataType: "json"
+        }).done(function(data){
+          $(".tree").width((data.length * 30) + "em");
+          var fatherArray = Array();
+          $.each(data, function(key,value) {
+            if (value.Father != null)
+              fatherArray.push(value.Father);
+          })
+          $.each(data, function(key,value){
+            var hasChild = (fatherArray.indexOf(value.MemberID) != -1);
+            if (value.Father == null)
+              layoutMember(value, "Tree",hasChild);
+            else
+              layoutMember(value, value.Father, hasChild);
+          })
+      })
+
+      });
+    </script>
+  </head>
+  <body>
+    <div class="tree">
+    	<ul id="childOfTree">
+        </ul>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en" class="no-js">
 <head>
     <meta charset="UTF-8" />
@@ -400,5 +401,73 @@
 </script>
 <!-- For the demo ad only -->
 <script src="http://tympanus.net/codrops/adpacks/demoad.js"></script>
+=======
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/tree.css" rel="stylesheet">
+    <link href="../css/member-card.css" rel="stylesheet">
+
+    <script src="../js/jquery-2.2.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+<canvas id="canvas" width="300px" height="300px"></canvas>
+<input type="file" id="file-input">
+<button id="btnUpload" type="button" class="btn btn-default">Upload Image</button>
+<script>
+
+    var imgUrl = "";
+
+        $('#file-input').change(function(e) {
+
+            var file = e.target.files[0];
+            imageType = /image.*/;
+
+            if (!file.type.match(imageType)) {
+                console.log("File didn't match");
+                return;
+            }
+
+            var reader = new FileReader();
+            reader.onload = function fileOnLoad(e) {
+                var $img = $('<img>', {src: e.target.result});
+                var canvas = $('#canvas')[0];
+                var context = canvas.getContext('2d');
+
+                $img.load(function() {
+                    context.drawImage(this, 0, 0);
+                    imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+                })
+            }
+            reader.readAsDataURL(file);
+        })
+
+    var clientId = "ae6e3c4095f9247";
+
+    function showMe(data) {
+        alert(data.data.link);
+    }
+    $("#btnUpload").click(function(){
+        $.ajax({
+            url: "https://api.imgur.com/3/upload",
+            type: "POST",
+            datatype: "json",
+            data: {image: imgUrl},
+            success: showMe,
+            error: showMe,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
+            }
+        });
+    })
+</script>
+>>>>>>> remotes/origin/tam
 </body>
 </html>
