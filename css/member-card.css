@@ -36,6 +36,9 @@
     border: none;
 }
 
+.member-modal-avatar{
+    margin: 0 2em 1em 2em;
+}
 
 /* Custom Tooltip Bootstrap*/
 
