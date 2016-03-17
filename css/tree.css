@@ -1,163 +1,130 @@
+/*Now the CSS*/
 * {margin: 0; padding: 0;}
 
 body{
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 1200%;
 }
 
 .tree{
-  height: 100%;
-  white-space: nowrap;
+    height: 100%;
+    white-space: nowrap;
 }
 
 .tree ul {
-	padding-top: 20px;
-    position: relative;
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
+    padding-top: 20px; position: relative;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
 .tree li {
-	float: left; text-align: center;
-	list-style-type: none;
-	position: relative;
-	padding: 20px 5px 0 5px;
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
 
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-}
-
-.tree .dropdown-menu li:after, .tree .dropdown-menu li:last-child::before{
-    position: static;
-    border: none;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{
-	content: '';
-	position: absolute; top: 0; right: 50%;
-	border-top: 1px solid #ccc;
-	width: 50%; height: 60px;
-    margin-top: -40px;
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-top: 3px solid #ccc;
+    width: 50%; height: 20px;
 }
 .tree li::after{
-	right: auto; left: 50%;
-	border-left: 1px solid #ccc;
+    right: auto; left: 50%;
+    border-left: 3px solid #ccc;
 }
 
 /*We need to remove left-right connectors from elements without
 any siblings*/
+/*Modify*/
 .tree li:only-child::before{
-    /*display: none;*/
+    display: none;
 }
-
-.tree li:only-child::after {
-	display: none;
+/*Modify*/
+.tree li:only-child::after  {
+    display: none;
 }
 
 /*Remove space from the top of single children*/
-.tree li:only-child{ padding-top: 20px;}
+/*Modify*/
+.tree li:only-child{ padding-top: 0px;}
+
+
+/*Modify*/
+.tree li:only-child::after{
+    border-left: 3px solid #ccc !important;
+    border-radius: 0 0 0 0 !important;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
 
 /*Remove left connector from first child and
 right connector from last child*/
 .tree li:first-child::before, .tree li:last-child::after{
-	border: 0 none;
+    border: 0 none;
 }
+
 
 /*Adding back the vertical connector to the last nodes*/
 .tree li:last-child::before{
-	border-right: 1px solid #ccc;
-	border-radius: 0 5px 0 0;
-	-webkit-border-radius: 0 5px 0 0;
-	-moz-border-radius: 0 5px 0 0;
+    border-right: 3px solid #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
 }
 .tree li:first-child::after{
-	border-radius: 5px 0 0 0;
-	-webkit-border-radius: 5px 0 0 0;
-	-moz-border-radius: 5px 0 0 0;
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+    /*display: block;*/
 }
-
-
-
 
 /*Time to add downward connectors from parents*/
-/*.tree ul:before{
-	content: '';
-	position: absolute; top: -100%; left: 50%;
-	border-left: 1px solid #ccc;
-	width: 0; height: 60px;
-}*/
-
-/*Root node = .tree>ul:not(.dropdown-menu) ul:not(.dropdown-menu):first-child::before but this is a bug and you can't select it*/
-/*.tree>ul:not(.dropdown-menu)>li>ul:not(.dropdown-menu)::before{*/
-    /*height: 40px;*/
-/*}*/
-
-.tree ul:not(.dropdown-menu) .dropdown-menu:before{
-    position: static;
+/*Modify*/
+.tree ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 3px solid #ccc;
+    width: 0; height: 40px;
+    margin-top: -20px;
 }
 
-.dropdown-menu li:not(.dropdown-menu li){
-    position: static;
-    padding: 0;
+.tree li a{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
 }
 
-.tree .dropdown-menu li::before, .tree .dropdown-menu li::after{
-    position: static;
-}
 
-.dropdown-menu li{
-    display: block;
-}
-
-.tree li:not(.dropdown-menu li) a{
-	border: 1px solid #ccc;
-	padding: 5px 10px;
-	text-decoration: none;
-	color: #666;
-	font-family: arial, verdana, tahoma;
-	font-size: 11px;
-	display: inline-block;
-
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-
-	transition: all 0.5s;
-	-webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-}
-
-/* Hover dropdown menu redeempt code below */
-
-.tree .dropdown-menu li{
-    padding: 0 5px 0 5px;
-}
 
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
-.tree li a:hover, .tree li a:hover+ul li a {
-	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
-}
-/*Connector styles on hover*/
-.tree li a:hover+ul li::after,
-.tree li a:hover+ul li::before,
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before{
-	border-color:  #94a0b4;
-}
-
-.tree li .membercard{
-
-}
-
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
 .tree li .membercard:hover, .tree li .membercard:hover+ul li .membercard {
-	border: 1px solid red;
+    border: 1px solid red;
+    cursor: pointer;
 }
 /*Connector styles on hover*/
 .tree li .membercard:hover+ul li::after,
@@ -165,114 +132,8 @@ right connector from last child*/
 .tree li .membercard:hover+ul::before,
 .tree li .membercard:hover+ul ul::before{
     border-width: medium;
-	border-color:  red;
+    border-color:  red;
 }
 
 
-/*------------------*/
-/***Winston Effect***/
-/*------------------*/
 
-.effect-winston {
-    /*background: #162633;*/
-    text-align: left;
-}
-
-.effect-winston img {
-    -webkit-transition: opacity 0.45s;
-    transition: opacity 0.45s;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.effect-winston figcaption::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /*background: url(../images/avatar-default.png) no-repeat center center;*/
-    background-size: 100% 100%;
-    content: '';
-    -webkit-transition: opacity 0.45s, -webkit-transform 0.45s;
-    transition: opacity 0.45s, transform 0.45s;
-    -webkit-transform: rotate3d(0,0,1,45deg);
-    transform: rotate3d(0,0,1,45deg);
-    -webkit-transform-origin: 0 100%;
-    transform-origin: 0 100%;
-}
-
-.effect-winston h2 {
-    -webkit-transition: -webkit-transform 0.35s;
-    transition: transform 0.35s;
-    -webkit-transform: translate3d(0,20px,0);
-    transform: translate3d(0,20px,0);
-}
-
-.effect-winston p {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    /*padding: 0 1.5em 7% 0;*/
-}
-
-.effect-winston a {
-    margin: 0 10px;
-    color: #5d504f;
-    font-size: 170%;
-}
-
-/*.effect-winston a:hover,
-.effect-winston a:focus {
-    color: #cc6055 ;
-}*/
-/* You must use p a:hover */
-.effect-winston p a:hover {
-    color: #cc6055;
-    background: none;
-    border: none;
-}
-
-.effect-winston p a i {
-    opacity: 0;
-    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
-    transition: opacity 0.35s, transform 0.35s;
-    -webkit-transform: translate3d(0,50px,0);
-    transform: translate3d(0,50px,0);
-}
-
-.effect-winston:hover img {
-    opacity: 0.6;
-}
-
-.effect-winston:hover h2 {
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-}
-
-.effect-winston:hover figcaption::before {
-    opacity: 0.7;
-    -webkit-transform: rotate3d(0,0,1,20deg);
-    transform: rotate3d(0,0,1,20deg);
-}
-
-.effect-winston:hover p i {
-    opacity: 1;
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-}
-
-.effect-winston:hover p a:nth-child(3) i {
-    -webkit-transition-delay: 0.05s;
-    transition-delay: 0.05s;
-}
-
-.effect-winston:hover p a:nth-child(2) i {
-    -webkit-transition-delay: 0.1s;
-    transition-delay: 0.1s;
-}
-
-.effect-winston:hover p a:first-child i {
-    -webkit-transition-delay: 0.15s;
-    transition-delay: 0.15s;
-}
