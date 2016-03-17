@@ -12,13 +12,14 @@
     <link href="../../css/member-modal.css" rel="stylesheet">
     <script src="../../js/jquery-2.2.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+
   </head>
   <body>
   
     <div class="membercard panel panel-default">
       <div class="panel-body">
         <div class="member-avatar pull-left">
-          <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+          <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberAvatar" alt="/*name*/">
         </div>
         <div class="info pull-right">
           <strong class="memberName">Nguyễn Xuân Thái</strong><br>
@@ -36,16 +37,6 @@
         <div class="clearfix"></div>
       </div>
     </div>
-	
-	<script>
-      $(document).on("click", ".hrefEdit", function(){
-        var panel = $(".hrefEdit").parent().parent().parent().parent();
-        var memberName = panel.find(".memberName").html();
-        var memberBirthDate = panel.find(".memberBirthDate").html();
-        var memberBirthPlace = panel.find(".memberBirthPlace").html();
-      })
-
-	</script>
 
     <!--member-info-modal-->
     <div id="member-info-modal" class="modal fade" role="dialog">
@@ -57,33 +48,33 @@
           </div>
           <div class="modal-body">
             <div class="member-modal-avatar">
-              <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+              <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberModalAvatar" alt="/*name*/">
             </div>
             <table class="member-modal-info">
               <tr>
                 <td>Name: </td>
-                <td><input type="text" class="form-control" value="Nguyễn Xuân Thái"></td>
+                <td><input type="text" class="form-control memberModalName" value="Nguyễn Xuân Thái"></td>
               </tr>
               <tr>
                 <td>Gender: </td>
                 <td>
-                  <select class="form-control">
+                  <select class="form-control memberModalGender">
                     <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="female" selected>Female</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Date of birth: </td>
-                <td><input type="date" class="form-control" value="October 29, 1994"></td>
+                <td><input type="date" class="form-control memberModalBirthDate" value="October 29, 1994"></td>
               </tr>
               <tr>
                 <td>Address: </td>
-                <td><input type="text" class="form-control" value="Too long, lazy to type"></td>
+                <td><input type="text" class="form-control memberModalAddress" value="Too long, lazy to type"></td>
               </tr>
               <tr>
                 <td>Birthplace: </td>
-                <td><input type="text" class="form-control" value="HCMC"></td>
+                <td><input type="text" class="form-control memberModalBirthPlace" value="HCMC"></td>
               </tr>
               <tr>
                 <td>Status: </td>

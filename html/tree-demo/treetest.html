@@ -16,7 +16,6 @@
     <script src="../../js/tree.js"></script>
 
     <script>
-
       function layoutMember(value, fatherName, hasChild) {
         if (hasChild)
           $("#childOf" + fatherName).append("<li><div id='" + "contentOf" + value.MemberID  + "'></div>" + "<ul id='childOf" + value.MemberID + "'></ul></li>");
@@ -24,13 +23,13 @@
           $("#childOf" + fatherName).append("<li><div id='" + "contentOf" + value.MemberID  + "'></div>" + "</li>");
 
         $("#contentOf" + value.MemberID).load("../card-demo/membercard-demo.html .membercard", function() {
-          var membercard = document.getElementById("contentOf" + value.MemberID);
-          membercard.getElementsByClassName("memberName")[0].innerHTML = value.Name;
-          membercard.getElementsByClassName("memberBirthDate")[0].innerHTML = value.BirthDate;
-          membercard.getElementsByClassName("memberBirthPlace")[0].innerHTML = value.BirthPlace;
+          var membercard = $("#contentOf" + value.MemberID);
+          membercard.find(".memberAvatar").attr("src", value.Avatar);
+          membercard.find(".memberName").html(value.Name);
+          membercard.find(".memberBirthDate").html(value.BirthDate);
+          membercard.find(".memberBirthPlace").html(value.BirthPlace);
+          membercard.find(".hrefEdit").data("memberinfo", value);
         });
-
-
       }
 
       $(document).ready(function(){
@@ -52,15 +51,34 @@
             else
               layoutMember(value, value.Father, hasChild);
           })
+        }).error(function(data){
+          alert(data.response);
+        })
+
+        $("#member-modal").load("../card-demo/membercard-demo.html #member-info-modal");
+      });
+
+      $(document).on("click", ".hrefEdit", function(){
+        var memberinfo = $(this).data("memberinfo");
+        $(".modal-title").html(memberinfo.Name + " Information");
+        $(".memberModalAvatar").attr("src", memberinfo.Avatar);
+        $(".memberModalName").attr("value", memberinfo.Name);
+        $(".memberModalGender").val(memberinfo.Gender);
+        $(".memberModalBirthDate").attr("value", memberinfo.BirthDate);
+        $(".memberModalAddress").attr("value", memberinfo.Address);
+        $(".memberModalBirthPlace").attr("value", memberinfo.BirthPlace);
       })
 
-      });
+
     </script>
   </head>
   <body>
     <div class="tree">
     	<ul id="childOfTree">
         </ul>
+    </div>
+    <div id="member-modal">
+
     </div>
   </body>
 </html>
