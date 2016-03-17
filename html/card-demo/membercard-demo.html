@@ -14,6 +14,7 @@
     <script src="../../js/bootstrap.min.js"></script>
   </head>
   <body>
+  
     <div class="membercard panel panel-default">
       <div class="panel-body">
         <div class="member-avatar pull-left">
@@ -28,13 +29,23 @@
           <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#">Add relatives</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#member-info-modal">Edit</a></li>
+            <li><a href="#" class="hrefEdit" data-toggle="modal" data-target="#member-info-modal">Edit</a></li>
             <li><a href="#">Delete</a></li>
           </ul>
         </div>
         <div class="clearfix"></div>
       </div>
     </div>
+	
+	<script>
+      $(document).on("click", ".hrefEdit", function(){
+        var panel = $(".hrefEdit").parent().parent().parent().parent();
+        var memberName = panel.find(".memberName").html();
+        var memberBirthDate = panel.find(".memberBirthDate").html();
+        var memberBirthPlace = panel.find(".memberBirthPlace").html();
+      })
+
+	</script>
 
     <!--member-info-modal-->
     <div id="member-info-modal" class="modal fade" role="dialog">
@@ -59,7 +70,6 @@
                   <select class="form-control">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
-                    <option value="undefined">Undefined</option>
                   </select>
                 </td>
               </tr>
