@@ -18,32 +18,28 @@
 
 <!-- membercard -->
 <div class ='membercard-wrapper'>
-    <div class="membercard panel panel-default">
+    <div class="membercard panel panel-default effect-winston">
         <div class="panel-body">
             <div class="member-avatar pull-left">
                 <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
             </div>
             <div class="info pull-right">
-                <strong>Nguyễn Xuân Thái heo mập</strong><br>
+                <strong>Nguyễn Xuân Thái</strong><br>
                 <em>October 29th, 1994</em><br>
                 <em>Ho Chi Minh City</em><br>
             </div>
-            <div class="dropdown pull-right">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Add relatives</a></li>
-                    <li><a href="#" data-toggle="modal" data-target=".member-info-modal">Edit</a></li>
-                    <li><a href="#">Delete</a></li>
-                </ul>
-            </div>
+            <p>
+                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x" data-toggle="modal" data-target="#member-info-modal"></i></a>
+                <a href="#"><i class="fa fa-fw fa-plus fa-2x"></i></a>
+                <a href="#"><i class="fa fa-fw fa-times fa-2x"></i></a>
+            </p>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
 
-<!--member-info-modal-->
-<div class="member-info-modal modal fade" role="dialog" data-backdrop="static">
+<!-- Member-info-modal -->
+<div id="modal-edit-user" class="modal fade" role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -130,6 +126,29 @@
         </div>
     </div>
 </div>
+<!-- ~~ Member-info-modal -->
+
+<!-- Modal Delete  -->
+<div class="modal fade" id="modal-delete-user" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading" >Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this member?</div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Delete -->
 
 </body>
 </html>

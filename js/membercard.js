@@ -28,4 +28,16 @@ $(document).ready(function(){
         $(this).blur();
     });
 
+    /* Click icon open modal */
+    $('.effect-winston p a:nth-child(1) i').attr({
+        'data-toggle':'modal',
+        'data-target':'#modal-edit-user'
+    });
+
+    $('.effect-winston p a:nth-child(3) i').attr({
+        'data-toggle':'modal',
+        'data-target':'#modal-delete-user'
+    });
+
+
 });
