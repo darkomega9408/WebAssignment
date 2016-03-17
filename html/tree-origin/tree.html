@@ -36,13 +36,103 @@ The markup will be simple nested lists
                         <em>Ho Chi Minh City</em><br>
                     </div>
                     <p>
-                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x"></i></a>
-                        <a href="#"><i class="fa fa-fw fa-plus fa-2x" ></i></a>
+                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x" data-toggle="modal" data-target=".member-info-modal"></i></a>
+                        <a href="#"><i class="fa fa-fw fa-plus fa-2x"></i></a>
                         <a href="#"><i class="fa fa-fw fa-times fa-2x"></i></a>
                     </p>
                     <div class="clearfix"></div>
                 </div>
             </div>
+
+            <!--member-info-modal-->
+            <div class="member-info-modal modal fade" role="dialog" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Someone's Information</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="member-modal-avatar">
+                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+                            </div>
+
+                            <form role="form" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Name: </label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="Nguyễn Xuân Thái"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2">Gender: </label>
+                                    <div class="col-sm-10"><select class="form-control">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="undefined">Undefined</option>
+                                    </select></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Date of birth: </label>
+                                    <div class="col-sm-10"><input type="date" class="form-control" value="October 29, 1994"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Address: </label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="Too long, lazy to type"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Birthplace: </label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" value="HCMC"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Status: </label>
+                                    <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
+                                    <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                                </div>
+                            </form>
+                            <!--<table class="member-modal-info">
+                                <tr>
+                                    <td>Name: </td>
+                                    <td><input type="text" class="form-control" value="Nguyễn Xuân Thái"></td>
+                                </tr>
+                                <tr>
+                                    <td>Gender: </td>
+                                    <td>
+                                        <select class="form-control">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="undefined">Undefined</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Date of birth: </td>
+                                    <td><input type="date" class="form-control" value="October 29, 1994"></td>
+                                </tr>
+                                <tr>
+                                    <td>Address: </td>
+                                    <td><input type="text" class="form-control" value="Too long, lazy to type"></td>
+                                </tr>
+                                <tr>
+                                    <td>Birthplace: </td>
+                                    <td><input type="text" class="form-control" value="HCMC"></td>
+                                </tr>
+                                <tr>
+                                    <td>Status: </td>
+                                    <td>
+                                        <span class="radio-inline"><input type="radio" name="optradio" checked>Alive</span>
+                                        <span class="radio-inline"><input type="radio" name="optradio">Dead</span>
+                                    </td>
+                                </tr>
+                                &lt;!&ndash;date of death&ndash;&gt;
+                            </table>-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Update</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <ul>
                 <li>
                     <div class="membercard panel panel-default effect-winston">
@@ -67,23 +157,23 @@ The markup will be simple nested lists
                     <ul>
                         <li>
                             <div class="membercard panel panel-default effect-winston">
-                                <div class="panel-body">
-                                    <div class="member-avatar pull-left">
-                                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                    </div>
-                                    <div class="info pull-right">
-                                        <strong>Nguyễn Xuân Thái</strong><br>
-                                        <em>October 29th, 1994</em><br>
-                                        <em>Ho Chi Minh City</em><br>
-                                    </div>
-                                    <p>
-                                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                    </p>
-                                    <div class="clearfix"></div>
+                            <div class="panel-body">
+                                <div class="member-avatar pull-left">
+                                    <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
                                 </div>
+                                <div class="info pull-right">
+                                    <strong>Nguyễn Xuân Thái</strong><br>
+                                    <em>October 29th, 1994</em><br>
+                                    <em>Ho Chi Minh City</em><br>
+                                </div>
+                                <p>
+                                    <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
+                                    <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
+                                    <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
+                                </p>
+                                <div class="clearfix"></div>
                             </div>
+                        </div>
                             <ul>
                                 <li>
                                     <div class="membercard panel panel-default effect-winston">
