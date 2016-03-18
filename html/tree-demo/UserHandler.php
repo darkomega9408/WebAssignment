@@ -45,11 +45,26 @@ class UserHandler
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
+
+        //$this->getAllMembers();
+        //echo $this->conn->lastInsertId()."<br>";
+        $sql = "SELECT * FROM `member` WHERE `MemberID`= ". $this->conn->lastInsertId() ." AND Username = 'tam'";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        echo json_encode($result);
     }
 
     public function deleteMember($data)
     {
-        $sql = "DELETE FROM `member` WHERE `Username`='tam' AND `MemberID`=". $data['MemberID'];
+        $sql = "DELETE FROM `member` WHERE `Username`='tam' AND `MemberID`=". $data;
         $this->conn->exec($sql);
+        echo "Success";
+    }
+
+    public function updateMember($data)
+    {
+
     }
 }
