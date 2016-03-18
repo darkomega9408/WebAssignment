@@ -12,23 +12,25 @@
     <link href="../../css/member-modal.css" rel="stylesheet">
     <script src="../../js/jquery-2.2.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
+
   </head>
   <body>
+  
     <div class="membercard panel panel-default">
       <div class="panel-body">
         <div class="member-avatar pull-left">
-          <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+          <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberAvatar" alt="/*name*/">
         </div>
         <div class="info pull-right">
-          <strong>Nguyễn Xuân Thái heo mập</strong><br>
-          <em>October 29th, 1994</em><br>
-          <em>Ho Chi Minh City</em><br>
+          <strong class="memberName">Nguyễn Xuân Thái</strong><br>
+          <em class="memberBirthDate">October 29th, 1994</em><br>
+          <em class="memberBirthPlace">Ho Chi Minh City</em><br>
         </div>
         <div class="dropdown pull-right">
           <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li><a href="#">Add relatives</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#member-info-modal">Edit</a></li>
+            <li><a href="#" class="hrefEdit" data-toggle="modal" data-target="#member-info-modal">Edit</a></li>
             <li><a href="#">Delete</a></li>
           </ul>
         </div>
@@ -46,34 +48,33 @@
           </div>
           <div class="modal-body">
             <div class="member-modal-avatar">
-              <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
+              <img src="../../images/aboutus/Thai.jpg" width="300" height="300" class="img-circle img-responsive memberModalAvatar" alt="/*name*/">
             </div>
             <table class="member-modal-info">
               <tr>
                 <td>Name: </td>
-                <td><input type="text" class="form-control" value="Nguyễn Xuân Thái"></td>
+                <td><input type="text" class="form-control memberModalName" value="Nguyễn Xuân Thái"></td>
               </tr>
               <tr>
                 <td>Gender: </td>
                 <td>
-                  <select class="form-control">
+                  <select class="form-control memberModalGender">
                     <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="undefined">Undefined</option>
+                    <option value="female" selected>Female</option>
                   </select>
                 </td>
               </tr>
               <tr>
                 <td>Date of birth: </td>
-                <td><input type="date" class="form-control" value="October 29, 1994"></td>
+                <td><input type="date" class="form-control memberModalBirthDate" value="October 29, 1994"></td>
               </tr>
               <tr>
                 <td>Address: </td>
-                <td><input type="text" class="form-control" value="Too long, lazy to type"></td>
+                <td><input type="text" class="form-control memberModalAddress" value="Too long, lazy to type"></td>
               </tr>
               <tr>
                 <td>Birthplace: </td>
-                <td><input type="text" class="form-control" value="HCMC"></td>
+                <td><input type="text" class="form-control memberModalBirthPlace" value="HCMC"></td>
               </tr>
               <tr>
                 <td>Status: </td>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Tree Demo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/tree.css" rel="stylesheet">
+    <link href="../../css/member-card.css" rel="stylesheet">
+
+    <script src="../../js/jquery-2.2.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/tree.js"></script>
+
+    <script>
+
+      var membercardLayout;
+
+      function layoutMember(value, fatherName) {
+
+        if ($("#" + fatherName).find("#childOf" + fatherName).html() == null)
+          $("#" + fatherName).append("<ul id='childOf" + fatherName + "'></ul>");
+
+        $("#" + fatherName).find("#childOf" + fatherName).append("<li id='" + value.MemberID + "'>" +
+                "<div id='contentOf" + value.MemberID + "'></div></li>");
+
+
+        var membercard = $("#contentOf" + value.MemberID);
+        membercard.html(membercardLayout);
+        membercard.find(".memberAvatar").attr("src", value.Avatar);
+        membercard.find(".memberName").html(value.Name);
+        membercard.find(".memberBirthDate").html(value.BirthDate);
+        membercard.find(".memberBirthPlace").html(value.BirthPlace);
+        membercard.find(".hrefEdit").data("memberinfo", value);
+      }
+
+      $(document).ready(function(){
+
+        $("#member-modal").load("../card-demo/membercard-demo.html #member-info-modal");
+
+        $("#tree").load("../card-demo/membercard-demo.html .membercard", function() {
+          membercardLayout = $(this).html();
+          $(this).html('');
+        })
+
+        $.ajax({
+          url: 'GetListMember.php',
+          type: 'GET',
+          dataType: "json"
+        }).done(function(data){
+          $(".tree").width((data.length * 30) + "em");
+          $.each(data, function(key,value){
+            if (value.Father == null)
+              layoutMember(value, "tree");
+            else
+              layoutMember(value, value.Father);
+          })
+        }).error(function(data){
+          alert(data.response);
+        })
+
+      });
+
+      $(document).on("click", ".hrefEdit", function(){
+        var memberinfo = $(this).data("memberinfo");
+        $(".modal-title").html(memberinfo.Name + " Information");
+        $(".memberModalAvatar").attr("src", memberinfo.Avatar);
+        $(".memberModalName").attr("value", memberinfo.Name);
+        $(".memberModalGender").val(memberinfo.Gender);
+        $(".memberModalBirthDate").attr("value", memberinfo.BirthDate);
+        $(".memberModalAddress").attr("value", memberinfo.Address);
+        $(".memberModalBirthPlace").attr("value", memberinfo.BirthPlace);
+      })
+
+      // Test Add a member to tree
+      $(document).on("click", "#btnAdd", function(){
+        var value = JSON.parse('{"MemberID":"20", "Avatar":"hihi", "Name":"A du", "BirthDate":"2016-01-02", "BirthPlace":"bla","Address":"bla","Gender":"Male","Father":"7"}');
+        layoutMember(value, value.Father, false);
+
+      })
+
+
+    </script>
+  </head>
+  <body>
+    <button id="btnAdd" type="button" class="btn btn-success">Add</button>
+    <div class="tree" id="tree">
+
+    </div>
+    <div id="member-modal">
+
+    </div>
+  </body>
+</html>
