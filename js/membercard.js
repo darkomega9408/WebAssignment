@@ -7,7 +7,7 @@ $(document).ajaxComplete(function () {
         'data-toggle':'tooltip',
         'data-placement' : 'bottom'
     });
-
+    
     // Edit tooltip
     $('.effect-winston p a:nth-child(1)').attr('title','Edit');
 
@@ -26,12 +26,19 @@ $(document).ajaxComplete(function () {
         $(this).blur();
     });
 
-    /* Click icon open modal */
+    /* Click icon EDIT open modal  */
     $('.effect-winston p a:nth-child(1) i').attr({
         'data-toggle':'modal',
         'data-target':'#modal-edit-user'
     });
 
+    /* Click icon ADD RELATIVE open modal */
+    $('.effect-winston p a:nth-child(2) i').attr({
+        'data-toggle':'modal',
+        'data-target':'#modal-add-user'
+    });
+
+    /* Click icon DELETE open modal */
     $('.effect-winston p a:nth-child(3) i').attr({
         'data-toggle':'modal',
         'data-target':'#modal-delete-user'

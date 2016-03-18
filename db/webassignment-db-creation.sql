@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2016 at 08:50 AM
+-- Generation Time: Mar 17, 2016 at 04:46 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -47,8 +47,36 @@ CREATE TABLE `member` (
   `BirthPlace` varchar(255) DEFAULT NULL,
   `Gender` varchar(6) NOT NULL,
   `Father` int(11) DEFAULT NULL,
-  `Level` int(11) DEFAULT 0
+  `Level` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`Username`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level`) VALUES
+('tam', 1, 'venom', '2016-05-03', 'hell', 'hell', 'female', NULL, 0),
+('tam', 2, 'snake', '2016-03-11', 'paradise', 'paradise', 'male', 1, 1),
+('tam', 4, 'lion', '2016-03-18', 'school', 'school', 'female', 2, 2),
+('tam', 5, 'turtle', '2016-03-25', 'river', 'river', 'male', 2, 2),
+('tam', 8, 'tamgay', '0000-00-00', NULL, NULL, 'male', 1, 1),
+('tam', 9, 'tamgay', '2016-03-02', '34134', 'dasdas', 'male', 1, 1),
+('tam', 10, 'tamgay1', '2016-03-02', 'fsd', 'dfsf', 'male', 2, 2);
+
+--
+-- Triggers `member`
+--
+DELIMITER $$
+CREATE TRIGGER `triggerAutoLevel` BEFORE INSERT ON `member` FOR EACH ROW BEGIN
+IF NEW.Father IS NULL
+THEN
+	SET NEW.Level = 0;
+ELSE
+SET NEW.Level = (SELECT Level FROM member WHERE MemberID = NEW.Father) + 1;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -76,6 +104,13 @@ CREATE TABLE `user` (
   `Username` varchar(15) NOT NULL,
   `Password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`Username`, `Password`) VALUES
+('tam', 'tam');
 
 --
 -- Indexes for dumped tables
@@ -118,7 +153,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `notfamilyperson`
 --
@@ -141,7 +176,7 @@ ALTER TABLE `marriedincest`
 --
 ALTER TABLE `member`
   ADD CONSTRAINT `member_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `user` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `member_ibfk_2` FOREIGN KEY (`Father`) REFERENCES `member` (`MemberID`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `member_ibfk_2` FOREIGN KEY (`Father`) REFERENCES `member` (`MemberID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `notfamilyperson`

@@ -15,7 +15,6 @@
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/membercard.js"></script>
     <script src="../../js/tree.js"></script>
-
 </head>
 <body>
 <!--
@@ -385,6 +384,56 @@ The markup will be simple nested lists
 </div>
 <!-- ~~ Modal Delete -->
 
+<script>
+    $(document).ready(function () {
 
+        // Click button trigger event
+        $('#btn').click(function () {
+            $.ajax({
+                url: '../../php/server.php',
+                type: 'POST'
+            }).done(function (data) {
+                // show response
+                data = JSON.parse(data);
+                createTree(data);
+            }).fail(function () {
+                alert("Post failed");
+            });
+        });
+
+
+        // Load member card html and assign to variable
+        var memberCardHtml = "";
+        $('.tree').load('../card-demo/membercard-demo.html .membercard', function () {
+            var obj = $(this).find('.membercard');
+            memberCardHtml = obj.html();
+            $(this).html('');
+        });
+
+
+        // Use to create tree html
+        // data: server 's response , get from DB
+        var createTree = function (data) {
+            var nbrNode = data.length;
+
+            // Set width for tree
+            $('.tree').css('width',nbrNode*300+'px');
+
+            // Add Root node ( if any )
+            if( nbrNode <= 0 ) return;
+            else $('.tree').append("<ul><li><div class='membercard panel panel-default' id='_"+ data[0].MemberID +"'>"+memberCardHtml+"</div></li></ul>");
+
+            // Add Child node
+            for(i = 1 ; i< nbrNode ; ++i) {
+                if( data[i].Level != data[i-1].Level )
+                    $('#_'+data[i].FatherID).after("<ul><li><div class='membercard panel panel-default' id='_"+ data[i].MemberID +"'>"+memberCardHtml+"</div></li></ul>");
+                else
+                    $('#_'+data[i].FatherID+'+ul').append("<li><div class='membercard panel panel-default' id='_"+ data[i].MemberID +"'>"+memberCardHtml+"</div></li>");
+            }
+        };
+
+
+    });
+</script>
 </body>
 </html>
