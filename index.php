@@ -8,7 +8,7 @@
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
-	
+
 	<link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
@@ -18,25 +18,41 @@
                 <h1>Gia Phả Web</h1>
                 <p>Chết là hết</p>
                 <div class="well">
-                    <form role="form">
+                    <form role="form" method="post" action="">
                         <div class="form-group">
                             <input type="text"
                                    class="form-control input-lg"
                                    placeholder="Username"
-                                   id="inputUsername" />
+                                   id="inputUsername"
+                                   name="username" required/>
                         </div>
                         <div class="form-group">
                             <input type="password"
                                    class="form-control input-lg"
                                    placeholder="Password"
-                                   id="inputPassword" />
+                                   id="inputPassword"
+                                   name="password" required/>
                         </div>
                         <div class="form-group">
-                            <button type="button"
+                            <button type="submit"
                                     class="btn btn-primary form-control input-lg">
                                 Login
                             </button>
                         </div>
+                        <?php
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                $username = $_POST["username"];
+                                $password = $_POST["password"];
+                                $conn = new PDO("mysql:host=localhost;dbname=webassignment", "root", "", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+                                $numRows = $conn->query("SELECT count(*) FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetchColumn();
+                                if ($numRows == 0) {
+                                    echo "Incorrect username or password";
+                                }
+                                else if ($numRows == 1) {
+                                    header("Location: /html/tree-demo/treetest.html");
+                                }
+                            }
+                        ?>
                     </form>
                 </div>
             </div>
