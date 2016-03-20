@@ -65,22 +65,23 @@ CREATE TABLE `member` (
   `Gender` varchar(6) CHARACTER SET latin1 NOT NULL,
   `Father` int(11) DEFAULT NULL,
   `Level` int(11) DEFAULT '0',
-  `Avatar` varchar(255) NOT NULL
+  `Avatar` varchar(255) NOT NULL,
+  `Alive` BOOLEAN
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level`, `Avatar`) VALUES
-(2, 1, 'Nguyễn Thành Tâm', '1994-12-15', '345 Red Street', 'Paradise', 'male', NULL, 0, 'http://i.imgur.com/gtWulgo.jpg'),
-(2, 2, 'Nguyễn Xuân Thái', '2016-03-11', '482 Black Street', 'Hotel', 'male', 1, 1, 'http://i.imgur.com/qEei3AS.jpg'),
-(2, 3, 'Lê Đức Quí', '2016-03-18', '382 Pink Street', '382 Pink Street', 'female', 2, 2, 'http://i.imgur.com/6pQf6Ur.jpg'),
-(2, 4, 'Bùi Quang Vinh', '2016-03-25', '583 Yellow Street', '583 Yellow Street', 'male', 2, 2, 'http://i.imgur.com/zEcz4bx.jpg'),
-(2, 5, 'Uzumaki Naruto', '2016-03-10', '333 Leaf Village', '333 Leaf Village', 'male', 1, 1, 'http://i.imgur.com/VRM1KB9.png'),
-(2, 6, 'Michael Jackson', '2016-03-02', '253 NewYork', '253 NewYork', 'male', 1, 1, 'http://i.imgur.com/EYflj2s.jpg'),
-(2, 7, 'Mike Tyson', '2016-03-02', '374 Las Vegas', '374 Las Vegas', 'male', 2, 2, 'http://i.imgur.com/xyNvaBI.jpg'),
-(2, 8, 'Monkey de Luffy', '2016-03-09', 'Big Sea', 'Big Sea', 'male', 5, 2, 'http://i.imgur.com/2noknZD.jpg?1');
+INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level`, `Avatar`, `Alive`) VALUES
+(2, 1, 'Nguyễn Thành Tâm', '1994-12-15', '345 Red Street', 'Paradise', 'male', NULL, 0, 'http://i.imgur.com/gtWulgo.jpg', false),
+(2, 2, 'Nguyễn Xuân Thái', '2016-03-11', '482 Black Street', 'Hotel', 'male', 1, 1, 'http://i.imgur.com/qEei3AS.jpg', false),
+(2, 3, 'Lê Đức Quí', '2016-03-18', '382 Pink Street', '382 Pink Street', 'female', 2, 2, 'http://i.imgur.com/6pQf6Ur.jpg', true),
+(2, 4, 'Bùi Quang Vinh', '2016-03-25', '583 Yellow Street', '583 Yellow Street', 'male', 2, 2, 'http://i.imgur.com/zEcz4bx.jpg', false),
+(2, 5, 'Uzumaki Naruto', '2016-03-10', '333 Leaf Village', '333 Leaf Village', 'male', 1, 1, 'http://i.imgur.com/VRM1KB9.png', false),
+(2, 6, 'Michael Jackson', '2016-03-02', '253 NewYork', '253 NewYork', 'male', 1, 1, 'http://i.imgur.com/EYflj2s.jpg', false),
+(2, 7, 'Mike Tyson', '2016-03-02', '374 Las Vegas', '374 Las Vegas', 'male', 2, 2, 'http://i.imgur.com/xyNvaBI.jpg', false),
+(2, 8, 'Monkey de Luffy', '2016-03-09', 'Big Sea', 'Big Sea', 'male', 5, 2, 'http://i.imgur.com/2noknZD.jpg?1', false);
 
 --
 -- Triggers `member`
