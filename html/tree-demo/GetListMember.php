@@ -14,6 +14,7 @@ if( isset($_GET['operation']) ){
         $userHandler->deleteMember($_GET['sentData']);
     else if ( $_GET['operation'] == "update" )
         $userHandler->updateMember($_GET['sentData']);
+
 }
 else
     $userHandler->getAllMembers($_GET['UserID']);
