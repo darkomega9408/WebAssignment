@@ -14,261 +14,17 @@
 
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/membercard.js"></script>
-    <script src="../../js/tree.js"></script>
-
+    <!--<script src="../../js/tree.js"></script>-->
 </head>
 <body>
 <!--
 We will create a family tree using just CSS(3)
 The markup will be simple nested lists
 -->
+<button id="btn">Click Me</button>
+
 <div class="tree">
-    <ul>
-        <li>
-            <div class="membercard panel panel-default effect-winston">
-                <div class="panel-body">
-                    <div class="member-avatar pull-left">
-                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                    </div>
-                    <div class="info pull-right">
-                        <strong>Nguyễn Xuân Thái</strong><br>
-                        <em>October 29th, 1994</em><br>
-                        <em>Ho Chi Minh City</em><br>
-                    </div>
-                    <p>
-                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x" data-toggle="modal" data-target="#member-info-modal"></i></a>
-                        <a href="#"><i class="fa fa-fw fa-plus fa-2x"></i></a>
-                        <a href="#"><i class="fa fa-fw fa-times fa-2x"></i></a>
-                    </p>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-            <ul>
-                <li>
-                    <div class="membercard panel panel-default effect-winston">
-                        <div class="panel-body">
-                            <div class="member-avatar pull-left">
-                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                            </div>
-                            <div class="info pull-right">
-                                <strong>Nguyễn Xuân Thái</strong><br>
-                                <em>October 29th, 1994</em><br>
-                                <em>Ho Chi Minh City</em><br>
-                            </div>
-                            <p>
-                                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x"></i></a>
-                                <a href="#"><i class="fa fa-fw fa-plus fa-2x" ></i></a>
-                                <a href="#"><i class="fa fa-fw fa-times fa-2x"></i></a>
-                            </p>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
 
-                    <ul>
-                        <li>
-                            <div class="membercard panel panel-default effect-winston">
-                            <div class="panel-body">
-                                <div class="member-avatar pull-left">
-                                    <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                </div>
-                                <div class="info pull-right">
-                                    <strong>Nguyễn Xuân Thái</strong><br>
-                                    <em>October 29th, 1994</em><br>
-                                    <em>Ho Chi Minh City</em><br>
-                                </div>
-                                <p>
-                                    <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                    <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                    <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                </p>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                            <ul>
-                                <li>
-                                    <div class="membercard panel panel-default effect-winston">
-                                        <div class="panel-body">
-                                            <div class="member-avatar pull-left">
-                                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                            </div>
-                                            <div class="info pull-right">
-                                                <strong>Nguyễn Xuân Thái</strong><br>
-                                                <em>October 29th, 1994</em><br>
-                                                <em>Ho Chi Minh City</em><br>
-                                            </div>
-                                            <p>
-                                                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                                <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                                <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                            </p>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <div class="membercard panel panel-default effect-winston">
-                                                <div class="panel-body">
-                                                    <div class="member-avatar pull-left">
-                                                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                                    </div>
-                                                    <div class="info pull-right">
-                                                        <strong>Nguyễn Xuân Thái</strong><br>
-                                                        <em>October 29th, 1994</em><br>
-                                                        <em>Ho Chi Minh City</em><br>
-                                                    </div>
-                                                    <p>
-                                                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                                        <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                                        <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                                    </p>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-
-                                        </li>
-
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                    </ul>
-                </li>
-                <li>
-                    <div class="membercard panel panel-default effect-winston">
-                        <div class="panel-body">
-                            <div class="member-avatar pull-left">
-                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                            </div>
-                            <div class="info pull-right">
-                                <strong>Nguyễn Xuân Thái</strong><br>
-                                <em>October 29th, 1994</em><br>
-                                <em>Ho Chi Minh City</em><br>
-                            </div>
-                            <p>
-                                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                            </p>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-
-                </li>
-                <li>
-                    <div class="membercard panel panel-default effect-winston">
-                        <div class="panel-body">
-                            <div class="member-avatar pull-left">
-                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                            </div>
-                            <div class="info pull-right">
-                                <strong>Nguyễn Xuân Thái</strong><br>
-                                <em>October 29th, 1994</em><br>
-                                <em>Ho Chi Minh City</em><br>
-                            </div>
-                            <p>
-                                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                            </p>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    <ul>
-                        <li>
-                            <div class="membercard panel panel-default effect-winston">
-                                <div class="panel-body">
-                                    <div class="member-avatar pull-left">
-                                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                    </div>
-                                    <div class="info pull-right">
-                                        <strong>Nguyễn Xuân Thái</strong><br>
-                                        <em>October 29th, 1994</em><br>
-                                        <em>Ho Chi Minh City</em><br>
-                                    </div>
-                                    <p>
-                                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                    </p>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>
-                                    <div class="membercard panel panel-default effect-winston">
-                                        <div class="panel-body">
-                                            <div class="member-avatar pull-left">
-                                                <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                            </div>
-                                            <div class="info pull-right">
-                                                <strong>Nguyễn Xuân Thái</strong><br>
-                                                <em>October 29th, 1994</em><br>
-                                                <em>Ho Chi Minh City</em><br>
-                                            </div>
-                                            <p>
-                                                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                                <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                                <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                            </p>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li>
-                                            <div class="membercard panel panel-default effect-winston">
-                                                <div class="panel-body">
-                                                    <div class="member-avatar pull-left">
-                                                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                                    </div>
-                                                    <div class="info pull-right">
-                                                        <strong>Nguyễn Xuân Thái</strong><br>
-                                                        <em>October 29th, 1994</em><br>
-                                                        <em>Ho Chi Minh City</em><br>
-                                                    </div>
-                                                    <p>
-                                                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                                        <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                                        <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                                    </p>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                            </div>
-
-                                        </li>
-
-                                    </ul>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li>
-                            <div class="membercard panel panel-default effect-winston">
-                                <div class="panel-body">
-                                    <div class="member-avatar pull-left">
-                                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive" alt="/*name*/">
-                                    </div>
-                                    <div class="info pull-right">
-                                        <strong>Nguyễn Xuân Thái</strong><br>
-                                        <em>October 29th, 1994</em><br>
-                                        <em>Ho Chi Minh City</em><br>
-                                    </div>
-                                    <p>
-                                        <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x edit-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-plus fa-2x add-icon-title" ></i></a>
-                                        <a href="#"><i class="fa fa-fw fa-times fa-2x delete-icon-title"></i></a>
-                                    </p>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
 </div>
 <!-- ~~ Tree  -->
 
@@ -385,6 +141,70 @@ The markup will be simple nested lists
 </div>
 <!-- ~~ Modal Delete -->
 
+<script>
+    $(document).ready(function () {
 
+        // Click button trigger event
+        $('#btn').click(function () {
+            $.ajax({
+                url: '../tree-demo/GetListMember.php',
+                type: 'POST'
+            }).done(function (data) {
+                // show response
+                data = JSON.parse(data);
+                createTree(data);
+            }).fail(function () {
+                alert("Post failed");
+            });
+        });
+
+
+        // Some variables
+        var memberCardObj = "";
+        var member = "mem";
+
+        // Load member card from another file and assign to '@memberCardObj'
+        $('.tree').load('../card-demo/membercard-demo.html .membercard', function () {
+            memberCardObj = $(this).clone();
+            $(this).html('');
+        });
+        // ~~
+
+        // Set information for each member based on DB
+        var setInfoMemberCard = function (data, memberCardObj) {
+            $(memberCardObj).find('.membercard').attr('id', member + data.MemberID);
+            $(memberCardObj).find('.memberName').html(data.Name);
+            $(memberCardObj).find('.memberBirthDate').html(data.BirthDate);
+            $(memberCardObj).find('.memberBirthPlace').html(data.BirthPlace);
+            return $(memberCardObj).html();
+        };
+        // ~~
+
+        // Use to create tree html
+        // data: server 's response , get from DB
+        var createTree = function (data) {
+            var nbrNode = data.length;
+
+            // Set width for tree
+            $('.tree').css('width',nbrNode*300+'px');
+
+            // Add Root node ( if any )
+            if( nbrNode <= 0 ) return;
+            else $('.tree').append("<ul><li>"+ setInfoMemberCard(data[0],memberCardObj) +"</li></ul>");
+
+            // Add Child node
+            for(i = 1 ; i< nbrNode ; ++i) {
+                var content = "<li>" + setInfoMemberCard(data[i], memberCardObj) + "</li>";
+                if( $('#' + member + data[i].Father + '+ul').length <= 0 )
+                    $('#' + member + data[i].Father).after("<ul>" + content + "</ul>");
+                else
+                    $('#' + member + data[i].Father + '+ul').append(content);
+            }
+        }
+
+
+
+    });
+</script>
 </body>
 </html>

@@ -5,7 +5,7 @@
             color:white;
             height:100vh;
             margin:0px;
-            background: url("../images/background/index.jpg");
+            background: url("../images/Background/index.jpg");
         }
         .flexcenter {
             display: flex;
