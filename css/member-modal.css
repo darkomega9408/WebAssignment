@@ -1,8 +1,13 @@
 .member-modal-avatar{
   margin: 0 auto;
+    padding-bottom: 2em;
   width: 40%;
 }
 
 .member-modal-info{
   width: 100%;
+}
+
+.modal-title{
+    color: firebrick;
 }
