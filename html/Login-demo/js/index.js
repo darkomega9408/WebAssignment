@@ -10,15 +10,11 @@ $(document).ready(function() {
         document.cookie = "token=" + data.token + "; expires=" + String(new Date().getTime() + (86400 * 30));
         window.location = "home.php";
       }
+      else if (data.status == "user_not_found") {
+        alert("Username or password is incorrect");
+      }
     }).fail(function(err) {
       alert("Internal Server Error");
     });
   })
 })
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
