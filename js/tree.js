@@ -117,8 +117,13 @@ $(document).ready(function(){
             var $trigger = $(e.relatedTarget);
             var $memberID = $trigger.parents().eq(3).attr('id');
             currMemberID = $memberID.substr(member.length);
+            $(this).attr("data-memid", currMemberID);
+        } catch (err) {
+            var $trigger = $(e.relatedTarget);
+            var modalFather = $trigger.parents().eq(4);
+            $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
         }
-        catch (err){}
+
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
@@ -225,5 +230,81 @@ $(document).ready(function(){
             console.log("Failed to update info member !")
         });
     });
+
+    //Handle Image upload
+    var imgUrl = "";
+    var memberUploadAvatarId;
+
+    $('#file-input').change(function(e) {
+
+        var file = e.target.files[0];
+        imageType = /image.*/;
+
+        if (!file.type.match(imageType)) {
+            console.log("File didn't match");
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.onload = function fileOnLoad(e) {
+            var $img = $('<img>', {src: e.target.result});
+            $("#imgNewAvatar").attr("src", $img.attr("src"));
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+
+            $img.load(function() {
+                canvas.width = this.width;
+                canvas.height = this.height;
+                context.drawImage(this, 0, 0);
+                imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
+            })
+        }
+        reader.readAsDataURL(file);
+    })
+
+    var clientId = "ae6e3c4095f9247";
+
+    function showMeError(err) {
+        console.log(err);
+    }
+    function updateAvatarForDB(data) {
+        var imgLink = data.data.link;
+        $.ajax({
+            url: 'GetListMember.php',
+            type: 'GET',
+            data: {
+                operation: "changeavatar",
+                sentData: {
+                    Avatar : data.data.link,
+                    UserID : 2,
+                    MemberID : memberUploadAvatarId
+                }
+            },
+            dataType: 'json'
+        }).done(function (data) {
+            $('#modal-uploading').modal('hide');
+            $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
+            $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
+            $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+        }).fail(function () {
+            console.log("Failed to upload avatar !")
+        });
+    }
+    $("#btnUploadAvatar").click(function(){
+        memberUploadAvatarId = $(this).attr("data-memid");
+        $.ajax({
+            url: "https://api.imgur.com/3/upload",
+            type: "POST",
+            datatype: "json",
+            data: {image: imgUrl},
+            success: updateAvatarForDB,
+            error: showMeError,
+            beforeSend: function (xhr) {
+                $('#modal-uploading').modal('show');
+                xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
+            }
+        });
+    })
+
     // ~~~
 });

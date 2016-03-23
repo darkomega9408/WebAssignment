@@ -73,6 +73,13 @@ class UserHandler
         $this->getMember($data['UserID'],$data['MemberID']);
     }
 
+    public function uploadAvatar($data)
+    {
+        $sql = "UPDATE `member` SET `Avatar`='". $data['Avatar'] ."' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+        $this->conn->exec($sql);
+        $this->getMember($data['UserID'],$data['MemberID']);
+    }
+
     public function getMember($userID, $memberID)
     {
         // return last inserted member ID

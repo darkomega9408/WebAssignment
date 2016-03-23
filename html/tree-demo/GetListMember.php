@@ -15,6 +15,8 @@ if( isset($_GET['operation']) ){
     else if ( $_GET['operation'] == "update" )
         $userHandler->updateMember($_GET['sentData']);
 
+    else if ( $_GET['operation'] == "changeavatar")
+        $userHandler->uploadAvatar($_GET['sentData']);
 }
 else
 {
