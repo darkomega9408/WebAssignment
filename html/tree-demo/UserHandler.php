@@ -11,7 +11,7 @@ class UserHandler
     public $servername = "localhost";
     public $username = "root";
     public $password = "";
-    public $dbname = "family-tree";
+    public $dbname = "webassignment";
     public $conn;
 
     public function connectDB(){
@@ -42,7 +42,11 @@ class UserHandler
     {
         $userID = $data['UserID'];
         $father = $data['Father'];
+<<<<<<< 1a957289b13cffe2e6369cea5d888c214dc48471
         $sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level` , `Avatar`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '0' , '".$data['Avatar']."')";
+=======
+        $sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level` , `Avatar`) VALUES (".$userID.", NULL, 'tâm gay chúa', '2016-03-09', 'bình hưng hòa', 'sao hỏa', 'male',". $father .", '0' , 'http://i.imgur.com/zEcz4bx.jpg')";
+>>>>>>> add card-demo tree-test nav-bar
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
@@ -79,4 +83,8 @@ class UserHandler
         $result = $stmt->fetchAll();
         echo json_encode($result);
     }
+<<<<<<< 1a957289b13cffe2e6369cea5d888c214dc48471
 }
+=======
+}
+>>>>>>> add card-demo tree-test nav-bar
