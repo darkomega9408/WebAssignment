@@ -24,7 +24,8 @@ $(document).ready(function(){
         }
     }).done(function(data){
         createTree(data);
-    }).fail(function () {
+    }).fail(function (err) {
+        console.log(err);
         console.log("Create tree failed");
     });
     // ~~
@@ -80,7 +81,7 @@ $(document).ready(function(){
     // Add member
     function addMember(data) {
         var content = "<li>" + layoutMember(data, memberCardObj) + "</li>";
-        
+
         if( $('#' + member + data.Father + '+ul').length <= 0 )
             $('#' + member + data.Father).after("<ul>" + content + "</ul>");
         else

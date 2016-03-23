@@ -17,7 +17,10 @@ if( isset($_GET['operation']) ){
 
 }
 else
+{
     $userHandler->getAllMembers($_GET['UserID']);
+}
+
 
 $userHandler->closeDB();
 
