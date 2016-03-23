@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Tree Demo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../../js/jquery-2.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="../../css/tree.css"/>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/member-card.css" rel="stylesheet">
+    <link href="../../css/member-modal.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/membercard.js"></script>
+    <script src="../../js/tree.js"></script>
+
+
+    <!-- <script src="../../bower_components/jquery/dist/jquery.min.js"></script> -->
+    <script src="../../bower_components/selectize/dist/js/standalone/selectize.js"></script>
+    <script src="js/index.js"></script>
+
+    <style>
+        nav.navbar-findcond {
+            background: #fff;
+            border-color: #ccc;
+            box-shadow: 0 0 2px 0 #ccc;
+        }
+
+        nav.navbar-findcond a {
+            color: #f14444;
+        }
+
+        nav.navbar-findcond ul.navbar-nav a {
+            color: #f14444;
+            border-style: solid;
+            border-width: 0 0 2px 0;
+            border-color: #fff;
+        }
+
+        nav.navbar-findcond ul.navbar-nav a:hover,
+        nav.navbar-findcond ul.navbar-nav a:visited,
+        nav.navbar-findcond ul.navbar-nav a:focus,
+        nav.navbar-findcond ul.navbar-nav a:active {
+            background: #fff;
+        }
+
+        nav.navbar-findcond ul.navbar-nav a:hover {
+            border-color: #f14444;
+        }
+
+        nav.navbar-findcond li.divider {
+            background: #ccc;
+        }
+
+        nav.navbar-findcond button.navbar-toggle {
+            background: #f14444;
+            border-radius: 2px;
+        }
+
+        nav.navbar-findcond button.navbar-toggle:hover {
+            background: #999;
+        }
+
+        nav.navbar-findcond button.navbar-toggle > span.icon-bar {
+            background: #fff;
+        }
+
+        nav.navbar-findcond ul.dropdown-menu {
+            border: 0;
+            background: #fff;
+            border-radius: 4px;
+            margin: 4px 0;
+            box-shadow: 0 0 4px 0 #ccc;
+        }
+
+        nav.navbar-findcond ul.dropdown-menu > li > a {
+            color: #444;
+        }
+
+        nav.navbar-findcond ul.dropdown-menu > li > a:hover {
+            background: #f14444;
+            color: #fff;
+        }
+
+        nav.navbar-findcond span.badge {
+            background: #f14444;
+            font-weight: normal;
+            font-size: 11px;
+            margin: 0 4px;
+        }
+
+        nav.navbar-findcond span.badge.new {
+            background: rgba(255, 0, 0, 0.8);
+            color: #fff;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<!-- Nav bar -->
+<script>
+  var search, $search;
+  $.ajax({
+    url: 'GetListMember1.php',
+    type: 'GET',
+    dataType: 'json',
+    error: function(error) {
+      console.log("get member fail");
+      console.log(error);
+    },
+    success: function(res){
+      console.log("get member success");
+      search(res);
+    }
+  });
+
+
+
+function search(data) {
+  $search = $('#search').selectize({
+    maxItems: 1,
+    scrollDuration: 1000,
+    selectOnTab: 'true',
+    valueField: 'MemberID',
+    labelField: 'Name',
+    searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+    options: data,
+    onChange: function(value){
+      $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
+      $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2);
+    },
+    render: {
+      item: function(item, escape) {
+        console.log(item);
+        return '<div><strong>' + escape(item.Name) + '</strong></div>';
+      },
+      option: function(item, escape) {
+        return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
+               '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
+               '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
+      }
+    }
+  });
+
+  search = $search[0].selectize;
+}
+</script>
+
+<header>
+    <nav class="navbar navbar-findcond navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LOGO</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notification <span class="badge">0</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> ABC <span class="badge">Video</span> Sun Sun Sun </a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> Sun Sun Sun</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> Sun Sun Sun</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> Sun Sun Sun</a></li>
+                        </ul>
+                    </li>
+                    <li class="active"><a href="#">Video <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Sairam</a></li>
+                            <li><a href="#">Gopal</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Login</a></li>
+                            <li><a href="#exit">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right search-form" role="search">
+                    <input  multiple style="width:15em" class="form-control" type="text"  id="search"  placeholder="Search">
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
+
+<!-- tree -->
+<div style="margin-top:5em" class="tree">
+    <!--<ul id="childOfTree">
+    </ul>-->
+</div>
+
+<!-- Member-info-modal -->
+<div id="modal-edit-user" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Someone's Information</h4>
+            </div>
+            <div class="modal-body">
+                <div class="member-modal-avatar">
+                    <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberModalAvatar"
+                         alt="/*name*/">
+                </div>
+
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Name: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                      value="Nguyễn Xuân Thái" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Gender: </label>
+                        <div class="col-sm-10">
+                            <select class="memberModalGender form-control">
+                                <option value="male">Male</option>
+                                <option value="female" selected>Female</option>
+                                <option value="undefined">Undefined</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date of birth: </label>
+                        <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
+                                                      value="October 29, 1994" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Address: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                      value="Too long, lazy to type" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Birthplace: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                      value="HCMC"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status: </label>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnUpdate"><span
+                        class="glyphicon glyphicon-upload"></span> Update
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Member-info-modal -->
+
+
+<div id="modal-add-user" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="member-modal-avatar">
+                    <img src="../../images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                         alt="/*name*/">
+                </div>
+
+                <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Name: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                      placeholder="Enter Name here..." required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Gender: </label>
+                        <div class="col-sm-10">
+                            <select class="memberModalGender form-control">
+                                <option value="male">Male</option>
+                                <option value="female" selected>Female</option>
+                                <option value="undefined">Undefined</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date of birth: </label>
+                        <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Address: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                      placeholder="Enter Addess here..." required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Birthplace: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                      placeholder="Enter Birthplace here..."></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status: </label>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAdd"><span
+                        class="glyphicon glyphicon-plus"></span> Add
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete  -->
+<div class="modal fade" id="modal-delete-user" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading">Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure
+                    you want to delete this member?
+                </div>
+
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="btnDelete" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-ok-sign"></span> Yes
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove"></span> No
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Delete --></div>
+
+<!--<div class="modal-wrapper">
+
+</div>-->
+
+</body>
+</html>
