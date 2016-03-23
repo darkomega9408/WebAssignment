@@ -16,7 +16,10 @@ if( isset($_GET['operation']) ){
         $userHandler->updateMember($_GET['sentData']);
 }
 else
+{
     $userHandler->getAllMembers($_GET['UserID']);
+}
+
 
 $userHandler->closeDB();
 
