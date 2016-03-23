@@ -61,7 +61,7 @@ $(document).ready(function(){
         var nbrNode = data.length;
 
         // Set width for tree
-        $(".tree").width((data.length * 30) + "em");
+        $(".tree").width((data.length * 15) + "em");
 
         // Add Root node ( if any )
         if( nbrNode <= 0 ) return;
@@ -112,9 +112,12 @@ $(document).ready(function(){
      */
     $('.modal').on('show.bs.modal', function (e) {
         // Get memberID of current shown member
-        var $trigger = $(e.relatedTarget);
-        var $memberID = $trigger.parents().eq(3).attr('id');
-        currMemberID = $memberID.substr(member.length);
+        try {
+            var $trigger = $(e.relatedTarget);
+            var $memberID = $trigger.parents().eq(3).attr('id');
+            currMemberID = $memberID.substr(member.length);
+        }
+        catch (err){}
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {

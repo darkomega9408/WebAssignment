@@ -42,7 +42,7 @@ class UserHandler
     {
         $userID = $data['UserID'];
         $father = $data['Father'];
-        $sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level` , `Avatar`) VALUES (".$userID.", NULL, 'tâm gay chúa', '2016-03-09', 'bình hưng hòa', 'sao hỏa', 'male',". $father .", '0' , 'http://i.imgur.com/zEcz4bx.jpg')";
+        $sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level` , `Avatar`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '0' , '".$data['Avatar']."')";
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
