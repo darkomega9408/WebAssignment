@@ -1,0 +1,43 @@
+.border-effect {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 320px;
+  height: 140px;
+  color: #69ca62;
+}
+.border-effect::before, .border-effect::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  content: '';
+  z-index: -1;
+  margin: -5%;
+  box-shadow: inset 0 0 0 2px;
+  animation: clipMe 8s linear infinite;
+  /*background-color: rgba(255, 0, 0, 0.3);*/
+}
+.border-effect::before {
+  animation-delay: -4s;
+}
+.border-effect:hover::after, .border-effect:hover::before {
+  /*background-color: rgba(255, 0, 0, 0.3);*/
+}
+
+@keyframes clipMe {
+  0%, 100% {
+    clip: rect(0px, 352px, 2px, 0px);
+  }
+  25% {
+    clip: rect(0px, 2px, 172px, 0px);
+  }
+  50% {
+    clip: rect(170px, 352px, 172px, 0px);
+  }
+  75% {
+    clip: rect(0px, 352px, 172px, 350px);
+  }
+}
