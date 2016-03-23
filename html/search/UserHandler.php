@@ -11,7 +11,7 @@ class UserHandler
     public $servername = "localhost";
     public $username = "root";
     public $password = "";
-    public $dbname = "family-tree";
+    public $dbname = "webassignment";
     public $conn;
 
     public function connectDB(){
