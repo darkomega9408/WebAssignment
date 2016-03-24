@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<canvas id="canvas" width="300px" height="300px"></canvas>
+<img id="imgAvatar" width="300px" height="300px">
 <input type="file" id="file-input">
 <button id="btnUpload" type="button" class="btn btn-default">Upload Image</button>
 <script>
@@ -35,10 +35,14 @@
             var reader = new FileReader();
             reader.onload = function fileOnLoad(e) {
                 var $img = $('<img>', {src: e.target.result});
-                var canvas = $('#canvas')[0];
+                $("#imgAvatar").attr("src", $img.attr("src"));
+                var canvas = document.createElement('canvas');
+
                 var context = canvas.getContext('2d');
 
                 $img.load(function() {
+                    canvas.width = this.width;
+                    canvas.height = this.height;
                     context.drawImage(this, 0, 0);
                     imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
                 })
@@ -49,6 +53,7 @@
     var clientId = "ae6e3c4095f9247";
 
     function showMe(data) {
+        console.log(data.data.link);
         alert(data.data.link);
     }
     $("#btnUpload").click(function(){
