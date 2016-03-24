@@ -20,9 +20,13 @@ $(document).ready(function(){
         type: 'GET',
         dataType: "json",
         data: {
-            UserID : 2
+            UserID : 3
         }
     }).done(function(data){
+		if (data.length == 0)
+			$("#btnAddMember").show();
+		else
+			$("#btnAddMember").hide();
         createTree(data);
 		search(data);
     }).fail(function (err) {
@@ -63,7 +67,7 @@ $(document).ready(function(){
         var nbrNode = data.length;
 
         // Set width for tree
-        $(".tree").width((data.length * 15) + "em");
+        $(".tree").width((data.length * 30) + "em");
 
         // Add Root node ( if any )
         if( nbrNode <= 0 ) return;
@@ -152,6 +156,7 @@ $(document).ready(function(){
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
+			currMemberID = 0;
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
@@ -160,7 +165,12 @@ $(document).ready(function(){
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
+			if (currMemberID == 0) {
+				$(".modal-title").html("New member");
+			}
+			else {
             $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+			}
             return;
         }
 
@@ -203,7 +213,7 @@ $(document).ready(function(){
     // Add new relative
     $('#btnAdd').click(function () {
         var sentData = {
-            UserID: 2,
+            UserID: 3,
             Name: $("#modal-add-user .memberModalName").val(),
             BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
             BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
