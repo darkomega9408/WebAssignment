@@ -38,8 +38,10 @@
             </div>
             <div class="modal-body">
                 <div class="member-modal-avatar">
-                    <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberModalAvatar"
-                         alt="/*name*/">
+                    <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
+                        <img src="../../images/aboutus/Thai.jpg" class="img-circle img-responsive memberModalAvatar"
+                             alt="/*name*/">
+                    </a>
                 </div>
 
                 <form role="form" class="form-horizontal">
@@ -186,6 +188,56 @@
     </div>
 </div>
 <!-- ~~ Modal Delete --></div>
+
+<!-- Modal Upload Avatar  -->
+<div class="modal fade" id="modal-upload-avatar" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading">Change Avatar</h4>
+            </div>
+            <div class="modal-body">
+                <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
+                src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
+                alt="New Avatar">
+                <div class="row" style="margin-top:2em">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <input type="file" id="file-input">
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-ok-sign"></span> Upload
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Upload Avatar --></div>
+
+<!-- Modal Uploading  -->
+<div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
+                width="100em"
+                height="100em">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Uploading --></div>
 
 <!--<div class="modal-wrapper">
 

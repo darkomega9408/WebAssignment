@@ -135,5 +135,7 @@ right connector from last child*/
     border-color:  red;
 }
 
-
-
+/*CSS for hover image effect*/
+#hrefChangeAvatar:hover .img-circle  {
+    opacity:0.5;
+}
