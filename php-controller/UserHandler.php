@@ -8,26 +8,12 @@
  */
 class UserHandler
 {
-    public $servername = "localhost";
-    public $username = "root";
-    public $password = "";
-    public $dbname = "webassignment";
-    public $conn;
 
-    public function connectDB(){
-        try {
-            $this->conn = new PDO("mysql:host=$this->servername;dbname=$this->dbname", $this->username, $this->password, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }catch (PDOException $e) {
-            echo "Connection failed: " . $e->getMessage();
-            return false;
-        }
-        return true;
-    }
+    private $conn;
 
-    public function closeDB()
+    public function __construct($dbConn)
     {
-        $this->conn = null;
+        $this->conn = $dbConn;
     }
 
     public function getAllMembers($data)

@@ -49,7 +49,7 @@
                                     echo "Incorrect username or password";
                                 }
                                 else if ($numRows == 1) {
-                                    header("Location: /html/tree-demo/treetest.html");
+                                    header("Location: tree.php");
                                 }
                             }
                         ?>

@@ -7,16 +7,24 @@ $(document).ready(function(){
 
     //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
 
+    // Load header - navbar from file
+    $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
+        // Change logo relative path
+        $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+    });
+    // ~~
+
     // Load member card from another file and assign to '@memberCardObj'
-    $('.tree').load('../card-demo/membercard-demo.html .membercard', function () {
+    $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
         memberCardObj = $(this).clone();
         $(this).html('');
     });
     // ~~
 
+
     // Load tree first
     $.ajax({
-        url: 'GetListMember.php',
+        url: 'php-controller/ServerHandler.php',
         type: 'GET',
         dataType: "json",
         data: {
@@ -76,39 +84,9 @@ $(document).ready(function(){
         for(i = 1 ; i< nbrNode ; ++i)
             addMember(data[i]);
     };
-	
-	
+
+
     // ~~
-	function search(data) {
-	  var search, $search;
-	  $search = $('#search').selectize({
-		maxItems: 1,
-		scrollDuration: 1000,
-		selectOnTab: 'true',
-		valueField: 'MemberID',
-		labelField: 'Name',
-		searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
-		options: data,
-		onChange: function(value){
-		  $('.membercard').removeClass('border-effect');
-		  $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
-		  $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
-		  $('#mem' + value).addClass('border-effect');
-		},
-		render: {
-		  item: function(item, escape) {
-			console.log(item);
-			return '<div><strong>' + escape(item.Name) + '</strong></div>';
-		  },
-		  option: function(item, escape) {
-			return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
-				   '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
-				   '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
-		  }
-		}
-	  });
-	  search = $search[0].selectize;
-	}
 
 
     // Add member
@@ -160,7 +138,7 @@ $(document).ready(function(){
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
-            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+            $("#modal-add-user .modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
             return;
         }
 
@@ -181,9 +159,10 @@ $(document).ready(function(){
     $('#btnDelete').click(function () {
         console.log("Delete");
         $.ajax({
-            url: 'GetListMember.php',
+            url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
+                role: "user",
                 operation: "delete",
                 sentData : {
                     UserID : 2,
@@ -215,9 +194,10 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: 'GetListMember.php',
+            url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
+                role: "user",
                 operation: "add",
                 sentData: sentData
             },
@@ -249,9 +229,10 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: 'GetListMember.php',
+            url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
+                role: "user",
                 operation: "update",
                 sentData: sentData
             },
@@ -263,6 +244,7 @@ $(document).ready(function(){
             console.log("Failed to update info member !")
         });
     });
+
 
     //Handle Image upload
     var imgUrl = "";
@@ -303,10 +285,11 @@ $(document).ready(function(){
     function updateAvatarForDB(data) {
         var imgLink = data.data.link;
         $.ajax({
-            url: 'GetListMember.php',
+            url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                operation: "changeavatar",
+                role: "user",
+                operation: "changeAvatar",
                 sentData: {
                     Avatar : data.data.link,
                     UserID : 2,
@@ -315,14 +298,16 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
-            $('#modal-uploading').modal('hide');
             $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
             $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
             $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+            $('#modal-uploading').modal('hide');
         }).fail(function () {
             console.log("Failed to upload avatar !")
         });
     }
+
+
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
         $.ajax({
@@ -340,4 +325,39 @@ $(document).ready(function(){
     })
 
     // ~~~
+
+
+    // Search function for navbar
+    function search(data) {
+        var search, $search;
+        $search = $('#search').selectize({
+            maxItems: 1,
+            scrollDuration: 1000,
+            selectOnTab: 'true',
+            valueField: 'MemberID',
+            labelField: 'Name',
+            searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+            options: data,
+            onChange: function(value){
+                $('.membercard').removeClass('border-effect');
+                $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
+                $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
+                $('#mem' + value).addClass('border-effect');
+            },
+            render: {
+                item: function(item, escape) {
+                    console.log(item);
+                    return '<div><strong>' + escape(item.Name) + '</strong></div>';
+                },
+                option: function(item, escape) {
+                    return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
+                        '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
+                        '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
+                }
+            }
+        });
+        search = $search[0].selectize;
+    }
+    // ~~
+
 });

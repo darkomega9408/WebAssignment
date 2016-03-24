@@ -10,93 +10,31 @@
     <meta name="author" content="">
 
     <title>
-        TTutorials point Bootstrap Examples
+        Admin Page
     </title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../css/admin-page.css" rel="stylesheet">
+    <link href="css/admin-page.css" rel="stylesheet">
 
-    <!-- Font Awesome CSS -->
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <!-- JQuery Script -->
+    <script src="js/jquery-2.2.1.min.js"></script>
 
-    <style>
-        nav.navbar-findcond {
-            background: #fff;
-            border-color: #ccc;
-            box-shadow: 0 0 2px 0 #ccc;
-        }
+    <!-- Bootstrap Script -->
+    <script src="js/bootstrap.min.js"></script>
 
-        nav.navbar-findcond a {
-            color: #f14444;
-        }
+    <!-- Font Awesome 4.5 -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
 
-        nav.navbar-findcond ul.navbar-nav a {
-            color: #f14444;
-            border-style: solid;
-            border-width: 0 0 2px 0;
-            border-color: #fff;
-        }
+    <!-- Custom CSS -->
+    <!--<link href="one-page-wonder.css" rel="stylesheet">-->
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/border-effect.css" rel="stylesheet">
 
-        nav.navbar-findcond ul.navbar-nav a:hover,
-        nav.navbar-findcond ul.navbar-nav a:visited,
-        nav.navbar-findcond ul.navbar-nav a:focus,
-        nav.navbar-findcond ul.navbar-nav a:active {
-            background: #fff;
-        }
+    <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
 
-        nav.navbar-findcond ul.navbar-nav a:hover {
-            border-color: #f14444;
-        }
-
-        nav.navbar-findcond li.divider {
-            background: #ccc;
-        }
-
-        nav.navbar-findcond button.navbar-toggle {
-            background: #f14444;
-            border-radius: 2px;
-        }
-
-        nav.navbar-findcond button.navbar-toggle:hover {
-            background: #999;
-        }
-
-        nav.navbar-findcond button.navbar-toggle > span.icon-bar {
-            background: #fff;
-        }
-
-        nav.navbar-findcond ul.dropdown-menu {
-            border: 0;
-            background: #fff;
-            border-radius: 4px;
-            margin: 4px 0;
-            box-shadow: 0 0 4px 0 #ccc;
-        }
-
-        nav.navbar-findcond ul.dropdown-menu > li > a {
-            color: #444;
-        }
-
-        nav.navbar-findcond ul.dropdown-menu > li > a:hover {
-            background: #f14444;
-            color: #fff;
-        }
-
-        nav.navbar-findcond span.badge {
-            background: #f14444;
-            font-weight: normal;
-            font-size: 11px;
-            margin: 0 4px;
-        }
-
-        nav.navbar-findcond span.badge.new {
-            background: rgba(255, 0, 0, 0.8);
-            color: #fff;
-        }
-    </style>
 
 </head>
 
@@ -104,51 +42,7 @@
 
 <!-- Navigation -->
 <header>
-    <nav class="navbar navbar-findcond navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">LOGO</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notification <span class="badge">0</span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> ABC <span class="badge">Video</span> Sun Sun Sun </a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> Sun Sun Sun</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Video</span> Sun Sun Sun</a></li>
-                            <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> Sun Sun Sun</a></li>
-                        </ul>
-                    </li>
-                    <li class="active"><a href="#">Video <span class="sr-only">(current)</span></a></li>
-                    <li class="dropdown">
-                        <!--<span>Hi, </span>-->
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="padding: 9px;">
-                            <img class="avatar" src="../images/avatar-default.png" width="32px" height="32px">
-                            Admin <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Sairam</a></li>
-                            <li><a href="#">Gopal</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#exit">Log out</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-right search-form" role="search">
-                    <input type="text" class="form-control" placeholder="Search" />
-                </form>
-            </div>
-        </div>
-    </nav>
 </header>
 <!-- Full Width Image Header -->
 
@@ -390,39 +284,6 @@
     </div>
 </main>
 
-<footer>
-    <div class="footer-copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-1">
-                    <a href="index.html" class="logo">
-
-                        <img alt="Tutorials Point" class="img-responsive" src="http://www.tutorialspoint.com//scripts/img/logo-footer.png">
-
-                    </a>
-                </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
-                    <p>
-                        © Copyright 2015. All Rights Reserved.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
-
-
-<!-- jQuery -->
-<script src="http://www.tutorialspoint.com/bootstrap/scripts/jquery.min.js">
-</script>
-
-
-
-<!-- Bootstrap Core JavaScript -->
-<script src="http://www.tutorialspoint.com/bootstrap/js/bootstrap.min.js">
-</script>
-
 
 <!-- Modal Check All Script -->
 <script>
@@ -441,6 +302,13 @@
         });
 
         $("[data-toggle=tooltip]").tooltip();
+
+        $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
+            // Change logo relative path
+            $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+        });
+
+
     });
 </script>
 
