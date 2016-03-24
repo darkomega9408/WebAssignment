@@ -104,52 +104,7 @@
 </head>
 <body>
 <!-- Nav bar -->
-<script>
-  var search, $search;
-  $.ajax({
-    url: 'GetListMember1.php',
-    type: 'GET',
-    dataType: 'json',
-    error: function(error) {
-      console.log("get member fail");
-      console.log(error);
-    },
-    success: function(res){
-      console.log("get member success");
-      search(res);
-    }
-  });
 
-function search(data) {
-  $search = $('#search').selectize({
-    maxItems: 1,
-    scrollDuration: 1000,
-    selectOnTab: 'true',
-    valueField: 'MemberID',
-    labelField: 'Name',
-    searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
-    options: data,
-    onChange: function(value){
-      $('.membercard').removeClass('border-effect');
-      $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
-      $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
-      $('#mem' + value).addClass('border-effect');
-    },
-    render: {
-      item: function(item, escape) {
-        console.log(item);
-        return '<div><strong>' + escape(item.Name) + '</strong></div>';
-      },
-      option: function(item, escape) {
-        return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
-               '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
-               '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
-      }
-    }
-  });
-  search = $search[0].selectize;
-}
-</script>
 
 <header>
     <nav class="navbar navbar-findcond navbar-fixed-top">

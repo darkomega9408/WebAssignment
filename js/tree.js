@@ -24,6 +24,7 @@ $(document).ready(function(){
         }
     }).done(function(data){
         createTree(data);
+		search(data);
     }).fail(function (err) {
         console.log(err);
         console.log("Create tree failed");
@@ -75,7 +76,39 @@ $(document).ready(function(){
         for(i = 1 ; i< nbrNode ; ++i)
             addMember(data[i]);
     };
+	
+	
     // ~~
+	function search(data) {
+	  var search, $search;
+	  $search = $('#search').selectize({
+		maxItems: 1,
+		scrollDuration: 1000,
+		selectOnTab: 'true',
+		valueField: 'MemberID',
+		labelField: 'Name',
+		searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+		options: data,
+		onChange: function(value){
+		  $('.membercard').removeClass('border-effect');
+		  $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
+		  $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
+		  $('#mem' + value).addClass('border-effect');
+		},
+		render: {
+		  item: function(item, escape) {
+			console.log(item);
+			return '<div><strong>' + escape(item.Name) + '</strong></div>';
+		  },
+		  option: function(item, escape) {
+			return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
+				   '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
+				   '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
+		  }
+		}
+	  });
+	  search = $search[0].selectize;
+	}
 
 
     // Add member
