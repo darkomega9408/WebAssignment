@@ -66,37 +66,37 @@
             <br>
             <div class="row">
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-off logo"></span>
-                    <h4>POWER</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="glyphicon glyphicon-plus logo"></span></span>
+                    <h4>CREATE</h4>
+                    <p>Create your own family tree</p>
                 </div>
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-heart logo"></span>
-                    <h4>LOVE</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="glyphicon glyphicon-pencil logo"></span>
+                    <h4>MODIFY</h4>
+                    <p>Modify your family tree</p>
                 </div>
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-lock logo"></span>
-                    <h4>JOB DONE</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="glyphicon glyphicon-search logo"></span>
+                    <h4>SEARCH</h4>
+                    <p>Search member in your family</p>
                 </div>
             </div>
             <br><br>
             <div class="row">
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-leaf logo"></span>
-                    <h4>GREEN</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="glyphicon glyphicon-globe logo"></span>
+                    <h4>GLOBE</h4>
+                    <p>Find member address on map</p>
                 </div>
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-certificate logo"></span>
-                    <h4>CERTIFIED</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="glyphicon glyphicon-user logo"></span>
+                    <h4>AVATAR</h4>
+                    <p>Upload member avatar</p>
                 </div>
                 <div class="col-sm-4">
-                    <span class="glyphicon glyphicon-wrench logo"></span>
-                    <h4>HARD WORK</h4>
-                    <p>Lorem ipsum dolor sit amet..</p>
+                    <span class="	glyphicon glyphicon-paperclip logo"></span>
+                    <h4>EXPORT</h4>
+                    <p>Export your family tree</p>
                 </div>
             </div>
         </div>
