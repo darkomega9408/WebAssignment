@@ -7,6 +7,8 @@
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
+CREATE DATABASE `webassignment`;
+USE `webassignment`;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 

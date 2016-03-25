@@ -28,7 +28,7 @@ $(document).ready(function(){
         type: 'GET',
         dataType: "json",
         data: {
-			role: "user",
+            role: "user",
             UserID : 2
         }
     }).done(function(data){
