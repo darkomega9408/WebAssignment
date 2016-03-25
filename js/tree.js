@@ -28,6 +28,7 @@ $(document).ready(function(){
         type: 'GET',
         dataType: "json",
         data: {
+			role: "user",
             UserID : 2
         }
     }).done(function(data){
@@ -291,6 +292,7 @@ $(document).ready(function(){
                 role: "user",
                 operation: "changeAvatar",
                 sentData: {
+					role: "user",
                     Avatar : data.data.link,
                     UserID : 2,
                     MemberID : memberUploadAvatarId
