@@ -54,3 +54,6 @@
         .thumbnail img {
             width:20vh;
         }
+		.row {
+			margin: 0;
+		}

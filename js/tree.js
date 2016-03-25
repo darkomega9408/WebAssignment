@@ -32,6 +32,10 @@ $(document).ready(function(){
             UserID : 2
         }
     }).done(function(data){
+		if (data.length == 0)
+			$("#btnAddMember").show();
+		else
+			$("#btnAddMember").hide();
         createTree(data);
 		search(data);
     }).fail(function (err) {
@@ -72,7 +76,7 @@ $(document).ready(function(){
         var nbrNode = data.length;
 
         // Set width for tree
-        $(".tree").width((data.length * 15) + "em");
+        $(".tree").width((data.length * 30) + "em");
 
         // Add Root node ( if any )
         if( nbrNode <= 0 ) return;
@@ -114,6 +118,8 @@ $(document).ready(function(){
         if( node.parent().contents().length <= 1 )
             node.parent().remove();
         else node.remove();
+		if ($(".tree").has(".membercard").length == 0)
+			$("#btnAddMember").show();
     };
     // ~~
 
@@ -131,15 +137,22 @@ $(document).ready(function(){
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
+			currMemberID = 0;
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
+			return;
         }
 
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
-            $("#modal-add-user .modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+			if (currMemberID == 0) {
+				$(".modal-title").html("New member");
+			}
+			else {
+            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+			}
             return;
         }
 
@@ -172,7 +185,7 @@ $(document).ready(function(){
             }
         }).done(function (data) {
             console.log("Delete member successfully");
-            deleteMember();
+            deleteMember();			
         }).fail(function () {
             console.log("Failed to delete member");
         });
@@ -204,6 +217,9 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
+			if (currMemberID == 0)
+				window.location.reload();
+			$(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data[0]);
             console.log(data[0].MemberID);
         }).fail(function () {
@@ -292,6 +308,7 @@ $(document).ready(function(){
                 role: "user",
                 operation: "changeAvatar",
                 sentData: {
+					role: "user",
                     Avatar : data.data.link,
                     UserID : 2,
                     MemberID : memberUploadAvatarId
