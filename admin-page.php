@@ -74,10 +74,9 @@ if ($shown_page <= 0)
     <!-- Custom CSS -->
     <!--<link href="one-page-wonder.css" rel="stylesheet">-->
     <link href="css/navbar.css" rel="stylesheet">
-    <link href="css/border-effect.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
-
+    <script src="js/search.js"></script>
 
 </head>
 
