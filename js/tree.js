@@ -185,7 +185,7 @@ $(document).ready(function(){
             }
         }).done(function (data) {
             console.log("Delete member successfully");
-            deleteMember();			
+            deleteMember();
         }).fail(function () {
             console.log("Failed to delete member");
         });
@@ -347,6 +347,7 @@ $(document).ready(function(){
 
     // Search function for navbar
     function search(data) {
+        var dropdown = true;
         var search, $search;
         $search = $('#search').selectize({
             maxItems: 1,
@@ -361,6 +362,17 @@ $(document).ready(function(){
                 $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
                 $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
                 $('#mem' + value).addClass('border-effect');
+            },
+            onDropdownOpen: function($dropdown){
+                $('.membercard').removeClass('border-effect');
+            },
+            onType: function(str){
+                $('.membercard').removeClass('border-effect');
+                if(str){
+                  $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                    $('#mem' + $(this).attr('data-value')).addClass('border-effect');
+                  });
+                }
             },
             render: {
                 item: function(item, escape) {
