@@ -6,7 +6,58 @@ $(document).ready(function () {
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+        $.ajax({
+            url: 'php-controller/GetAllUser.php',
+            type: 'GET',
+            dataType: 'json',
+            data:{
+              role : "admin",
+              AdminId: 1
+            },
+        }).done(function(data){
+            console.log(data);
+            search(data);
+        }).fail(function () {
+            console.log("failed");
+        });
     });
+
+    function search(data) {
+        var dropdown = true;
+        var search, $search;
+        $search = $('#search').selectize({
+            maxItems: 1,
+            selectOnTab: 'true',
+            valueField: 'ID',
+            labelField: 'Username',
+            searchField: ['Username', "Name", 'Email'],
+            options: data,
+            onChange: function(value){
+              $('#mytable tbody tr').css('display','none');
+              $('#mem' + value).addClass('border-effect');
+              $('#user' + value).css('display','');
+            },
+            onType: function(str){
+              if(str){
+                $('#mytable tbody tr').css('display','none');
+                $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                  $('#user' + $(this).attr('data-value')).css('display','');
+                });
+              }
+            },
+            render: {
+                item: function(item, escape) {
+                    console.log(item);
+                    return '<div><strong style="text-transform: capitalize">' + escape(item.Name) + '</strong></div>';
+                },
+                option: function(item, escape) {
+                    return '<div data-id="' + escape(item.Name) + '"><strong style="text-transform: capitalize">' + escape(item.Name) +
+                        '</strong><br><small style=" opacity:0.8;">' + escape(item.Email) + '</small><br></div>';
+                }
+            }
+        });
+        search = $search[0].selectize;
+    }
 
     /*// Load table first
     $.ajax({
