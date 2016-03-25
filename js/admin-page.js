@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     var user = "user";
-
+    var text = "";
     // Load header
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
@@ -25,6 +25,7 @@ $(document).ready(function () {
     function search(data) {
         var dropdown = true;
         var search, $search;
+
         $search = $('#search').selectize({
             maxItems: 1,
             selectOnTab: 'true',
@@ -35,12 +36,17 @@ $(document).ready(function () {
             onDropdownOpen: function($dropdown){
                 $dropdown.css('visibility','hidden');
             },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
+
+            },
             onChange: function(value){
               $('#mytable tbody tr').css('display','none');
               $('#mem' + value).addClass('border-effect');
               $('#user' + value).css('display','');
             },
             onType: function(str){
+              text = str;
               if(str){
                 $('#mytable tbody tr').css('display','none');
                 $('.selectize-dropdown .selectize-dropdown-content div').each( function(){

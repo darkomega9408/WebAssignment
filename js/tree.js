@@ -4,6 +4,7 @@ $(document).ready(function(){
     var memberCardObj = "";
     var member = "mem";
     var currMemberID ;
+    var text;
 
     //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
 
@@ -54,7 +55,7 @@ $(document).ready(function(){
           console.log(data);
           memberCard.css('background-image','url(images/watermark.png)');
           memberCard.css('background-repeat','no-repeat');
-        
+
         }
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
@@ -370,9 +371,14 @@ $(document).ready(function(){
                 $('#mem' + value).addClass('border-effect');
             },
             onDropdownOpen: function($dropdown){
-                $('.membercard').removeClass('border-effect');
+
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
             },
             onType: function(str){
+                console.log(str);
+                text = str;
                 $('.membercard').removeClass('border-effect');
                 if(str){
                   $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
