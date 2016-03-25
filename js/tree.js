@@ -55,8 +55,12 @@ $(document).ready(function(){
           console.log(data);
           memberCard.css('background-image','url(images/watermark.png)');
           memberCard.css('background-repeat','no-repeat');
-
         }
+        else{
+          memberCard.css('background-image','');
+          memberCard.css('background-repeat','no-repeat');
+        }
+        
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
