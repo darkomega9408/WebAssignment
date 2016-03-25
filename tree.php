@@ -82,8 +82,8 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status: </label>
-                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
-                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked>Alive</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead">Dead</span>
                     </div>
                 </form>
             </div>
@@ -148,8 +148,8 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status: </label>
-                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
-                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked>Alive</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead">Dead</span>
                     </div>
                 </form>
             </div>

@@ -208,7 +208,7 @@ $(document).ready(function(){
             BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
             Gender : $("#modal-add-user .memberModalGender").val(),
             Avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-add-user input[name='radioStatus']:checked").val(),
+            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-add-user .memberModalAddress").val(),
             Father : currMemberID
         };
@@ -245,7 +245,7 @@ $(document).ready(function(){
             BirthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
             Gender : $("#modal-edit-user .memberModalGender").val(),
             Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val(),
+            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-edit-user .memberModalAddress").val()
             //,
             //Father : currMemberID
