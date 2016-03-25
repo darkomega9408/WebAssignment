@@ -246,6 +246,8 @@
 </div>
 <!-- ~~ Modal Uploading --></div>
 
+<button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
+
 <!--<div class="modal-wrapper">
 
 </div>-->

@@ -193,7 +193,7 @@ $(document).ready(function(){
     // Add new relative
     $('#btnAdd').click(function () {
         var sentData = {
-            UserID: 2,
+            UserID: 3,
             Name: $("#modal-add-user .memberModalName").val(),
             BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
             BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
