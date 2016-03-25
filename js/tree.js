@@ -50,6 +50,12 @@ $(document).ready(function(){
         var memberCard = $("#"+member + data.MemberID);
 
         // Set avatar if any or leave default
+        if(data.Alive == 0){
+          console.log(data);
+          memberCard.css('background-image','url(images/watermark.png)');
+          memberCard.css('background-repeat','no-repeat');
+        
+        }
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
