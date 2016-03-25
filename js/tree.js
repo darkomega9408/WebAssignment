@@ -118,6 +118,8 @@ $(document).ready(function(){
         if( node.parent().contents().length <= 1 )
             node.parent().remove();
         else node.remove();
+		if ($(".tree").has(".membercard").length == 0)
+			$("#btnAddMember").show();
     };
     // ~~
 
@@ -139,6 +141,7 @@ $(document).ready(function(){
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
+			return;
         }
 
 
@@ -182,7 +185,7 @@ $(document).ready(function(){
             }
         }).done(function (data) {
             console.log("Delete member successfully");
-            deleteMember();
+            deleteMember();			
         }).fail(function () {
             console.log("Failed to delete member");
         });
@@ -193,7 +196,7 @@ $(document).ready(function(){
     // Add new relative
     $('#btnAdd').click(function () {
         var sentData = {
-            UserID: 3,
+            UserID: 2,
             Name: $("#modal-add-user .memberModalName").val(),
             BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
             BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
@@ -214,6 +217,9 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
+			if (currMemberID == 0)
+				window.location.reload();
+			$(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data[0]);
             console.log(data[0].MemberID);
         }).fail(function () {
