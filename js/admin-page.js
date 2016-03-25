@@ -32,6 +32,9 @@ $(document).ready(function () {
             labelField: 'Username',
             searchField: ['Username', "Name", 'Email'],
             options: data,
+            onDropdownOpen: function($dropdown){
+                $dropdown.css('visibility','hidden');
+            },
             onChange: function(value){
               $('#mytable tbody tr').css('display','none');
               $('#mem' + value).addClass('border-effect');
