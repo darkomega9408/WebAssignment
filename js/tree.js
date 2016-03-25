@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 
     // Load tree first
-    $.ajax({
+/*    $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
         dataType: "json",
@@ -41,7 +41,29 @@ $(document).ready(function(){
     }).fail(function (err) {
         console.log(err);
         console.log("Create tree failed");
+    });*/
+
+    $.ajax({
+        url: 'http://localhost:8080/hello-restful/webservice/giapha/getmembers',
+        type: 'POST',
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify({
+            role: "user",
+            UserID : 2
+        })
+    }).done(function(data){
+        if (data.length == 0)
+            $("#btnAddMember").show();
+        else
+            $("#btnAddMember").hide();
+        createTree(data);
+        //search(data);
+    }).fail(function (err) {
+        console.log(err);
+        console.log("Create tree failed");
     });
+
     // ~~
 
 
