@@ -53,6 +53,7 @@ $(document).ready(function(){
             UserID : 2
         })
     }).done(function(data){
+        console.log(data);
         if (data.length == 0)
             $("#btnAddMember").show();
         else
@@ -69,14 +70,13 @@ $(document).ready(function(){
 
     // Change member info displayed based on DB
     function setInfoForMember(data) {
-        var memberCard = $("#"+member + data.MemberID);
-
+        var memberCard = $("#"+member + data.memberID);
         // Set avatar if any or leave default
-        if( data.Avatar != null )
-            memberCard.find(".memberAvatar").attr("src", data.Avatar);
-        memberCard.find('.memberName').html(data.Name);
-        memberCard.find('.memberBirthDate').html(data.BirthDate);
-        memberCard.find('.memberBirthPlace').html(data.BirthPlace);
+        if( data.avatar != null )
+            memberCard.find(".memberAvatar").attr("src", data.avatar);
+        memberCard.find('.memberName').html(data.name);
+        memberCard.find('.memberBirthDate').html(data.birthDate);
+        memberCard.find('.memberBirthPlace').html(data.birthPlace);
 
         // Store all data
         memberCard.data("memberinfo", data);
@@ -86,7 +86,7 @@ $(document).ready(function(){
 
     // Set HTML layout for each member
     var layoutMember = function (data, memberCardObj) {
-        $(memberCardObj).find('.membercard').attr('id', member + data.MemberID);
+        $(memberCardObj).find('.membercard').attr('id', member + data.memberID);
         return $(memberCardObj).html();
     };
     // ~~
@@ -120,10 +120,10 @@ $(document).ready(function(){
     function addMember(data) {
         var content = "<li>" + layoutMember(data, memberCardObj) + "</li>";
 
-        if( $('#' + member + data.Father + '+ul').length <= 0 )
-            $('#' + member + data.Father).after("<ul>" + content + "</ul>");
+        if( $('#' + member + data.father + '+ul').length <= 0 )
+            $('#' + member + data.father).after("<ul>" + content + "</ul>");
         else
-            $('#' + member + data.Father + '+ul').append(content);
+            $('#' + member + data.father + '+ul').append(content);
 
         setInfoForMember(data);
     };
@@ -173,20 +173,20 @@ $(document).ready(function(){
 				$(".modal-title").html("New member");
 			}
 			else {
-            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").name);
 			}
             return;
         }
 
         // Assign some basic info to modal before display to user
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
-        $("#modal-edit-user .modal-title").html(memberinfo.Name + " Information");
-        $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.Avatar);
-        $("#modal-edit-user .memberModalName").attr("value", memberinfo.Name);
-        $("#modal-edit-user .memberModalGender").val(memberinfo.Gender);
-        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.BirthDate);
-        $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.Address);
-        $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.BirthPlace);
+        $("#modal-edit-user .modal-title").html(memberinfo.name + " Information");
+        $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.avatar);
+        $("#modal-edit-user .memberModalName").attr("value", memberinfo.name);
+        $("#modal-edit-user .memberModalGender").val(memberinfo.gender);
+        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate);
+        $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
+        $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
     });
     // ~~
 
@@ -194,7 +194,7 @@ $(document).ready(function(){
     // Delete user triggered by btnDelete onclick()
     $('#btnDelete').click(function () {
         console.log("Delete");
-        $.ajax({
+/*        $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
@@ -210,6 +210,24 @@ $(document).ready(function(){
             deleteMember();			
         }).fail(function () {
             console.log("Failed to delete member");
+        });*/
+
+        $.ajax({
+            url: 'http://localhost:8080/hello-restful/webservice/giapha/deletemember',
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify({
+                role: "user",
+                sentData : {
+                    UserID : 2,
+                    MemberID: currMemberID
+                }
+            })
+        }).done(function (data) {
+            console.log("Delete member successfully");
+            deleteMember();
+        }).fail(function () {
+            console.log("Failed to delete member");
         });
     });
     // ~~
@@ -218,18 +236,18 @@ $(document).ready(function(){
     // Add new relative
     $('#btnAdd').click(function () {
         var sentData = {
-            UserID: 2,
-            Name: $("#modal-add-user .memberModalName").val(),
-            BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
-            BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
-            Gender : $("#modal-add-user .memberModalGender").val(),
-            Avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-add-user input[name='radioStatus']:checked").val(),
-            Address : $("#modal-add-user .memberModalAddress").val(),
-            Father : currMemberID
+            userID: 2,
+            name: $("#modal-add-user .memberModalName").val(),
+            birthDate : $("#modal-add-user .memberModalBirthDate").val(),
+            birthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
+            gender : $("#modal-add-user .memberModalGender").val(),
+            avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
+            alive : 1,
+            address : $("#modal-add-user .memberModalAddress").val(),
+            father : currMemberID
         };
 
-        $.ajax({
+/*        $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
@@ -243,7 +261,26 @@ $(document).ready(function(){
 				window.location.reload();
 			$(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data[0]);
-            console.log(data[0].MemberID);
+            console.log(data[0].memberID);
+        }).fail(function () {
+            console.log("Failed to add new member!")
+        });*/
+
+        $.ajax({
+            url: 'http://localhost:8080/hello-restful/webservice/giapha/addmember',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: "json",
+            data: JSON.stringify({
+                role: "user",
+                sentData: sentData
+            })
+        }).done(function (data) {
+            if (currMemberID == 0)
+                window.location.reload();
+            $(".tree").width( ($(".tree").width() + 30) + "em" );
+            addMember(data);
+            console.log(data.memberID);
         }).fail(function () {
             console.log("Failed to add new member!")
         });
@@ -254,7 +291,7 @@ $(document).ready(function(){
     // Update member info
     $('#btnUpdate').click(function () {
         var sentData = {
-            UserID: 2,
+/*            UserID: 2,
             MemberID: currMemberID,
             Name: $("#modal-edit-user .memberModalName").val(),
             BirthDate : $("#modal-edit-user .memberModalBirthDate").val(),
@@ -262,12 +299,22 @@ $(document).ready(function(){
             Gender : $("#modal-edit-user .memberModalGender").val(),
             Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
             Status : $("#modal-edit-user input[name='radioStatus']:checked").val(),
-            Address : $("#modal-edit-user .memberModalAddress").val()
+            Address : $("#modal-edit-user .memberModalAddress").val()*/
+
             //,
             //Father : currMemberID
+            userID: 2,
+            memberID: currMemberID,
+            name: $("#modal-edit-user .memberModalName").val(),
+            birthDate : $("#modal-edit-user .memberModalBirthDate").val(),
+            birthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
+            gender : $("#modal-edit-user .memberModalGender").val(),
+            avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
+            alive : 1,
+            address : $("#modal-edit-user .memberModalAddress").val()
         };
 
-        $.ajax({
+/*        $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
@@ -278,7 +325,23 @@ $(document).ready(function(){
             dataType: 'json'
         }).done(function (data) {
             setInfoForMember(data[0]);
-            console.log(data[0].MemberID);
+            console.log(data[0].memberID);
+        }).fail(function () {
+            console.log("Failed to update info member !")
+        });*/
+
+        $.ajax({
+            url: 'http://localhost:8080/hello-restful/webservice/giapha/updatemember',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                role: "user",
+                sentData: sentData
+            }),
+            dataType: 'json'
+        }).done(function (data) {
+            setInfoForMember(data);
+            console.log(data.memberID);
         }).fail(function () {
             console.log("Failed to update info member !")
         });
@@ -387,12 +450,12 @@ $(document).ready(function(){
             render: {
                 item: function(item, escape) {
                     console.log(item);
-                    return '<div><strong>' + escape(item.Name) + '</strong></div>';
+                    return '<div><strong>' + escape(item.name) + '</strong></div>';
                 },
                 option: function(item, escape) {
-                    return '<div data-id="' + escape(item.MemberID) + '"><strong>' + escape(item.Name) +
-                        '</strong><br><span style="opacity:0.8;">' + escape(item.BirthDate) +
-                        '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.Address) + '</small><br></div>';
+                    return '<div data-id="' + escape(item.memberID) + '"><strong>' + escape(item.name) +
+                        '</strong><br><span style="opacity:0.8;">' + escape(item.birthDate) +
+                        '</span><br><small style="font-style: italic; opacity:0.8;">' + escape(item.address) + '</small><br></div>';
                 }
             }
         });
