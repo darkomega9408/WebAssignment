@@ -6,12 +6,18 @@ $(document).ready(function(){
     var currMemberID ;
     var text;
 
+    var token = getCookie('token');
+
     //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
 
     // Load header - navbar from file
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+        $(document).on('click', 'a[href="#exit"]', function() {
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          window.location = '/';
+        })
     });
     // ~~
 
@@ -27,21 +33,17 @@ $(document).ready(function(){
     $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
-        dataType: "json",
-        data: {
-            role: "user",
-            UserID : 2
-        }
+        dataType: "json"
     }).done(function(data){
-		if (data.length == 0)
-			$("#btnAddMember").show();
-		else
+		  if (data.length == 0)
+			   $("#btnAddMember").show();
+		  else
 			$("#btnAddMember").hide();
-        createTree(data);
-		search(data);
+      createTree(data);
+	    search(data);
     }).fail(function (err) {
-        console.log(err);
-        console.log("Create tree failed");
+      console.log(err.responseText);
+      console.log("Create tree failed");
     });
     // ~~
 
@@ -60,7 +62,7 @@ $(document).ready(function(){
           memberCard.css('background-image','');
           memberCard.css('background-repeat','no-repeat');
         }
-        
+
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
