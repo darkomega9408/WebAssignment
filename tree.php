@@ -1,8 +1,20 @@
+<?php
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+use Firebase\JWT\JWT;
+if (!isset($_COOKIE['token'])) header('Location: index.php');
+else {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $id = $personData['id'];
+}
+?>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Tree Demo</title>
+    <title>Tree Demo userID <?php echo $id; ?></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +31,7 @@
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/membercard.js"></script>
+    <script src="js/cookie-management.js"></script>
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>

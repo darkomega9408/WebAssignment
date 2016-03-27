@@ -18,7 +18,7 @@ class UserHandler
 
     public function getAllMembers($data)
     {
-        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive FROM `member` WHERE UserID = ".$data);
+        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive FROM `member` WHERE UserID = $data");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
