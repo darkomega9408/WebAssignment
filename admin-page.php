@@ -1,11 +1,11 @@
 <?php
 require("lib/vendor/firebase/php-jwt/src/JWT.php");
-require($_SERVER['DOCUMENT_ROOT'] . '/config.php')
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 use Firebase\JWT\JWT;
 if (!isset($_COOKIE['token'])) header('Location: index.php');
 else {
   $token = $_COOKIE['token'];
-  $data = (array) JWT::decode($token, Token::$key, ['alg' => 'HS512']);
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
   $personData = (array) $data['data'];
   $role = $personData['role'];
   if ($role != 'admin') {
