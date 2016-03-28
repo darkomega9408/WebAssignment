@@ -189,10 +189,9 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
                 operation: "delete",
                 sentData : {
-                    UserID : 2,
+					UserID: 2,
                     MemberID: currMemberID
                 }
             }

@@ -27,17 +27,21 @@ $role = $personData['role'];
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if( $role == 'user' ){
       $userHandler = new UserHandler($dbConn->conn);
+	  
+	  
 
       // Classify actions client requested server
       if( isset($_GET['operation']) ){
+		  $sentData = $_GET['sentData'];
+		  $sentData['UserID'] = $id;
           if( $_GET['operation'] == "add" )
-              $userHandler->insertMember($_GET['sentData']);
+              $userHandler->insertMember($sentData);
           else if ( $_GET['operation'] == "delete" )
-              $userHandler->deleteMember($_GET['sentData']);
+              $userHandler->deleteMember($sentData);
           else if ( $_GET['operation'] == "update" )
-              $userHandler->updateMember($_GET['sentData']);
+              $userHandler->updateMember($sentData);
           else if ( $_GET['operation'] == "changeAvatar")
-              $userHandler->uploadAvatar($_GET['sentData']);
+              $userHandler->uploadAvatar($sentData);
       }
       else $userHandler->getAllMembers($id);
 
