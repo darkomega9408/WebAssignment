@@ -14,6 +14,11 @@ $(document).ready(function(){
     });
     // ~~
 
+    $(document).on("click", "#hrefLogOut", function() {
+        deleteCookie("giaphaauth");
+        document.location.href = "index.php";
+    })
+
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
         memberCardObj = $(this).clone();
@@ -47,11 +52,13 @@ $(document).ready(function(){
         url: 'http://localhost:8080/hello-restful/webservice/giapha/getmembers',
         type: 'POST',
         dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify({
-            role: "user",
-            UserID : 2
-        })
+        beforeSend: function(request) {
+            var authstring = getCookie("giaphaauth");
+            if (authstring != "")
+                request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
+            else
+                document.location.href = "index.php";
+        }
     }).done(function(data){
         console.log(data);
         if (data.length == 0)
@@ -159,9 +166,15 @@ $(document).ready(function(){
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
-			currMemberID = 0;
+            if ($(this).attr("id") != "modal-upload-avatar" && $(this).attr("id") != "modal-uploading")
+                currMemberID = 0;
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
+            if (modalFather.attr("id") == "modal-add-user")
+                $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
+            else {
+                $(this).find("#btnUploadAvatar").attr("data-addmem", 0);
+            }
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
 			return;
         }
@@ -217,12 +230,17 @@ $(document).ready(function(){
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
-                role: "user",
                 sentData : {
-                    UserID : 2,
                     MemberID: currMemberID
                 }
-            })
+            }),
+            beforeSend: function(request) {
+                var authstring = getCookie("giaphaauth");
+                if (authstring != "")
+                    request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
+                else
+                    document.location.href = "index.php";
+            }
         }).done(function (data) {
             console.log("Delete member successfully");
             deleteMember();
@@ -272,9 +290,15 @@ $(document).ready(function(){
             contentType: 'application/json',
             dataType: "json",
             data: JSON.stringify({
-                role: "user",
                 sentData: sentData
-            })
+            }),
+            beforeSend: function(request) {
+                var authstring = getCookie("giaphaauth");
+                if (authstring != "")
+                    request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
+                else
+                    document.location.href = "index.php";
+            }
         }).done(function (data) {
             if (currMemberID == 0)
                 window.location.reload();
@@ -335,10 +359,16 @@ $(document).ready(function(){
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                role: "user",
                 sentData: sentData
             }),
-            dataType: 'json'
+            dataType: 'json',
+            beforeSend: function(request) {
+                var authstring = getCookie("giaphaauth");
+                if (authstring != "")
+                    request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
+                else
+                    document.location.href = "index.php";
+            }
         }).done(function (data) {
             setInfoForMember(data);
             console.log(data.memberID);
@@ -384,41 +414,56 @@ $(document).ready(function(){
     function showMeError(err) {
         console.log(err);
     }
-    function updateAvatarForDB(data) {
+    function updateAvatarForDB(data, isAddMem) {
         var imgLink = data.data.link;
-        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'GET',
-            data: {
-                role: "user",
-                operation: "changeAvatar",
-                sentData: {
-					role: "user",
-                    Avatar : data.data.link,
-                    UserID : 2,
-                    MemberID : memberUploadAvatarId
-                }
-            },
-            dataType: 'json'
-        }).done(function (data) {
-            $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
-            $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
-            $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+        if (isAddMem == 1) {
+            $("#modal-add-user .memberModalAvatar").attr("src", imgLink);
             $('#modal-uploading').modal('hide');
-        }).fail(function () {
-            console.log("Failed to upload avatar !")
-        });
+        }
+        else {
+            $.ajax({
+                url: 'http://localhost:8080/hello-restful/webservice/giapha/changeavatar',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    sentData: {
+                        avatar : data.data.link,
+                        memberID : memberUploadAvatarId
+                    }
+                }),
+                dataType: 'json',
+                beforeSend: function(request) {
+                    var authstring = getCookie("giaphaauth");
+                    if (authstring != "")
+                        request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
+                    else
+                        document.location.href = "index.php";
+                }
+            }).done(function (data) {
+                $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
+                $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
+                $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+                $('#modal-uploading').modal('hide');
+            }).fail(function () {
+                console.log("Failed to upload avatar !")
+            });
+        }
+
     }
 
 
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
+        var isAddMem = $(this).attr("data-addmem");
         $.ajax({
             url: "https://api.imgur.com/3/upload",
             type: "POST",
             datatype: "json",
             data: {image: imgUrl},
-            success: updateAvatarForDB,
+            success: function(data) {
+                updateAvatarForDB(data, isAddMem);
+
+            },
             error: showMeError,
             beforeSend: function (xhr) {
                 $('#modal-uploading').modal('show');

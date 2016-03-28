@@ -19,6 +19,7 @@
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/membercard.js"></script>
+    <script src="js/authrestful.js" type="text/javascript"></script>
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>

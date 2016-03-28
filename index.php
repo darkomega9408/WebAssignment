@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/jquery-2.2.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src="js/authrestful.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
