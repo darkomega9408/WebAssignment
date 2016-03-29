@@ -215,7 +215,7 @@ $(document).ready(function(){
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 role: "user",
                 operation: "add",
@@ -253,7 +253,7 @@ $(document).ready(function(){
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 role: "user",
                 operation: "update",

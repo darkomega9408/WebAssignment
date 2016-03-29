@@ -11,7 +11,7 @@ require_once 'Paginate.php';
 class AdminHandler
 {
     private $conn;
-    private $per_page = 5;
+    //private $per_page = 5;
 
     public function __construct($dbConn)
     {
@@ -19,7 +19,13 @@ class AdminHandler
     }
 
     public function getAllUsers(){
-        $per_page = $this->per_page;         // number of results to show per page
+
+        $stmt = $this->conn->prepare("SELECT `ID`,`Username`,`Email`,`Name` FROM `person` WHERE `Role` = 'user'");
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        echo json_encode($stmt->fetchAll());
+
+        /*$per_page = $this->per_page;         // number of results to show per page
         $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE `Role` = 'user'");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -84,11 +90,11 @@ class AdminHandler
             $out["pagination"].= paginate($reload, $shown_page, $total_pages);
         $out["pagination"].= "</ul>";
 
-        echo json_encode($out,JSON_PRETTY_PRINT);
+        echo json_encode($out,JSON_PRETTY_PRINT);*/
     }
 
     public function insertUser($data){
-        $sql = "INSERT INTO `person` (`Username`, `Email`, `Name`, `Role`) VALUES ('".$data['UserName']."', '".$data['Email']."', '".$data['Name']."', 'user')";
+        $sql = "INSERT INTO `person` (`Username`, `Password`, `Email`, `Name`, `Role`) VALUES ('".$data['UserName']."', '".$data['Password']."','".$data['Email']."', '".$data['Name']."', 'user')";
 
         // use exec() because no results are returned
         $this->conn->exec($sql);

@@ -6,22 +6,28 @@ $(document).ready(function () {
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
-        $.ajax({
-            url: 'php-controller/GetAllUser.php',
-            type: 'GET',
-            dataType: 'json',
-            data:{
-              role : "admin",
-              AdminId: 1
-            },
-        }).done(function(data){
-            console.log(data);
-            search(data);
-        }).fail(function () {
-            console.log("failed");
-        });
     });
+    // ~~
 
+    // Load all users
+    $.ajax({
+        url: 'php-controller/ServerHandler.php',
+        type: 'GET',
+        dataType: 'json',
+        data:{
+            role : "admin",
+            AdminId: 1
+        }
+    }).done(function(data){
+        console.log(data);
+        createTable(data);
+        search(data);
+    }).fail(function () {
+        console.log("Load users failed");
+    });
+    // ~~
+
+    // Search function
     function search(data) {
         var dropdown = true;
         var search, $search;
@@ -58,9 +64,10 @@ $(document).ready(function () {
         });
         search = $search[0].selectize;
     }
+    // ~~
 
-    /*// Load table first
-    $.ajax({
+    // Load table first
+    /*$.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
         data:{
@@ -71,21 +78,21 @@ $(document).ready(function () {
         createTable(data);
     }).fail(function () {
         console.log("Create tree failed");
-    });
+    });*/
     // ~~
 
     // Create table
     function createTable(data) {
-        /!*$.each(data, function (index, val) {
+        $.each(data, function (index, val) {
             addUser($("#mytable tbody"), val)
-        });*!/
+        });
         //console.log(data);
 
 
-        $("#mytable tbody").html(data.tbody);
-        $("#pagination").html(data.pagination);
+        //$("#mytable tbody").html(data.tbody);
+        //$("#pagination").html(data.pagination);
     }
-    // ~~*/
+    // ~~
 
     /*$(document).on("click", ".pagination>li>a" ,function (e) {
         e.preventDefault();
@@ -110,17 +117,18 @@ $(document).ready(function () {
         });
 
         //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
-    });*/
-
+    });
+*/
 
 
     // Add member
     function addUser(root,data) {
-        /*root.append("<tr id='"+user+data.id+"'> " +
+        root.append("<tr id='"+user+data.id+"'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
-            "<td>" + data.id + "</td> " +
-            "<td>" + data.name + "</td> " +
-            "<td>" + data.year + "</td> " +
+            "<td>" + data.ID + "</td> " +
+            "<td>" + data.Username + "</td> " +
+            "<td>" + data.Email + "</td> " +
+            "<td>" + data.Name + "</td> " +
             "<td> <p data-placement='top' data-toggle='tooltip' title='Edit'>"+
             "<button class='btn btn-primary btn-xs' data-title='Edit' data-toggle='modal' data-target='#edit'><span class='glyphicon glyphicon-pencil'></span></button>"+
             "</p>"+
@@ -131,11 +139,12 @@ $(document).ready(function () {
             "</p>"+
             "</td>"+
             "</tr>");
-*/
+
         // Cache user info
-        //$("#" + user + data.id).data(user, data);
+        $("#" + user + data.id).data(user, data);
+
         // Force reload page is the fastest way
-        location.reload();
+        //location.reload();
     }
     // ~~
 
@@ -193,23 +202,25 @@ $(document).ready(function () {
 
         var userName = $("#add .userName").val();
         var userID = $("#add .userID").val();
+        var userPassword = $("#add .userPassword").val();
         var userEmail = $("#add .userEmail").val();
+        if( !validateEmail(userEmail) )
+            return;
+
         var name = $("#add .name").val();
 
-        // Validate input
-        /*if ( userName.length < 5 || userName.length > 40 || !isNormalInteger(userEmail) || parseInt(userEmail) < 1990 || parseInt(userEmail) > 2015)
-            return;*/
 
         var sentData = {
             ID: userID,
             UserName:userName,
+            Password: userPassword,
             Name: name,
             Email: userEmail
         };
         console.log(sentData);
         $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 operation: "add",
                 role : "admin",
@@ -232,6 +243,9 @@ $(document).ready(function () {
         var userName = $("#edit .userName").val();
         var userID = $("#edit .userID").val();
         var userEmail = $("#edit .userEmail").val();
+        if( !validateEmail(userEmail) )
+            return;
+
         var name = $("#edit .name").val();
 
         // Validate input
@@ -247,7 +261,7 @@ $(document).ready(function () {
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 operation: "update",
                 role : "admin",
@@ -316,4 +330,9 @@ $(document).ready(function () {
     });
     // ~~
 
+
+    function validateEmail($email) {
+        var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
+        return emailReg.test( $email );
+    }
 });

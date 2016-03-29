@@ -1,6 +1,6 @@
 <?php
 
-require_once 'php-controller/DBConnection.php';
+/*require_once 'php-controller/DBConnection.php';
 require_once 'php-controller/Paginate.php'; //include of paginate page
 
 $dbConn = new DBConnection();
@@ -37,7 +37,7 @@ if (isset($_GET['page'])) {
 
 $tpages = $total_pages;
 if ($shown_page <= 0)
-    $shown_page = 1;
+    $shown_page = 1;*/
 
 ?>
 
@@ -72,7 +72,7 @@ if ($shown_page <= 0)
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
 
     <!-- Custom CSS -->
-    <!--<link href="one-page-wonder.css" rel="stylesheet">-->
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
@@ -108,10 +108,10 @@ if ($shown_page <= 0)
 
 
 
-                <div class="table-responsive">
+                <div class="table-responsive" style="height: 45em;">
 
 
-                    <table id="mytable" class="table table-bordred table-striped">
+                    <table id="mytable" class="table table-bordred table-striped" >
 
                         <thead>
 
@@ -128,7 +128,7 @@ if ($shown_page <= 0)
 
                         <tbody>
                         <?php
-                        $reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
+                        /*$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
 
                         // loop through results of database query, displaying them in the table
                         for ($i = $start; $i < $end; $i++) {
@@ -151,22 +151,20 @@ if ($shown_page <= 0)
                             echo "</tr>";
                         }
                         // ~~
-                        ?>
+                        */?>
                         </tbody>
 
                     </table>
-                    <button type="button" class="btn btn-info" style="position: relative; top: 15px" data-title='Add' data-toggle='modal' data-target='#add'>
-                        <span class="glyphicon glyphicon-plus-sign"></span> Add User
-                    </button>
+
 
 
                     <!-- Pagination here -->
                     <?php
-                    //$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
+                    /*//$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
                     echo '<ul class="pagination pull-right ">';
                     if ($total_pages > 1)
                         echo paginate($reload, $shown_page, $total_pages);
-                    echo "</ul>";
+                    echo "</ul>";*/
                     ?>
 
                     <!--<ul class="pagination pull-right">
@@ -184,6 +182,10 @@ if ($shown_page <= 0)
                 </div>
 
             </div>
+
+            <button type="button" class="btn btn-info" style="margin: 2em auto" data-title='Add' data-toggle='modal' data-target='#add'>
+                <span class="glyphicon glyphicon-plus-sign"></span> Add User
+            </button>
             <!-- End List User -->
 
 
@@ -195,27 +197,31 @@ if ($shown_page <= 0)
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                             <h4 class="modal-title custom_align Heading" >Edit User Detail</h4>
                         </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>ID: </label>
-                                <input class="form-control userID" type="text" readonly >
+                        <form  class="form-horizontal">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>ID: </label>
+                                    <input class="form-control userID" type="text" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>UserName: </label>
+                                    <input class="form-control userName" type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email: </label>
+                                    <input class="form-control userEmail" type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Name: </label>
+                                    <input class="form-control name" type="text">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>UserName: </label>
-                                <input class="form-control userName" type="text"  >
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate"
+                                        data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Update
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label>Email: </label>
-                                <input class="form-control userEmail" type="text"  >
-                            </div>
-                            <div class="form-group">
-                                <label>Name: </label>
-                                <input class="form-control name" type="text"  >
-                            </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-                        </div>
+                        </form>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -232,23 +238,32 @@ if ($shown_page <= 0)
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                             <h4 class="modal-title custom_align Heading" >New User</h4>
                         </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>UserName: </label>
-                                <input class="form-control userName" type="text"  >
+                        <form  class="form-horizontal">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>UserName: </label>
+                                    <input class="form-control userName" type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password: </label>
+                                    <input class="form-control userPassword" type="password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email: </label>
+                                    <input class="form-control userEmail" type="email"
+                                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Name: </label>
+                                    <input class="form-control name" type="text">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Email: </label>
-                                <input class="form-control userEmail" type="text"  >
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd"
+                                        data-dismiss="modal"><span class="glyphicon glyphicon-plus-sign"></span> Add
+                                </button>
                             </div>
-                            <div class="form-group">
-                                <label>Name: </label>
-                                <input class="form-control name" type="text"  >
-                            </div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd" data-dismiss="modal"><span class="glyphicon glyphicon-plus-sign"></span> Add </button>
-                        </div>
+                        </form>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -266,9 +281,7 @@ if ($shown_page <= 0)
                             <h4 class="modal-title custom_align Heading" >Delete this entry</h4>
                         </div>
                         <div class="modal-body">
-
                             <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-
                         </div>
                         <div class="modal-footer ">
                             <button type="button" class="btn btn-success" id="btnDelete" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>

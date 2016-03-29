@@ -6,7 +6,7 @@
  * Date: 3/24/2016
  * Time: 6:15 PM
  */
-require_once $_SERVER['DOCUMENT_ROOT'].'/config.php';
+require_once '../config.php';
 
 class DBConnection
 {
