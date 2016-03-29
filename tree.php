@@ -1,8 +1,20 @@
+<?php
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+use Firebase\JWT\JWT;
+if (!isset($_COOKIE['token'])) header('Location: index.php');
+else {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $id = $personData['id'];
+}
+?>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Tree Demo</title>
+    <title>Tree Demo userID <?php echo $id; ?></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +31,7 @@
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/membercard.js"></script>
+    <script src="js/cookie-management.js"></script>
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
@@ -82,8 +95,10 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status: </label>
-                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
-                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked id="edit-radio-alive">
+                            <label for="edit-radio-alive">Alive</label></span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead" id="edit-radio-dead">
+                            <label for="edit-radio-dead">Dead</label></span>
                     </div>
                 </form>
             </div>
@@ -148,8 +163,10 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Status: </label>
-                        <span class="radio-inline"><input type="radio" name="radioStatus" checked>Alive</span>
-                        <span class="radio-inline"><input type="radio" name="radioStatus">Dead</span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked id="add-radio-alive">
+                            <label for="add-radio-alive">Alive</label></span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead" id="add-radio-dead">
+                            <label for="add-radio-dead">Dead</label></span>
                     </div>
                 </form>
             </div>
@@ -194,7 +211,7 @@
         </div>
     </div>
 </div>
-<!-- ~~ Modal Delete --></div>
+<!-- ~~ Modal Delete -->
 
 <!-- Modal Upload Avatar  -->
 <div class="modal fade" id="modal-upload-avatar" tabindex="-1" role="dialog" aria-labelledby="edit"
@@ -208,8 +225,8 @@
             </div>
             <div class="modal-body">
                 <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
-                src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
-                alt="New Avatar">
+                     src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
+                     alt="New Avatar">
                 <div class="row" style="margin-top:2em">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
@@ -229,7 +246,7 @@
         </div>
     </div>
 </div>
-<!-- ~~ Modal Upload Avatar --></div>
+<!-- ~~ Modal Upload Avatar -->
 
 <!-- Modal Uploading  -->
 <div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
@@ -238,13 +255,13 @@
         <div class="modal-content">
             <div class="modal-body">
                 <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
-                width="100em"
-                height="100em">
+                     width="100em"
+                     height="100em">
             </div>
         </div>
     </div>
 </div>
-<!-- ~~ Modal Uploading --></div>
+<!-- ~~ Modal Uploading -->
 
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
 

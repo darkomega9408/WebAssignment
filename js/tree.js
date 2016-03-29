@@ -4,6 +4,9 @@ $(document).ready(function(){
     var memberCardObj = "";
     var member = "mem";
     var currMemberID ;
+    var text;
+
+    var token = getCookie('token');
 
     //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
 
@@ -11,6 +14,10 @@ $(document).ready(function(){
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+        $(document).on('click', 'a[href="#exit"]', function() {
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          window.location = '/';
+        })
     });
     // ~~
 
@@ -26,21 +33,17 @@ $(document).ready(function(){
     $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
-        dataType: "json",
-        data: {
-            role: "user",
-            UserID : 2
-        }
+        dataType: "json"
     }).done(function(data){
-		if (data.length == 0)
-			$("#btnAddMember").show();
-		else
+		  if (data.length == 0)
+			   $("#btnAddMember").show();
+		  else
 			$("#btnAddMember").hide();
-        createTree(data);
-		search(data);
+      createTree(data);
+	    search(data);
     }).fail(function (err) {
-        console.log(err);
-        console.log("Create tree failed");
+      console.log(err.responseText);
+      console.log("Create tree failed");
     });
     // ~~
 
@@ -50,6 +53,16 @@ $(document).ready(function(){
         var memberCard = $("#"+member + data.MemberID);
 
         // Set avatar if any or leave default
+        if(data.Alive == 0){
+          console.log(data);
+          memberCard.css('background-image','url(images/watermark.png)');
+          memberCard.css('background-repeat','no-repeat');
+        }
+        else{
+          memberCard.css('background-image','');
+          memberCard.css('background-repeat','no-repeat');
+        }
+
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
@@ -185,7 +198,7 @@ $(document).ready(function(){
             }
         }).done(function (data) {
             console.log("Delete member successfully");
-            deleteMember();			
+            deleteMember();
         }).fail(function () {
             console.log("Failed to delete member");
         });
@@ -202,7 +215,7 @@ $(document).ready(function(){
             BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
             Gender : $("#modal-add-user .memberModalGender").val(),
             Avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-add-user input[name='radioStatus']:checked").val(),
+            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-add-user .memberModalAddress").val(),
             Father : currMemberID
         };
@@ -239,7 +252,7 @@ $(document).ready(function(){
             BirthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
             Gender : $("#modal-edit-user .memberModalGender").val(),
             Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val(),
+            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-edit-user .memberModalAddress").val()
             //,
             //Father : currMemberID
@@ -347,6 +360,7 @@ $(document).ready(function(){
 
     // Search function for navbar
     function search(data) {
+        var dropdown = true;
         var search, $search;
         $search = $('#search').selectize({
             maxItems: 1,
@@ -361,6 +375,22 @@ $(document).ready(function(){
                 $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
                 $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
                 $('#mem' + value).addClass('border-effect');
+            },
+            onDropdownOpen: function($dropdown){
+
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
+            },
+            onType: function(str){
+                console.log(str);
+                text = str;
+                $('.membercard').removeClass('border-effect');
+                if(str){
+                  $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                    $('#mem' + $(this).attr('data-value')).addClass('border-effect');
+                  });
+                }
             },
             render: {
                 item: function(item, escape) {

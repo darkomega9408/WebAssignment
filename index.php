@@ -1,3 +1,15 @@
+<?php
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+use Firebase\JWT\JWT;
+if (isset($_COOKIE['token'])) {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  if ($personData['role'] == 'admin') header('Location: admin-page.php');
+  else header('Location: tree.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +18,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/jquery-2.2.1.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/cookie-management.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
 
@@ -17,7 +31,7 @@
             <div id="index_content" class="text-center">
                 <h1>Gia Phả Web</h1>
                 <p>Chết là hết</p>
-                <div class="well">
+                <div class="login-form">
                     <form role="form" method="post" action="">
                         <div class="form-group">
                             <input type="text"
@@ -39,20 +53,6 @@
                                 Login
                             </button>
                         </div>
-                        <?php
-                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                $username = $_POST["username"];
-                                $password = $_POST["password"];
-                                $conn = new PDO("mysql:host=localhost;dbname=webassignment", "root", "", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-                                $numRows = $conn->query("SELECT count(*) FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetchColumn();
-                                if ($numRows == 0) {
-                                    echo "Incorrect username or password";
-                                }
-                                else if ($numRows == 1) {
-                                    header("Location: tree.php");
-                                }
-                            }
-                        ?>
                     </form>
                 </div>
             </div>

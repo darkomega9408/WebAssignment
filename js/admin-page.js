@@ -1,12 +1,76 @@
 
 $(document).ready(function () {
     var user = "user";
-
+    var text = "";
     // Load header
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+        $(document).on('click', 'a[href="#exit"]', function() {
+          document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          window.location = '/';
+        })
+        $.ajax({
+            url: 'php-controller/GetAllUser.php',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+              role: 'admin',
+              adminID: 1
+            }
+        }).done(function(data){
+            console.log(data);
+            search(data);
+        }).fail(function () {
+            console.log("failed");
+        });
     });
+
+    function search(data) {
+        var dropdown = true;
+        var search, $search;
+
+        $search = $('#search').selectize({
+            maxItems: 1,
+            selectOnTab: 'true',
+            valueField: 'ID',
+            labelField: 'Username',
+            searchField: ['Username', "Name", 'Email'],
+            options: data,
+            onDropdownOpen: function($dropdown){
+                $dropdown.css('visibility','hidden');
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
+
+            },
+            onChange: function(value){
+              $('#mytable tbody tr').css('display','none');
+              $('#mem' + value).addClass('border-effect');
+              $('#user' + value).css('display','');
+            },
+            onType: function(str){
+              text = str;
+              if(str){
+                $('#mytable tbody tr').css('display','none');
+                $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                  $('#user' + $(this).attr('data-value')).css('display','');
+                });
+              }
+            },
+            render: {
+                item: function(item, escape) {
+                    console.log(item);
+                    return '<div><strong style="text-transform: capitalize">' + escape(item.Name) + '</strong></div>';
+                },
+                option: function(item, escape) {
+                    return '<div data-id="' + escape(item.Name) + '"><strong style="text-transform: capitalize">' + escape(item.Name) +
+                        '</strong><br><small style=" opacity:0.8;">' + escape(item.Email) + '</small><br></div>';
+                }
+            }
+        });
+        search = $search[0].selectize;
+    }
 
     /*// Load table first
     $.ajax({

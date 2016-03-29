@@ -1,4 +1,19 @@
 <?php
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php')
+use Firebase\JWT\JWT;
+if (!isset($_COOKIE['token'])) header('Location: index.php');
+else {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $role = $personData['role'];
+  if ($role != 'admin') {
+    echo 'You are not allowed here';
+    exit;
+  }
+  $id = $personData['id'];
+}
 
 require_once 'php-controller/DBConnection.php';
 require_once 'php-controller/Paginate.php'; //include of paginate page
@@ -53,7 +68,7 @@ if ($shown_page <= 0)
     <meta name="author" content="">
 
     <title>
-        Admin Page
+        Admin Page id <?php echo $id;?>
     </title>
 
     <!-- Bootstrap Core CSS -->
@@ -74,10 +89,9 @@ if ($shown_page <= 0)
     <!-- Custom CSS -->
     <!--<link href="one-page-wonder.css" rel="stylesheet">-->
     <link href="css/navbar.css" rel="stylesheet">
-    <link href="css/border-effect.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
-
+    <script src="js/search.js"></script>
 
 </head>
 
