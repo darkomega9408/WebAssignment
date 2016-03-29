@@ -31,6 +31,7 @@ $(document).ready(function () {
     function search(data) {
         var dropdown = true;
         var search, $search;
+
         $search = $('#search').selectize({
             maxItems: 1,
             selectOnTab: 'true',
@@ -38,12 +39,20 @@ $(document).ready(function () {
             labelField: 'Username',
             searchField: ['Username', "Name", 'Email'],
             options: data,
+            onDropdownOpen: function($dropdown){
+                $dropdown.css('visibility','hidden');
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
+
+            },
             onChange: function(value){
               $('#mytable tbody tr').css('display','none');
               $('#mem' + value).addClass('border-effect');
               $('#user' + value).css('display','');
             },
             onType: function(str){
+              text = str;
               if(str){
                 $('#mytable tbody tr').css('display','none');
                 $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
@@ -117,8 +126,8 @@ $(document).ready(function () {
         });
 
         //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
-    });
-*/
+    });*/
+
 
 
     // Add member
@@ -204,8 +213,10 @@ $(document).ready(function () {
         var userID = $("#add .userID").val();
         var userPassword = $("#add .userPassword").val();
         var userEmail = $("#add .userEmail").val();
-        if( !validateEmail(userEmail) )
+        if( !validateEmail(userEmail) || userName == "" || userID=="" || userPassword== "" || userEmail == "" ) {
+            $("#add .error-msg").html("Some fields are invalid. Please try again!");
             return;
+        }else $("#modal-edit-user .error-msg").html();
 
         var name = $("#add .name").val();
 
@@ -229,6 +240,7 @@ $(document).ready(function () {
             dataType: 'json'
         }).done(function (data) {
             addUser($("#mytable tbody"),data[0]);
+            $("#add").modal('hide');
             console.log("Add new user successfully");
         }).fail(function () {
             console.log("Failed to add new user!")
@@ -243,14 +255,12 @@ $(document).ready(function () {
         var userName = $("#edit .userName").val();
         var userID = $("#edit .userID").val();
         var userEmail = $("#edit .userEmail").val();
-        if( !validateEmail(userEmail) )
-            return;
-
         var name = $("#edit .name").val();
+        if( !validateEmail(userEmail) || userID == "" || userName == "") {
+            $("#edit .error-msg").html("Some fields are invalid. Please try again!");
+            return;
+        }else $("#edit .error-msg").html();
 
-        // Validate input
-        /*if ( userName.length < 5 || userName.length > 40 || !isNormalInteger(userEmail) || parseInt(userEmail) < 1990 || parseInt(userEmail) > 2015)
-            return;*/
 
         var sentData = {
             ID: userID,
@@ -270,6 +280,7 @@ $(document).ready(function () {
             dataType: 'json'
         }).done(function (data) {
             updateUser(data[0]);
+            $("#edit").modal('hide');
         }).fail(function () {
             console.log("Failed to update info member !")
         });

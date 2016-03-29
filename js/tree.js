@@ -4,6 +4,10 @@ $(document).ready(function(){
     var memberCardObj = "";
     var member = "mem";
     var currMemberID ;
+    var text;
+
+    var token = getCookie('token');
+
 
     //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
 
@@ -11,6 +15,17 @@ $(document).ready(function(){
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+
+        // Change role & append new caret
+        $("#navbar-user-name").prepend("Hi, User "+$("header").attr("data-id"));
+        /*$("#navbar-user-name")
+        <span class="caret"></span>*/
+
+
+        $(document).on('click', 'a[href="#exit"]', function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            window.location = '/';
+        })
     });
     // ~~
 
@@ -26,20 +41,18 @@ $(document).ready(function(){
     $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
-        dataType: "json",
-        data: {
-            role: "user",
-            UserID : 2
-        }
+        dataType: "json"
     }).done(function(data){
-		if (data.length == 0)
-			$("#btnAddMember").show();
-		else
-			$("#btnAddMember").hide();
+        if (data.length == 0)
+            $("#btnAddMember").show();
+        else
+            $("#btnAddMember").hide();
+
+        // Tree
         createTree(data);
-		search(data);
+        search(data);
     }).fail(function (err) {
-        console.log(err);
+        console.log(err.responseText);
         console.log("Create tree failed");
     });
     // ~~
@@ -51,11 +64,15 @@ $(document).ready(function(){
 
         // Set avatar if any or leave default
         if(data.Alive == 0){
-          console.log(data);
-          memberCard.css('background-image','url(images/watermark.png)');
-          memberCard.css('background-repeat','no-repeat');
-        
+            console.log(data);
+            memberCard.css('background-image','url(images/watermark.png)');
+            memberCard.css('background-repeat','no-repeat');
         }
+        else{
+            memberCard.css('background-image','');
+            memberCard.css('background-repeat','no-repeat');
+        }
+
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
@@ -124,8 +141,8 @@ $(document).ready(function(){
         if( node.parent().contents().length <= 1 )
             node.parent().remove();
         else node.remove();
-		if ($(".tree").has(".membercard").length == 0)
-			$("#btnAddMember").show();
+        if ($(".tree").has(".membercard").length == 0)
+            $("#btnAddMember").show();
     };
     // ~~
 
@@ -143,22 +160,22 @@ $(document).ready(function(){
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
-			currMemberID = 0;
+            currMemberID = 0;
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
-			return;
+            return;
         }
 
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
-			if (currMemberID == 0) {
-				$(".modal-title").html("New member");
-			}
-			else {
-            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
-			}
+            if (currMemberID == 0) {
+                $(".modal-title").html("New member");
+            }
+            else {
+                $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
+            }
             return;
         }
 
@@ -201,11 +218,20 @@ $(document).ready(function(){
 
     // Add new relative
     $('#btnAdd').click(function () {
+        // Validate
+        var name = $("#modal-add-user .memberModalName").val();
+        var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
+        if( name == "" || birthPlace == "" ){
+            $("#modal-add-user .error-msg").html("Some fields are invalid. Please try again!");
+            return;
+        }
+        else $("#modal-add-user .error-msg").html();
+
         var sentData = {
             UserID: 2,
-            Name: $("#modal-add-user .memberModalName").val(),
+            Name: name,
             BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
-            BirthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
+            BirthPlace : birthPlace,
             Gender : $("#modal-add-user .memberModalGender").val(),
             Avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
             Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
@@ -223,11 +249,12 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
-			if (currMemberID == 0)
-				window.location.reload();
-			$(".tree").width( ($(".tree").width() + 30) + "em" );
+            if (currMemberID == 0)
+                window.location.reload();
+            $("#modal-add-user").modal('hide');
+            $(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data[0]);
-            console.log(data[0].MemberID);
+            //console.log(data[0]);
         }).fail(function () {
             console.log("Failed to add new member!")
         });
@@ -237,6 +264,15 @@ $(document).ready(function(){
 
     // Update member info
     $('#btnUpdate').click(function () {
+        // Validate
+        var name = $("#modal-edit-user .memberModalName").val();
+        var birthPlace = $("#modal-edit-user .memberModalBirthPlace").val();
+        if( name == "" || birthPlace == "" ){
+            $("#modal-edit-user .error-msg").html("Some fields are invalid. Please try again!");
+            return;
+        }
+        else $("#modal-edit-user .error-msg").html();
+
         var sentData = {
             UserID: 2,
             MemberID: currMemberID,
@@ -261,6 +297,7 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
+            $("#modal-edit-user").modal('hide');
             setInfoForMember(data[0]);
             console.log(data[0].MemberID);
         }).fail(function () {
@@ -314,7 +351,7 @@ $(document).ready(function(){
                 role: "user",
                 operation: "changeAvatar",
                 sentData: {
-					role: "user",
+                    role: "user",
                     Avatar : data.data.link,
                     UserID : 2,
                     MemberID : memberUploadAvatarId
@@ -370,14 +407,19 @@ $(document).ready(function(){
                 $('#mem' + value).addClass('border-effect');
             },
             onDropdownOpen: function($dropdown){
-                $('.membercard').removeClass('border-effect');
+
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
             },
             onType: function(str){
+                console.log(str);
+                text = str;
                 $('.membercard').removeClass('border-effect');
                 if(str){
-                  $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
-                    $('#mem' + $(this).attr('data-value')).addClass('border-effect');
-                  });
+                    $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                        $('#mem' + $(this).attr('data-value')).addClass('border-effect');
+                    });
                 }
             },
             render: {

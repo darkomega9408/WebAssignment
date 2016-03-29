@@ -1,8 +1,20 @@
+<?php
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+use Firebase\JWT\JWT;
+if (!isset($_COOKIE['token'])) header('Location: index.php');
+else {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $id = $personData['id'];
+}
+?>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Tree Demo</title>
+    <title>Tree Demo userID <?php echo $id; ?></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +28,12 @@
     <link href="css/border-effect.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
 
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/membercard.js"></script>
+    <script src="js/cookie-management.js"></script>
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
@@ -28,7 +42,7 @@
 <body>
 
 
-<header></header>
+<header data-id="<?php echo $id ?>"></header>
 
 
 <div class="tree" style="margin-top:5em">
@@ -44,6 +58,7 @@
             </div>
             <form class="form-horizontal">
                 <div class="modal-body">
+                    <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
                             <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
@@ -53,7 +68,7 @@
 
                     <form role="form" class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Name: </label>
+                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                           value="Nguyễn Xuân Thái" required></div>
                         </div>
@@ -68,7 +83,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Date of birth: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
                             <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
                                                           value="October 29, 1994" required></div>
                         </div>
@@ -78,7 +93,7 @@
                                                           value="Too long, lazy to type" required></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Birthplace: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
                                                           value="HCMC"></div>
                         </div>
@@ -94,7 +109,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnUpdate"><span
+                    <button type="button" class="btn btn-success" id="btnUpdate"><span
                             class="glyphicon glyphicon-upload"></span> Update
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><span
@@ -117,6 +132,7 @@
             </div>
             <form  class="form-horizontal">
                 <div class="modal-body">
+                    <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
                             <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
@@ -124,9 +140,9 @@
                         </a>
                     </div>
 
-                    <form role="form" class="form-horizontal">
+
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Name: </label>
+                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                           placeholder="Enter Name here..." required></div>
                         </div>
@@ -141,7 +157,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Date of birth: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
                             <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
                                                           required></div>
                         </div>
@@ -151,7 +167,7 @@
                                                           placeholder="Enter Addess here..." required></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Birthplace: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
                                                           placeholder="Enter Birthplace here..."></div>
                         </div>
@@ -164,10 +180,10 @@
                                                                       id="add-radio-dead">
                                         <label for="add-radio-dead">Dead</label></span>
                         </div>
-                    </form>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAdd"><span
+                    <button type="button" class="btn btn-success" id="btnAdd"><span
                             class="glyphicon glyphicon-plus"></span> Add
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><span
@@ -233,7 +249,7 @@
                 </div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
+                <button type="button" class="btn btn-success" id="btnUploadAvatar" ><span
                         class="glyphicon glyphicon-ok-sign"></span> Upload
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span

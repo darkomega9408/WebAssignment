@@ -1,4 +1,19 @@
 <?php
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+use Firebase\JWT\JWT;
+if (!isset($_COOKIE['token'])) header('Location: index.php');
+else {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $role = $personData['role'];
+  if ($role != 'admin') {
+    echo 'You are not allowed here';
+    exit;
+  }
+  $id = $personData['id'];
+}
 
 /*require_once 'php-controller/DBConnection.php';
 require_once 'php-controller/Paginate.php'; //include of paginate page
@@ -53,7 +68,7 @@ if ($shown_page <= 0)
     <meta name="author" content="">
 
     <title>
-        Admin Page
+        Admin Page id <?php echo $id;?>
     </title>
 
     <!-- Bootstrap Core CSS -->
@@ -77,6 +92,7 @@ if ($shown_page <= 0)
     <script src="js/admin-page.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
 
 </head>
 
@@ -189,110 +205,6 @@ if ($shown_page <= 0)
             <!-- End List User -->
 
 
-            <!-- Modal Edit User Detail -->
-            <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                            <h4 class="modal-title custom_align Heading" >Edit User Detail</h4>
-                        </div>
-                        <form  class="form-horizontal">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>ID: </label>
-                                    <input class="form-control userID" type="text" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label>UserName: </label>
-                                    <input class="form-control userName" type="text" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email: </label>
-                                    <input class="form-control userEmail" type="text" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Name: </label>
-                                    <input class="form-control name" type="text">
-                                </div>
-                            </div>
-                            <div class="modal-footer ">
-                                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate"
-                                        data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Update
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- End Modal Edit User Detail -->
-
-
-            <!-- Modal Add User Detail -->
-            <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                            <h4 class="modal-title custom_align Heading" >New User</h4>
-                        </div>
-                        <form  class="form-horizontal">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>UserName: </label>
-                                    <input class="form-control userName" type="text" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password: </label>
-                                    <input class="form-control userPassword" type="password" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email: </label>
-                                    <input class="form-control userEmail" type="email"
-                                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Name: </label>
-                                    <input class="form-control name" type="text">
-                                </div>
-                            </div>
-                            <div class="modal-footer ">
-                                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd"
-                                        data-dismiss="modal"><span class="glyphicon glyphicon-plus-sign"></span> Add
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- End Modal Add User Detail -->
-
-
-            <!-- Modal Delete user-->
-            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                            <h4 class="modal-title custom_align Heading" >Delete this entry</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
-                        </div>
-                        <div class="modal-footer ">
-                            <button type="button" class="btn btn-success" id="btnDelete" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal Delete user-->
-
-
             <!-- /.modal-content -->
             <!----Code------end----------------------------------->
         </div>
@@ -301,6 +213,112 @@ if ($shown_page <= 0)
 
     </div>
 </main>
+
+
+<!-- Modal Edit User Detail -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading" >Edit User Detail</h4>
+            </div>
+            <form  class="form-horizontal">
+                <div class="modal-body">
+                    <p class="error-msg"></p>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>ID: </label>
+                        <input class="form-control userID" type="text" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>UserName: </label>
+                        <input class="form-control userName" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Email: </label>
+                        <input class="form-control userEmail" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Name: </label>
+                        <input class="form-control name" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate"
+                            ><span class="glyphicon glyphicon-ok-sign"></span> Update
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End Modal Edit User Detail -->
+
+
+<!-- Modal Add User Detail -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading" >New User</h4>
+            </div>
+            <form  class="form-horizontal">
+                <div class="modal-body">
+                    <p class="error-msg"></p>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>UserName: </label>
+                        <input class="form-control userName" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Password: </label>
+                        <input class="form-control userPassword" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Email: </label>
+                        <input class="form-control userEmail" type="email"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Name: </label>
+                        <input class="form-control name" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd"
+                            ><span class="glyphicon glyphicon-plus-sign"></span> Add
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End Modal Add User Detail -->
+
+
+<!-- Modal Delete user-->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading" >Delete this entry</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="btnDelete" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Delete user-->
 
 </body>
 

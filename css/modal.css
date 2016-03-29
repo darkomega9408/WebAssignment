@@ -5,3 +5,7 @@
 .modal .modal-header{
     font-weight: bolder;
 }
+
+.modal .error-msg{
+    color:red;
+}
