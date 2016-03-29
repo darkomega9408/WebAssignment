@@ -66,7 +66,7 @@ $(document).ready(function(){
         else
             $("#btnAddMember").hide();
         createTree(data);
-        //search(data);
+        search(data);
     }).fail(function (err) {
         console.log(err);
         console.log("Create tree failed");
@@ -482,9 +482,9 @@ $(document).ready(function(){
             maxItems: 1,
             scrollDuration: 1000,
             selectOnTab: 'true',
-            valueField: 'MemberID',
-            labelField: 'Name',
-            searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+            valueField: 'memberID',
+            labelField: 'name',
+            searchField: ['name', "gender", 'adress', 'birthDate', 'birthPlace'],
             options: data,
             onChange: function(value){
                 $('.membercard').removeClass('border-effect');
