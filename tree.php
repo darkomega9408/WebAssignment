@@ -16,13 +16,15 @@
     <link href="css/border-effect.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
 
-
     <script src="js/bootstrap.min.js"></script>
     <script src="js/membercard.js"></script>
     <script src="js/authrestful.js" type="text/javascript"></script>
+
     <script src="js/tree.js"></script>
+
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
+
 
 </head>
 <body>
@@ -72,7 +74,7 @@
                                                       value="October 29, 1994" required></div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Address: </label>
+                        <button onclick="loadGoogleMapAPI()" data-toggle="modal" data-target="#modal-map" type="button" class="col-sm-2 btn btn-default"><label>Address: </label></button>
                         <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
                                                       value="Too long, lazy to type" required></div>
                     </div>
@@ -248,6 +250,26 @@
 <!-- ~~ Modal Uploading --></div>
 
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
+
+<!-- Modal Map  -->
+<div id="modal-map" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Map</h4>
+            </div>
+            <div class="modal-body">
+                <div id="map" style="width:100%; height:50em"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ~~ Modal Map -->
 
 <!--<div class="modal-wrapper">
 

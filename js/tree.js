@@ -1,3 +1,54 @@
+var map;
+var geocoder;
+var address = "1083 Lạc Long Quân, phường 11, Tân Bình, Hồ Chí Minh";
+function loadGoogleMapAPI()
+{
+    address = $(".memberModalAddress").val();
+    var script = document.createElement("script");
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAZbQ6_Knt-SazBiokwXG0QQhLUiv-21Yg&callback=initMap";
+    script.type = "text/javascript";
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+        zoom: 16,
+        center: latlng
+    }
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+}
+function initMap() {
+    initialize();
+    geocoder.geocode({'address': address}, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        } else {
+            alert("Geocode was not successful for the following reason: " + status);
+        }
+    });
+}
+
+/*    var myLatLng = {lat: 10.7889289, lng: 106.6517366};
+
+    // Create a map object and specify the DOM element for display.
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: myLatLng,
+        scrollwheel: true,
+        zoom: 17
+    });
+
+    // Create a marker and set its position.
+    var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: 'Hello World!'
+    });*/
+
 $(document).ready(function(){
 
     // Some variables
@@ -82,7 +133,7 @@ $(document).ready(function(){
         if( data.avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.avatar);
         memberCard.find('.memberName').html(data.name);
-        memberCard.find('.memberBirthDate').html(data.birthDate);
+        memberCard.find('.memberBirthDate').html(data.birthDate.substring(0, 10));
         memberCard.find('.memberBirthPlace').html(data.birthPlace);
 
         // Store all data
@@ -158,6 +209,11 @@ $(document).ready(function(){
      * @Type : Modal event listener
      * @Author: TÂM
      */
+    $('#modal-map').on('shown.bs.modal', function(){
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
+    });
     $('.modal').on('show.bs.modal', function (e) {
         // Get memberID of current shown member
         try {
@@ -166,7 +222,7 @@ $(document).ready(function(){
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
-            if ($(this).attr("id") != "modal-upload-avatar" && $(this).attr("id") != "modal-uploading")
+            if ($(this).attr("id") == "modal-add-user")
                 currMemberID = 0;
             var $trigger = $(e.relatedTarget);
             var modalFather = $trigger.parents().eq(4);
@@ -197,7 +253,7 @@ $(document).ready(function(){
         $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.avatar);
         $("#modal-edit-user .memberModalName").attr("value", memberinfo.name);
         $("#modal-edit-user .memberModalGender").val(memberinfo.gender);
-        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate);
+        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate.substring(0, 10));
         $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
         $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
     });
