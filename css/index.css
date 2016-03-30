@@ -13,7 +13,7 @@
             justify-content: center;
         }
         #index_content {
-            width:30%;
+            width:50%;
         }
         .well {
             background-color:rgba(0,0,0,0.4);
@@ -57,3 +57,13 @@
 		.row {
 			margin: 0;
 		}
+
+        .modal-content .form-group input{
+            background-color: white;
+            color : black;
+        }
+
+        .requiredField{
+            color:red;
+            margin: 0 1px;
+        }

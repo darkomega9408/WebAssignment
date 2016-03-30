@@ -11,17 +11,17 @@
     <script src="js/index.js" type="text/javascript"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
-
+    <link rel="stylesheet" type="text/css" href="css/modal.css">
 	<link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
     <div class="container-fluid">
         <div class="jumbotron flexcenter">
             <div id="index_content" class="text-center">
-                <h1>Gia Phả Web</h1>
-                <p>Chết là hết</p>
-                <div class="well">
-                    <form id="formLogin" role="form" method="post" action="">
+                <h1>GENEALOGY WEBSITE</h1>
+                <p>Connect Generations</p>
+                <div class="login-form">
+                    <form role="form" method="post" action="" id="formLogin">
                         <div class="form-group">
                             <input type="text"
                                    class="form-control input-lg"
@@ -39,23 +39,18 @@
                         <div class="form-group">
                             <button type="submit"
                                     class="btn btn-primary form-control input-lg">
-                                Login
+                                LOGIN
                             </button>
                         </div>
-<!--                        --><?php
-/*                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                                $username = $_POST["username"];
-                                $password = $_POST["password"];
-                                $conn = new PDO("mysql:host=localhost;dbname=webassignment", "root", "", array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-                                $numRows = $conn->query("SELECT count(*) FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetchColumn();
-                                if ($numRows == 0) {
-                                    echo "Incorrect username or password";
-                                }
-                                else if ($numRows == 1) {
-                                    header("Location: tree.php");
-                                }
-                            }
-                        */?>
+
+<!--           SIGN UP BUTTON             -->
+                        <hr><p>OR</p>
+                        <div class="form-group">
+                            <button type="button" id="btnSignUp"
+                                    class="btn btn-danger form-control input-lg" data-title="Sign Up" data-toggle="modal" data-target="#signUp">
+                                SIGN UP
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -141,11 +136,62 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="col-sm-5">
-                <span class="glyphicon glyphicon-signal logo_large"></span>
-            </div>
+        </div>
+        <div class="col-sm-5">
+            <span class="glyphicon glyphicon-signal logo_large"></span>
         </div>
     </div>
+</div>
+
+
+<!-- Modal Add User Detail -->
+<div class="modal fade" id="signUp" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading" >Sign Up Form</h4>
+            </div>
+
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <p class="error-msg"></p>
+                    <div class="form-group">
+                        <label> <span class="requiredField">*</span>UserName: </label>
+                        <input class="form-control userName" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Password: </label>
+                        <input class="form-control userPassword" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Re-enter Password: </label>
+                        <input class="form-control userRePassword" type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label><span class="requiredField">*</span>Email: </label>
+                        <input class="form-control userEmail" type="email"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name: </label>
+                        <input class="form-control name" type="text">
+                    </div>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" id="modal-sign-up-btn" class="btn btn-warning btn-lg" style="width: 100%;">
+                        <span class="glyphicon glyphicon-ok-circle"></span> Submit
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- End Modal Add User Detail -->
+
+
 </body>
 </html>

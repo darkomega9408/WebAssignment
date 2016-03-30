@@ -62,6 +62,17 @@ $(document).ready(function(){
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+
+        // Change role & append new caret
+        var authStr = atob(getCookie("giaphaauth"));
+        var userName = authStr.split(":")[0];
+        $("#navbar-user-name").prepend("Hi, "+ userName);
+
+        // Expire token until ...
+        $(document).on('click', 'a[href="#exit"]', function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            window.location = '/';
+        })
     });
     // ~~
 
@@ -82,18 +93,16 @@ $(document).ready(function(){
 /*    $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
-        dataType: "json",
-        data: {
-            role: "user",
-            UserID : 2
-        }
+        dataType: "json"
     }).done(function(data){
-		if (data.length == 0)
-			$("#btnAddMember").show();
-		else
-			$("#btnAddMember").hide();
+        if (data.length == 0)
+            $("#btnAddMember").show();
+        else
+            $("#btnAddMember").hide();
+
+        // Tree
         createTree(data);
-		search(data);
+        search(data);
     }).fail(function (err) {
         console.log(err);
         console.log("Create tree failed");
@@ -122,7 +131,6 @@ $(document).ready(function(){
         console.log(err);
         console.log("Create tree failed");
     });
-
     // ~~
 
 
@@ -130,6 +138,19 @@ $(document).ready(function(){
     function setInfoForMember(data) {
         var memberCard = $("#"+member + data.memberID);
         // Set avatar if any or leave default
+
+        if(data.Alive == 0){
+            console.log(data);
+            memberCard.css('background-image','url(images/watermark.png)');
+            memberCard.css('background-repeat','no-repeat');
+        }
+        else{
+            memberCard.css('background-image','');
+            memberCard.css('background-repeat','no-repeat');
+        }
+
+        // Set default avatar
+        console.log(data.avatar);
         if( data.avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.avatar);
         memberCard.find('.memberName').html(data.name);
@@ -138,6 +159,7 @@ $(document).ready(function(){
 
         // Store all data
         memberCard.data("memberinfo", data);
+        console.log(memberCard.data("memberinfo"));
     }
     // ~~
 
@@ -184,7 +206,7 @@ $(document).ready(function(){
             $('#' + member + data.father + '+ul').append(content);
 
         setInfoForMember(data);
-    };
+    }
     // ~~
 
 
@@ -198,22 +220,25 @@ $(document).ready(function(){
         if( node.parent().contents().length <= 1 )
             node.parent().remove();
         else node.remove();
-		if ($(".tree").has(".membercard").length == 0)
-			$("#btnAddMember").show();
-    };
+        if ($(".tree").has(".membercard").length == 0)
+            $("#btnAddMember").show();
+    }
     // ~~
 
+
+    // Set map modal
+    $('#modal-map').on('shown.bs.modal', function(){
+        var center = map.getCenter();
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter(center);
+    });
+    // ~~
 
     /**
      * Set info for EDIT modal when opening
      * @Type : Modal event listener
      * @Author: TÂM
      */
-    $('#modal-map').on('shown.bs.modal', function(){
-        var center = map.getCenter();
-        google.maps.event.trigger(map, 'resize');
-        map.setCenter(center);
-    });
     $('.modal').on('show.bs.modal', function (e) {
         // Get memberID of current shown member
         try {
@@ -232,7 +257,7 @@ $(document).ready(function(){
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 0);
             }
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
-			return;
+            return;
         }
 
 
@@ -249,6 +274,7 @@ $(document).ready(function(){
 
         // Assign some basic info to modal before display to user
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
+
         $("#modal-edit-user .modal-title").html(memberinfo.name + " Information");
         $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.avatar);
         $("#modal-edit-user .memberModalName").attr("value", memberinfo.name);
@@ -276,7 +302,7 @@ $(document).ready(function(){
             }
         }).done(function (data) {
             console.log("Delete member successfully");
-            deleteMember();			
+            deleteMember();
         }).fail(function () {
             console.log("Failed to delete member");
         });*/
@@ -309,21 +335,30 @@ $(document).ready(function(){
 
     // Add new relative
     $('#btnAdd').click(function () {
+        // Validate
+        var name = $("#modal-add-user .memberModalName").val();
+        var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
+        if( name == "" || birthPlace == "" ){
+            $("#modal-add-user .error-msg").html("Some fields are invalid. Please try again!");
+            return;
+        }
+        else $("#modal-add-user .error-msg").html();
+
         var sentData = {
             userID: 2,
             name: $("#modal-add-user .memberModalName").val(),
             birthDate : $("#modal-add-user .memberModalBirthDate").val(),
             birthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
             gender : $("#modal-add-user .memberModalGender").val(),
-            avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
-            alive : 1,
+            avatar : $("#modal-add-user .memberModalAvatar").attr("src")==""?"images/avatar-default.png":$("#modal-add-user .memberModalAvatar").attr("src"),
+            alive : $("#modal-add-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             address : $("#modal-add-user .memberModalAddress").val(),
             father : currMemberID
         };
 
 /*        $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 role: "user",
                 operation: "add",
@@ -331,9 +366,10 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
-			if (currMemberID == 0)
-				window.location.reload();
-			$(".tree").width( ($(".tree").width() + 30) + "em" );
+            if (currMemberID == 0)
+                window.location.reload();
+            $("#modal-add-user").modal('hide');
+            $(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data[0]);
             console.log(data[0].memberID);
         }).fail(function () {
@@ -370,6 +406,15 @@ $(document).ready(function(){
 
     // Update member info
     $('#btnUpdate').click(function () {
+        // Validate
+        var name = $("#modal-edit-user .memberModalName").val();
+        var birthPlace = $("#modal-edit-user .memberModalBirthPlace").val();
+        if( name == "" || birthPlace == "" ){
+            $("#modal-edit-user .error-msg").html("Some fields are invalid. Please try again!");
+            return;
+        }
+        else $("#modal-edit-user .error-msg").html();
+
         var sentData = {
 /*            UserID: 2,
             MemberID: currMemberID,
@@ -378,11 +423,10 @@ $(document).ready(function(){
             BirthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
             Gender : $("#modal-edit-user .memberModalGender").val(),
             Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val(),
-            Address : $("#modal-edit-user .memberModalAddress").val()*/
 
-            //,
-            //Father : currMemberID
+            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+            Address : $("#modal-edit-user .memberModalAddress").val()
+            */
             userID: 2,
             memberID: currMemberID,
             name: $("#modal-edit-user .memberModalName").val(),
@@ -390,13 +434,13 @@ $(document).ready(function(){
             birthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
             gender : $("#modal-edit-user .memberModalGender").val(),
             avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-            alive : 1,
+            alive : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             address : $("#modal-edit-user .memberModalAddress").val()
         };
 
 /*        $.ajax({
             url: 'php-controller/ServerHandler.php',
-            type: 'GET',
+            type: 'POST',
             data: {
                 role: "user",
                 operation: "update",
@@ -426,6 +470,7 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+            $("#modal-edit-user").modal('hide');
             setInfoForMember(data);
             console.log(data.memberID);
         }).fail(function () {
@@ -463,7 +508,7 @@ $(document).ready(function(){
             })
         }
         reader.readAsDataURL(file);
-    })
+    });
 
     var clientId = "ae6e3c4095f9247";
 
@@ -483,12 +528,12 @@ $(document).ready(function(){
                 contentType: "application/json",
                 data: JSON.stringify({
                     sentData: {
-                        avatar : data.data.link,
-                        memberID : memberUploadAvatarId
+                        avatar: data.data.link,
+                        memberID: memberUploadAvatarId
                     }
                 }),
                 dataType: 'json',
-                beforeSend: function(request) {
+                beforeSend: function (request) {
                     var authstring = getCookie("giaphaauth");
                     if (authstring != "")
                         request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -504,7 +549,6 @@ $(document).ready(function(){
                 console.log("Failed to upload avatar !")
             });
         }
-
     }
 
 
@@ -526,13 +570,14 @@ $(document).ready(function(){
                 xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
             }
         });
-    })
+    });
 
     // ~~~
 
 
     // Search function for navbar
     function search(data) {
+        var dropdown = true;
         var search, $search;
         $search = $('#search').selectize({
             maxItems: 1,
@@ -547,6 +592,22 @@ $(document).ready(function(){
                 $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
                 $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
                 $('#mem' + value).addClass('border-effect');
+            },
+            onDropdownOpen: function($dropdown){
+
+            },
+            onBlur: function(){
+                $('.selectize-input input').val(text);
+            },
+            onType: function(str){
+                console.log(str);
+                text = str;
+                $('.membercard').removeClass('border-effect');
+                if(str){
+                    $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                        $('#mem' + $(this).attr('data-value')).addClass('border-effect');
+                    });
+                }
             },
             render: {
                 item: function(item, escape) {
@@ -564,4 +625,4 @@ $(document).ready(function(){
     }
     // ~~
 
-});
+})
