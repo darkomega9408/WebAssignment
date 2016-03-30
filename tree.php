@@ -177,7 +177,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnAdd" data-dismiss="modal"><span
+                    <button type="button" class="btn btn-success" id="btnAdd"><span
                             class="glyphicon glyphicon-plus"></span> Add
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><span
@@ -232,7 +232,7 @@
             </div>
             <div class="modal-body">
                 <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
-                     src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
+                     src="images/avatar-default.png"
                      alt="New Avatar">
                 <div class="row" style="margin-top:2em">
                     <div class="col-md-4"></div>

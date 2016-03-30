@@ -282,9 +282,9 @@ $(document).ready(function(){
         $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate.substring(0, 10));
         $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
         $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
-        if( memberinfo )
-            $("#edit-radio-dead").attr("checked", true);
-        else $("#edit-radio-alive").attr("checked", true);
+        if( memberinfo.alive )
+            $("#edit-radio-alive").attr("checked", true);
+        else $("#edit-radio-dead").attr("checked", true);
     });
     // ~~
 
@@ -400,6 +400,7 @@ $(document).ready(function(){
             $(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data);
             console.log(data.memberID);
+            $("#modal-add-user").modal('hide');
         }).fail(function () {
             console.log("Failed to add new member!")
         });
