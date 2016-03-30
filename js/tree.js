@@ -250,7 +250,7 @@ $(document).ready(function(){
             if ($(this).attr("id") == "modal-add-user")
                 currMemberID = 0;
             var $trigger = $(e.relatedTarget);
-            var modalFather = $trigger.parents().eq(4);
+            var modalFather = $trigger.parents().eq(5);
             if (modalFather.attr("id") == "modal-add-user")
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
             else {
