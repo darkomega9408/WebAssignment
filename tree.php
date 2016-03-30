@@ -37,6 +37,7 @@ else {
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/render/html2canvas.js"></script>
 
 </head>
 <body>
@@ -276,8 +277,21 @@ else {
 </div>
 <!-- ~~ Modal Uploading -->
 
-<button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
-
+<!-- <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button> -->
+<script type="text/javascript">
+    function clone(){
+      $('header').hide();
+      $('#clone').hide();
+      $('[data-toggle="tooltip"]').hide();
+      html2canvas(document.body).then(function(canvas) {
+          document.body.appendChild(canvas);
+      });
+      $('#clone').show();
+      $('header').show();
+      $('[data-toggle="tooltip"]').show();
+    }
+</script>
+<button id = "clone" onclick="clone()" style="z-index:1000"  type="button" class="btn btn-success center-block">Add Member</button>
 <!--<div class="modal-wrapper">
 
 </div>-->
