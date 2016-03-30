@@ -94,10 +94,10 @@ public class ConnectToSQL {
             String SQL;
             if (newMember.getFather() == 0) {
                 System.out.println("No father");
-                SQL = "INSERT INTO member (UserID, MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive) VALUES (" + newMember.getUserID() + ", NULL, '" + newMember.getName() + "', '" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMember.getBirthDate()) + "', '" + newMember.getAddress() + "', '" + newMember.getBirthPlace() + "', '" + newMember.getGender() + "', NULL, '" + newMember.getAvatar() + "', " + newMember.isAlive() + ")";
+                SQL = "INSERT INTO member (UserID, MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive) VALUES (" + newMember.getUserID() + ", NULL, '" + newMember.getName() + "', '" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMember.getBirthDate()) + "', '" + newMember.getAddress() + "', '" + newMember.getBirthPlace() + "', '" + newMember.getGender() + "', NULL, '" + newMember.getAvatar() + "', " + (newMember.isAlive()?1:0) + ")";
             } else {
                 System.out.println("Has father");
-                SQL = "INSERT INTO member (UserID, MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive) VALUES (" + newMember.getUserID() + ", NULL, '" + newMember.getName() + "', '" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMember.getBirthDate()) + "', '" + newMember.getAddress() + "', '" + newMember.getBirthPlace() + "', '" + newMember.getGender() + "'," + newMember.getFather() + ", '" + newMember.getAvatar() + "', " + newMember.isAlive() + ")";
+                SQL = "INSERT INTO member (UserID, MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive) VALUES (" + newMember.getUserID() + ", NULL, '" + newMember.getName() + "', '" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMember.getBirthDate()) + "', '" + newMember.getAddress() + "', '" + newMember.getBirthPlace() + "', '" + newMember.getGender() + "'," + newMember.getFather() + ", '" + newMember.getAvatar() + "', " + (newMember.isAlive()?1:0) + ")";
                 System.out.println(SQL);
             }
             Statement stmt = this.dbConnection.createStatement();
@@ -125,8 +125,8 @@ public class ConnectToSQL {
 
     public Member updateMember(Member newMemberInfo) {
         try {
-            String SQL = "UPDATE member SET Name='" + newMemberInfo.getName() + "',BirthDate='" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMemberInfo.getBirthDate()) + "',Address='" + newMemberInfo.getAddress() + "',BirthPlace='" + newMemberInfo.getBirthPlace() + "',Gender='" + newMemberInfo.getGender() + /*",Father=". $data['dsa'] .",Level=". $data['dsa'] .*/ "',Avatar='" + newMemberInfo.getAvatar() + "' WHERE userID=" + newMemberInfo.getUserID() + " AND MemberID=" + newMemberInfo.getMemberID();
-
+            String SQL = "UPDATE member SET Name='" + newMemberInfo.getName() + "',BirthDate='" + (new SimpleDateFormat("yyyy-MM-dd")).format(newMemberInfo.getBirthDate()) + "',Address='" + newMemberInfo.getAddress() + "',BirthPlace='" + newMemberInfo.getBirthPlace() + "',Gender='" + newMemberInfo.getGender() + "',Alive="+ (newMemberInfo.isAlive()?1:0)+ /*",Father=". $data['dsa'] .",Level=". $data['dsa'] .*/ ",Avatar='" + newMemberInfo.getAvatar() + "' WHERE userID=" + newMemberInfo.getUserID() + " AND MemberID=" + newMemberInfo.getMemberID();
+            System.out.println(SQL);    
             Statement stmt = this.dbConnection.createStatement();
             int resultInsert = stmt.executeUpdate(SQL);
 

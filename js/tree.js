@@ -139,7 +139,7 @@ $(document).ready(function(){
         var memberCard = $("#"+member + data.memberID);
         // Set avatar if any or leave default
 
-        if(data.Alive == 0){
+        if(data.alive == 0){
             console.log(data);
             memberCard.css('background-image','url(images/watermark.png)');
             memberCard.css('background-repeat','no-repeat');
@@ -282,6 +282,9 @@ $(document).ready(function(){
         $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate.substring(0, 10));
         $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
         $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
+        if( memberinfo )
+            $("#edit-radio-dead").attr("checked", true);
+        else $("#edit-radio-alive").attr("checked", true);
     });
     // ~~
 
