@@ -282,9 +282,11 @@ $(document).ready(function(){
         $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate.substring(0, 10));
         $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
         $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
-        if( memberinfo )
-            $("#edit-radio-dead").attr("checked", true);
-        else $("#edit-radio-alive").attr("checked", true);
+		if (memberinfo.alive == true)
+			$("input[name='radioStatus'][value='Alive']").attr("checked", true);
+		else {
+			$("input[name='radioStatus'][value='Dead']").attr("checked", true);
+		}
     });
     // ~~
 
