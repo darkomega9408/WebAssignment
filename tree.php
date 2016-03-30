@@ -177,7 +177,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnAdd"><span
+                    <button type="button" class="btn btn-success" id="btnAdd" data-dismiss="modal"><span
                             class="glyphicon glyphicon-plus"></span> Add
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><span
@@ -243,7 +243,7 @@
                 </div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-success" id="btnUploadAvatar" ><span
+                <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
                         class="glyphicon glyphicon-ok-sign"></span> Upload
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span
