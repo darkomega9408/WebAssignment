@@ -37,6 +37,7 @@ else {
     <script src="js/tree.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/render/html2canvas.js"></script>
 
 </head>
 <body>
@@ -277,6 +278,33 @@ else {
 <!-- ~~ Modal Uploading -->
 
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
+<script type="text/javascript">
+    function clone(){
+      $('header').hide();
+      $('#clone').hide();
+      $('[data-toggle="tooltip"]').hide();
+      html2canvas(document.body, {
+        onrendered: function(canvas) {
+          var a = document.createElement('a');
+          // document.body.appendChild(canvas);
+          // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+          a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+          a.download = 'somefilename.jpg';
+          a.click();
+
+        },
+        useCORS: true,
+        background: 'white'
+      });
+      $('#clone').show();
+      $('header').show();
+      $('[data-toggle="tooltip"]').show();
+    }
+</script>
+<input style="position:fixed; z-index:10000;" id = "clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+
+
+
 
 <!--<div class="modal-wrapper">
 

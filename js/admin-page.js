@@ -19,7 +19,6 @@ $(document).ready(function () {
             AdminId: 1
         }
     }).done(function(data){
-        console.log(data);
         createTable(data);
         search(data);
     }).fail(function () {
@@ -40,10 +39,10 @@ $(document).ready(function () {
             searchField: ['Username', "Name", 'Email'],
             options: data,
             onDropdownOpen: function($dropdown){
-                $dropdown.css('visibility','hidden');
+                // $dropdown.css('visibility','hidden');
             },
             onBlur: function(){
-                $('.selectize-input input').val(text);
+                // $('.selectize-input input').val(text);
 
             },
             onChange: function(value){
@@ -93,6 +92,7 @@ $(document).ready(function () {
     // Create table
     function createTable(data) {
         $.each(data, function (index, val) {
+            console.log(val);
             addUser($("#mytable tbody"), val)
         });
         //console.log(data);
@@ -132,7 +132,7 @@ $(document).ready(function () {
 
     // Add member
     function addUser(root,data) {
-        root.append("<tr id='"+user+data.id+"'> " +
+        root.append("<tr id='" + user + data.ID+ "'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
             "<td>" + data.ID + "</td> " +
             "<td>" + data.Username + "</td> " +
