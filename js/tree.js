@@ -402,6 +402,7 @@ $(document).ready(function(){
             $(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data);
             console.log(data.memberID);
+            $("#modal-add-user").modal('hide');
         }).fail(function () {
             console.log("Failed to add new member!")
         });

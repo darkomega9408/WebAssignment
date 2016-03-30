@@ -67,6 +67,7 @@
     transition: opacity 0.45s;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    height: 7em;
 }
 
 .effect-winston figcaption::before {
