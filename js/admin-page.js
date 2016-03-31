@@ -57,6 +57,7 @@ $(document).ready(function () {
                 console.log("Search On Blur");
             },
             onChange: function(value){
+                $('#mytable tbody tr').css('display','');
                 try {
                     var ele = document.getElementById("user" + value);
                     ele.className = ("border-effect1");
