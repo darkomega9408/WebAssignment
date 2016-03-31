@@ -36,7 +36,6 @@ $(document).ready(function () {
                 document.location.href = "index.php";
         }
     }).done(function(data){
-        //console.log(data);
         createTable(data);
         search(data);
     }).fail(function () {
@@ -109,6 +108,7 @@ $(document).ready(function () {
      */
     function createTable(data) {
         $.each(data, function (index, val) {
+            console.log(val);
             addUser($("#mytable tbody"), val)
         });
     }
@@ -121,7 +121,7 @@ $(document).ready(function () {
      * @param data
      */
     function addUser(root,data) {
-        root.append("<tr id='"+user+data.id+"'> " +
+        root.append("<tr id='" + user + data.ID+ "'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
             "<td>" + data.id + "</td> " +
             "<td>" + data.username + "</td> " +
