@@ -283,19 +283,18 @@ else {
       $('header').hide();
       $('#clone').hide();
       $('[data-toggle="tooltip"]').hide();
+      $('.membercard img').css('border','0px solid white');
       html2canvas(document.body, {
         onrendered: function(canvas) {
           var a = document.createElement('a');
-          // document.body.appendChild(canvas);
-          // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
           a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
           a.download = 'somefilename.jpg';
           a.click();
-
         },
         useCORS: true,
         background: 'white'
       });
+      $('.membercard img').css('border','');
       $('#clone').show();
       $('header').show();
       $('[data-toggle="tooltip"]').show();

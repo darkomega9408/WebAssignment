@@ -28,6 +28,10 @@
     border:5px solid blue;
 }
 
+.img {
+    border:1px solid;
+}
+
 .info{
     width: 170px;
 }
