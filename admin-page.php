@@ -33,6 +33,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
 
     <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/border-effect.css"/>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>

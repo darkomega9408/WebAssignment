@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     if (getCookie("giaphaauth") != "")
         document.location.href = "tree.php";
 

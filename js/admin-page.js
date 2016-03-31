@@ -51,33 +51,38 @@ $(document).ready(function () {
             searchField: ['username', "name", 'email'],
             options: data,
             onDropdownOpen: function($dropdown){
-                $dropdown.css('visibility','hidden');
+                $(".border-effect1").removeClass("border-effect1");
             },
             onBlur: function(){
-                $('.selectize-input input').val(text);
-
+                console.log("Search On Blur");
             },
             onChange: function(value){
-              $('#mytable tbody tr').css('display','none');
-              $('#mem' + value).addClass('border-effect');
-              $('#user' + value).css('display','');
+                try {
+                    var ele = document.getElementById("user" + value);
+                    ele.className = ("border-effect1");
+                    ele.scrollIntoView({block: "start", behavior: "instant"});
+                    console.log("Search On Change " + value);
+                }catch(err){
+                    $('#mytable tbody tr').css('display','');
+                }
             },
             onType: function(str){
-              text = str;
-              if(str){
-                $('#mytable tbody tr').css('display','none');
-                $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
-                  $('#user' + $(this).attr('data-value')).css('display','');
-                });
-              }
+                if(str){
+                    $('#mytable tbody tr').css('display','none');
+                    $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                        $('#user' + $(this).attr('data-value')).css('display','');
+                    });
+                }
+                else
+                    $('#mytable tbody tr').css('display','');
+                console.log("Search On Type " + str);
             },
             render: {
                 item: function(item, escape) {
-                    console.log(item);
-                    return '<div><strong style="text-transform: capitalize">' + escape(item.name) + '</strong></div>';
+                    return '<div><strong>' + escape(item.username) + '</strong></div>';
                 },
                 option: function(item, escape) {
-                    return '<div data-id="' + escape(item.name) + '"><strong style="text-transform: capitalize">' + escape(item.name) +
+                    return '<div data-id="' + escape(item.id) + '"><strong>' + escape(item.username) +
                         '</strong><br><small style=" opacity:0.8;">' + escape(item.email) + '</small><br></div>';
                 }
             }
@@ -88,17 +93,17 @@ $(document).ready(function () {
 
     // Load table first
     /*$.ajax({
-        url: 'php-controller/ServerHandler.php',
-        type: 'GET',
-        data:{
-          role : "admin"
-        },
-        dataType: 'json'
-    }).done(function(data){
-        createTable(data);
-    }).fail(function () {
-        console.log("Create tree failed");
-    });*/
+     url: 'php-controller/ServerHandler.php',
+     type: 'GET',
+     data:{
+     role : "admin"
+     },
+     dataType: 'json'
+     }).done(function(data){
+     createTable(data);
+     }).fail(function () {
+     console.log("Create tree failed");
+     });*/
     // ~~
 
     // Create table
@@ -115,29 +120,29 @@ $(document).ready(function () {
     // ~~
 
     /*$(document).on("click", ".pagination>li>a" ,function (e) {
-        e.preventDefault();
-        var shownPage = $(this).html();
-        var pageTitle = $(this).attr("href");
-        console.log(pageTitle);
-        //location.hash = "page="+$(this).html();
-        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'GET',
-            data:{
-                role : "admin",
-                page : $(this).html()
-            },
-            dataType: 'json'
-        }).done(function(data){
-            createTable(data);
-            document.title = pageTitle;
-            window.history.pushState({"html":data,"pageTitle":pageTitle},pageTitle, pageTitle);
-        }).fail(function () {
-            console.log("Create tree failed");
-        });
+     e.preventDefault();
+     var shownPage = $(this).html();
+     var pageTitle = $(this).attr("href");
+     console.log(pageTitle);
+     //location.hash = "page="+$(this).html();
+     $.ajax({
+     url: 'php-controller/ServerHandler.php',
+     type: 'GET',
+     data:{
+     role : "admin",
+     page : $(this).html()
+     },
+     dataType: 'json'
+     }).done(function(data){
+     createTable(data);
+     document.title = pageTitle;
+     window.history.pushState({"html":data,"pageTitle":pageTitle},pageTitle, pageTitle);
+     }).fail(function () {
+     console.log("Create tree failed");
+     });
 
-        //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
-    });*/
+     //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
+     });*/
 
 
 
@@ -363,20 +368,20 @@ $(document).ready(function () {
 
         // Assign some basic info to modal before display to user
         /*try {
-            var userInfo = $("#" + user + currUserID).data(user);
-            //console.log("UserInfo: \n" + userInfo);
-            $("#edit .userID").val(userInfo.id);
-            $("#edit .userName").val(userInfo.username);
-            $("#edit .userEmail").val(userInfo.email);
-            $("#edit .name").val(userInfo.name);
-        }
-        catch(err) {*/
-            var userObj = $("#" + user + currUserID + " td");
-            //console.log("UserObj: \n" + userObj);
-            $("#edit .userID").val(userObj.eq(1).html());
-            $("#edit .userName").val(userObj.eq(2).html());
-            $("#edit .userEmail").val(userObj.eq(3).html());
-            $("#edit .name").val(userObj.eq(4).html());
+         var userInfo = $("#" + user + currUserID).data(user);
+         //console.log("UserInfo: \n" + userInfo);
+         $("#edit .userID").val(userInfo.id);
+         $("#edit .userName").val(userInfo.username);
+         $("#edit .userEmail").val(userInfo.email);
+         $("#edit .name").val(userInfo.name);
+         }
+         catch(err) {*/
+        var userObj = $("#" + user + currUserID + " td");
+        //console.log("UserObj: \n" + userObj);
+        $("#edit .userID").val(userObj.eq(1).html());
+        $("#edit .userName").val(userObj.eq(2).html());
+        $("#edit .userEmail").val(userObj.eq(3).html());
+        $("#edit .name").val(userObj.eq(4).html());
         //}
     });
     // ~~
