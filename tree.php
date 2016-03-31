@@ -50,7 +50,10 @@
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                            <img src="images/avatar-default.png" 
+							class="img-circle center-block img-responsive memberModalAvatar"
+							width="300px"
+							height="300px"
                                  alt="/*name*/">
                         </a>
                     </div>

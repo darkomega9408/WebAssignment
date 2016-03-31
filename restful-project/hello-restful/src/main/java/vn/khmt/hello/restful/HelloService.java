@@ -37,7 +37,9 @@ public class HelloService {
             String role = user.getRole();
             int userID = user.getId();
 
-            ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, "localhost", "webassignment", "root", "");
+            ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, "www.db4free.net", "webassignment", "nguyenthanhtam", "123456");
+                    //ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, ConnectToSQL.DBHOST, ConnectToSQL.DBNAME, ConnectToSQL.DBUSER, ConnectToSQL.DBPASS);
+
             GenericEntity genEntity;
             
             if( role.equals("admin") ){

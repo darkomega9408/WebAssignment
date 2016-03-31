@@ -110,7 +110,7 @@ $(document).ready(function(){
     });*/
 
     $.ajax({
-        url: 'http://localhost:8080/hello-restful/webservice/giapha/getmembers',
+        url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
         dataType: "json",
         beforeSend: function(request) {
@@ -137,8 +137,6 @@ $(document).ready(function(){
 
     // Change member info displayed based on DB
     function setInfoForMember(data) {
-        console.log("Curr ID " + currMemberID);
-        console.log("Mem id " + data.memberID);
         var memberCard = $("#"+member + data.memberID);
         // Set avatar if any or leave default
 
@@ -262,7 +260,7 @@ $(document).ready(function(){
             return;
         }
 
-        console.log("OPen modal ID " + currMemberID);
+
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
 			if (currMemberID == 0) {
@@ -276,7 +274,6 @@ $(document).ready(function(){
 
         // Assign some basic info to modal before display to user
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
-        console.log(memberinfo);
 
         $("#modal-edit-user .modal-title").html(memberinfo.name + " Information");
         $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.avatar);
@@ -314,7 +311,7 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/deletemember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/deletemember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -341,7 +338,7 @@ $(document).ready(function(){
 
     // Add new relative
     $('#btnAdd').click(function () {
-
+        // Validate
         var name = $("#modal-add-user .memberModalName").val();
         var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
         var birthDate = $("#modal-add-user .memberModalBirthDate").val();
@@ -386,7 +383,7 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/addmember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: 'application/json',
             dataType: "json",
@@ -471,7 +468,7 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/updatemember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/updatemember',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -584,7 +581,7 @@ $(document).ready(function(){
         }
         else {
             $.ajax({
-                url: 'http://localhost:8080/hello-restful/webservice/giapha/changeavatar',
+                url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/changeavatar',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({

@@ -26,6 +26,11 @@ public class ConnectToSQL {
     public static final String MYSQLDRIVER = "com.mysql.jdbc.Driver";
     public static final String POSTGRESQL = "postgresql";
     public static final String POSTGRESQLDRIVER = "org.postgresql.Driver";
+    
+        public static final String DBHOST = "https://www.db4free.net";
+    public static final String DBNAME = "webassignment";
+    public static final String DBUSER = "nguyenthanhtam";
+    public static final String DBPASS = "123456";
 
     Connection dbConnection = null;
 

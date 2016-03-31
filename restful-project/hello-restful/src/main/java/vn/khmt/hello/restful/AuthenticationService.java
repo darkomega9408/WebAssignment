@@ -44,7 +44,9 @@ public class AuthenticationService {
         }
         
         // Otherwise check as usual
-        ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, "localhost", "webassignment", "root", "");
+        ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, "www.db4free.net", "webassignment", "nguyenthanhtam", "123456");
+                //ConnectToSQL db = new ConnectToSQL(ConnectToSQL.MYSQL, ConnectToSQL.DBHOST, ConnectToSQL.DBNAME, ConnectToSQL.DBUSER, ConnectToSQL.DBPASS);
+
         User user = db.checkUser(userName, pwd);
         if (user != null)
             return user;
