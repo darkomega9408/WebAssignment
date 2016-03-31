@@ -5,10 +5,11 @@ $(document).ready(function(){
             type: "POST",
             url: "https://tamrestfultest.herokuapp.com/webservice/giapha/checkuser",
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 request.setRequestHeader("Authorization", "Basic " + authstring);
             }
         }).done(function(data) {
-
+			$('#modal-uploading').modal('hide');
             if (data.length != 0) {
                 console.log(data);
                 setCookie("giaphaauth", authstring, 1);
@@ -19,6 +20,7 @@ $(document).ready(function(){
             else
                 alert("failed");
         }).error(function(err) {
+			$('#modal-uploading').modal('hide');
             console.log(err);
         });
 	}
@@ -78,11 +80,13 @@ $(document).ready(function(){
             }),
             dataType: 'json',
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 // Special power => don't need to authenticate
                 var authstring = btoa("admin:admin");
                 request.setRequestHeader("Authorization", "Basic " + authstring);
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             $("#signUp").modal('hide');
             //alert("Sign up successfully. Now you can login and enjoy the rest !")
             console.log("Add new user successfully");
@@ -93,6 +97,7 @@ $(document).ready(function(){
             $('.login-form button[type="submit"]').trigger("click");
 
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to add new user!")
         });
     });

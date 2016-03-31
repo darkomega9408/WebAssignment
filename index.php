@@ -192,6 +192,20 @@
 </div>
 <!-- End Modal Add User Detail -->
 
+<!-- Modal Uploading  -->
+<div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
+                     width="100em"
+                     height="100em">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Uploading -->
 
 </body>
 </html>

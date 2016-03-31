@@ -23,6 +23,7 @@ $(document).ready(function () {
             adminId: 1
         }),
         beforeSend: function(request) {
+			$('#modal-uploading').modal('show');
             var authstring = getCookie("giaphaauth");
             if (authstring != "")
                 request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -30,9 +31,11 @@ $(document).ready(function () {
                 document.location.href = "index.php";
         }
     }).done(function(data){
+		$('#modal-uploading').modal('hide');
         createTable(data);
         search(data);
     }).fail(function () {
+		$('#modal-uploading').modal('hide');
         console.log("Load users failed");
     });
     // ~~
@@ -215,6 +218,7 @@ $(document).ready(function () {
                 }
             }),
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -222,10 +226,12 @@ $(document).ready(function () {
                     document.location.href = "index.php";
             }
         }).done(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Delete member successfully");
             deleteUser();
             $("#delete").modal('hide');
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to delete member");
         });
     });
@@ -267,6 +273,7 @@ $(document).ready(function () {
             }),
             dataType: 'json',
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -274,10 +281,12 @@ $(document).ready(function () {
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             addUser($("#mytable tbody"),data);
             $("#add").modal('hide');
             console.log("Add new user successfully");
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to add new user!")
         });
     });
@@ -315,6 +324,7 @@ $(document).ready(function () {
             }),
             dataType: 'json',
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -322,9 +332,11 @@ $(document).ready(function () {
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             updateUser(data);
             $("#edit").modal('hide');
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
     });

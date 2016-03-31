@@ -114,6 +114,7 @@ $(document).ready(function(){
         type: 'POST',
         dataType: "json",
         beforeSend: function(request) {
+			$('#modal-uploading').modal('show');
             var authstring = getCookie("giaphaauth");
             if (authstring != "")
                 request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -121,7 +122,7 @@ $(document).ready(function(){
                 document.location.href = "index.php";
         }
     }).done(function(data){
-
+$('#modal-uploading').modal('hide');
         if (data.length == 0)
             $("#btnAddMember").show();
         else
@@ -129,6 +130,7 @@ $(document).ready(function(){
         createTree(data);
         search(data);
     }).fail(function (err) {
+		$('#modal-uploading').modal('hide');
         console.log(err);
         console.log("Create tree failed");
     });
@@ -320,6 +322,7 @@ $(document).ready(function(){
                 }
             }),
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -327,9 +330,11 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             console.log("Delete member successfully");
             deleteMember();
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to delete member");
         });
     });
@@ -391,6 +396,7 @@ $(document).ready(function(){
                 sentData: sentData
             }),
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -398,6 +404,7 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             // If tree has only one child => do reload page
             if (currMemberID == 0)
                 window.location.reload();
@@ -410,6 +417,7 @@ $(document).ready(function(){
             $("#modal-add-user").modal('hide');
 
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to add new member!")
         });
     });
@@ -476,6 +484,7 @@ $(document).ready(function(){
             }),
             dataType: 'json',
             beforeSend: function(request) {
+				$('#modal-uploading').modal('show');
                 var authstring = getCookie("giaphaauth");
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
@@ -483,10 +492,12 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             // Hide 'edit' modal and update member info
             $("#modal-edit-user").modal('hide');
             setInfoForMember(data);
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
     });
@@ -562,6 +573,7 @@ $(document).ready(function(){
                 canvas.width = this.width;
                 canvas.height = this.height;
                 context.drawImage(this, 0, 0);
+				console.log("DATAURL: " + canvas.toDataURL());
                 imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
             })
         }
