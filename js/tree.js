@@ -109,7 +109,7 @@ $(document).ready(function(){
     });*/
 
     $.ajax({
-        url: 'http://localhost:8080/hello-restful/webservice/giapha/getmembers',
+        url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
         dataType: "json",
         beforeSend: function(request) {
@@ -313,7 +313,7 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/deletemember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/deletemember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -382,7 +382,7 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/addmember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: 'application/json',
             dataType: "json",
@@ -397,13 +397,15 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+			
             if (currMemberID == 0)
                 window.location.reload();
             $(".tree").width( ($(".tree").width() + 30) + "em" );
             addMember(data);
             console.log(data.memberID);
             $("#modal-add-user").modal('hide');
-        }).fail(function () {
+        }).fail(function (err) {
+			console.log(err);
             console.log("Failed to add new member!")
         });
     });
@@ -461,11 +463,11 @@ $(document).ready(function(){
         });*/
 
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/updatemember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/updatemember',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                sentData: sentData
+                'sentData': sentData
             }),
             dataType: 'json',
             beforeSend: function(request) {
@@ -529,7 +531,7 @@ $(document).ready(function(){
         }
         else {
             $.ajax({
-                url: 'http://localhost:8080/hello-restful/webservice/giapha/changeavatar',
+                url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/changeavatar',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({

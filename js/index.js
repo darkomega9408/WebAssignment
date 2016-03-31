@@ -1,18 +1,9 @@
 $(document).ready(function(){
-
-    if (getCookie("giaphaauth") != "")
-        document.location.href = "tree.php";
-
-    $("#formLogin").submit(function(event) {
-        event.preventDefault();
-
-        var username = $("#inputUsername").val();
-        var password = $("#inputPassword").val();
-        var authstring = btoa(username + ":" + password);
-
-        $.ajax({
+	
+	function checkUser(authstring) {
+		        $.ajax({
             type: "POST",
-            url: "http://localhost:8080/hello-restful/webservice/giapha/checkuser",
+            url: "https://tamrestfultest.herokuapp.com/webservice/giapha/checkuser",
             beforeSend: function(request) {
                 request.setRequestHeader("Authorization", "Basic " + authstring);
             }
@@ -21,8 +12,10 @@ $(document).ready(function(){
             if (data.length != 0) {
                 console.log(data);
                 setCookie("giaphaauth", authstring, 1);
-                if( data.role == "admin" )
-                    document.location.href = "admin-page.php";
+                if( data.role == "admin" ) {
+					alert("aaddmiinnn");
+					document.location.href = "admin-page.php";
+				}                   
                 else document.location.href = "tree.php";
             }
             else
@@ -30,6 +23,20 @@ $(document).ready(function(){
         }).error(function(err) {
             console.log(err);
         });
+	}
+	
+	if (getCookie("giaphaauth") != '') {
+		checkUser(getCookie("giaphaauth"));
+	}
+
+    $("#formLogin").submit(function(event) {
+        event.preventDefault();
+
+        var username = $("#inputUsername").val();
+        var password = $("#inputPassword").val();
+        var authstring = btoa(username + ":" + password);
+
+        checkUser(authstring);
     });
 
 
@@ -63,7 +70,7 @@ $(document).ready(function(){
         };
         console.log(sentData);
         $.ajax({
-            url: 'http://localhost:8080/hello-restful/webservice/giapha/addmember',
+            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
