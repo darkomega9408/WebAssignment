@@ -33,21 +33,6 @@ function initMap() {
     });
 }
 
-/*    var myLatLng = {lat: 10.7889289, lng: 106.6517366};
-
-    // Create a map object and specify the DOM element for display.
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatLng,
-        scrollwheel: true,
-        zoom: 17
-    });
-
-    // Create a marker and set its position.
-    var marker = new google.maps.Marker({
-        map: map,
-        position: myLatLng,
-        title: 'Hello World!'
-    });*/
 
 $(document).ready(function(){
 
@@ -56,9 +41,9 @@ $(document).ready(function(){
     var member = "mem";
     var currMemberID ;
 
-    //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
-
-    // Load header - navbar from file
+    /**
+     *  Load header - navbar from file
+     */
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
@@ -76,6 +61,9 @@ $(document).ready(function(){
     });
     // ~~
 
+    /**
+     * Log out
+     */
     $(document).on("click", "#hrefLogOut", function() {
         deleteCookie("giaphaauth");
         document.location.href = "index.php";
@@ -90,25 +78,9 @@ $(document).ready(function(){
     // ~~
 
 
-    // Load tree first
-/*    $.ajax({
-        url: 'php-controller/ServerHandler.php',
-        type: 'GET',
-        dataType: "json"
-    }).done(function(data){
-        if (data.length == 0)
-            $("#btnAddMember").show();
-        else
-            $("#btnAddMember").hide();
-
-        // Tree
-        createTree(data);
-        search(data);
-    }).fail(function (err) {
-        console.log(err);
-        console.log("Create tree failed");
-    });*/
-
+    /**
+     * Load tree
+     */
     $.ajax({
         url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
@@ -137,13 +109,15 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Change member info displayed based on DB
+    /**
+     * Change member info displayed based on DB
+     * @param data : member info stored as JSON
+     */
     function setInfoForMember(data) {
         var memberCard = $("#"+member + data.memberID);
         // Set avatar if any or leave default
 
         if(data.alive == 0){
-            console.log(data);
             memberCard.css('background-image','url(images/watermark.png)');
             memberCard.css('background-repeat','no-repeat');
         }
@@ -166,7 +140,12 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Set HTML layout for each member
+    /**
+     * Set HTML layout for each member
+     * @param data
+     * @param memberCardObj
+     * @returns {*|jQuery}
+     */
     var layoutMember = function (data, memberCardObj) {
         $(memberCardObj).find('.membercard').attr('id', member + data.memberID);
         return $(memberCardObj).html();
@@ -174,8 +153,10 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Use to create tree html
-    // data: server 's response , get from DB
+    /**
+     * Use to create tree html
+     * @param data: server 's response , get from DB
+     */
     var createTree = function (data) {
         var nbrNode = data.length;
 
@@ -198,7 +179,10 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Add member
+    /**
+     * Add member
+     * @param data data to be added
+     */
     function addMember(data) {
         var content = "<li>" + layoutMember(data, memberCardObj) + "</li>";
 
@@ -228,7 +212,9 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Set map modal
+    /**
+     * Set map modal
+     */
     $('#modal-map').on('shown.bs.modal', function(){
         var center = map.getCenter();
         google.maps.event.trigger(map, 'resize');
@@ -236,13 +222,14 @@ $('#modal-uploading').modal('hide');
     });
     // ~~
 
+
     /**
      * Set info for EDIT modal when opening
      * @Type : Modal event listener
      * @Author: TÂM
      */
     $('.modal').on('show.bs.modal', function (e) {
-        // Get memberID of current shown member
+        // Get memberID of current shown member : in EDIT modal
         try {
             var $trigger = $(e.relatedTarget);
             var $memberID = $trigger.parents().eq(3).attr('id');
@@ -265,12 +252,14 @@ $('#modal-uploading').modal('hide');
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
-			if (currMemberID == 0) {
+			if (currMemberID == 0)
 				$(".modal-title").html("New member");
-			}
-			else {
-            $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").name);
-			}
+			else $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").name);
+            return;
+        }
+            // Change title of UPLOAD AVATAR modal
+        else if(  $(this).attr("id") != "modal-upload-avatar"){
+            $("#modal-upload-avatar .modal-title").html("Change Avatar");
             return;
         }
 
@@ -291,26 +280,11 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Delete user triggered by btnDelete onclick()
+    /**
+     * Delete user triggered by btnDelete onclick()
+     */
     $('#btnDelete').click(function () {
         console.log("Delete");
-/*        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'GET',
-            data: {
-                role: "user",
-                operation: "delete",
-                sentData : {
-                    UserID : 2,
-                    MemberID: currMemberID
-                }
-            }
-        }).done(function (data) {
-            console.log("Delete member successfully");
-            deleteMember();
-        }).fail(function () {
-            console.log("Failed to delete member");
-        });*/
 
         $.ajax({
             url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/deletemember',
@@ -341,7 +315,10 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Add new relative
+
+    /**
+     * Add new relative
+     */
     $('#btnAdd').click(function () {
         // Validate
         var name = $("#modal-add-user .memberModalName").val();
@@ -367,26 +344,7 @@ $('#modal-uploading').modal('hide');
             father : currMemberID
         };
 
-/*        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'POST',
-            data: {
-                role: "user",
-                operation: "add",
-                sentData: sentData
-            },
-            dataType: 'json'
-        }).done(function (data) {
-            if (currMemberID == 0)
-                window.location.reload();
-            $("#modal-add-user").modal('hide');
-            $(".tree").width( ($(".tree").width() + 30) + "em" );
-            addMember(data[0]);
-            console.log(data[0].memberID);
-        }).fail(function () {
-            console.log("Failed to add new member!")
-        });*/
-
+        // Ajax POST
         $.ajax({
             url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
@@ -424,7 +382,9 @@ $('#modal-uploading').modal('hide');
     // ~~
 
 
-    // Update member info
+    /**
+     * Update member info
+     */
     $('#btnUpdate').click(function () {
         // Validate
         var name = $("#modal-edit-user .memberModalName").val();
@@ -437,17 +397,6 @@ $('#modal-uploading').modal('hide');
             return;
 
         var sentData = {
-/*            UserID: 2,
-            MemberID: currMemberID,
-            Name: $("#modal-edit-user .memberModalName").val(),
-            BirthDate : $("#modal-edit-user .memberModalBirthDate").val(),
-            BirthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
-            Gender : $("#modal-edit-user .memberModalGender").val(),
-            Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
-            Address : $("#modal-edit-user .memberModalAddress").val()
-            */
             userID: 2, // default
             memberID: currMemberID,
             name: name,
@@ -459,22 +408,9 @@ $('#modal-uploading').modal('hide');
             address : $("#modal-edit-user .memberModalAddress").val()
         };
 
-/*        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'POST',
-            data: {
-                role: "user",
-                operation: "update",
-                sentData: sentData
-            },
-            dataType: 'json'
-        }).done(function (data) {
-            setInfoForMember(data[0]);
-            console.log(data[0].memberID);
-        }).fail(function () {
-            console.log("Failed to update info member !")
-        });*/
-
+        /**
+         * Ajax POST
+         */
         $.ajax({
             url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/updatemember',
             type: 'POST',
@@ -538,7 +474,7 @@ $('#modal-uploading').modal('hide');
      * Set default avatar if needed based on gender
      */
     function setDefaultAvatar(avatar ,gender) {
-        if( avatar == "" ) {
+        if( avatar == "" || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
             if (gender == "female")
                 avatar = "images/avatar-female-default.jpg";
             else avatar = "images/avatar-default.png";
@@ -548,7 +484,15 @@ $('#modal-uploading').modal('hide');
     }
     // ~~
 
-    //Handle Image upload
+    /********************************************************
+     *
+     * Handle Image upload
+     */
+
+
+    /**
+     *  Some var
+     */
     var imgUrl = "";
     var memberUploadAvatarId;
 
@@ -582,9 +526,20 @@ $('#modal-uploading').modal('hide');
 
     var clientId = "ae6e3c4095f9247";
 
+    /**
+     * Show err
+     * @param err
+     */
     function showMeError(err) {
         console.log(err);
     }
+
+
+    /**
+     * Update avatar to DB
+     * @param data
+     * @param isAddMem
+     */
     function updateAvatarForDB(data, isAddMem) {
         var imgLink = data.data.link;
         if (isAddMem == 1) {
@@ -622,6 +577,9 @@ $('#modal-uploading').modal('hide');
     }
 
 
+    /**
+     * Button upload on click
+     */
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
         var isAddMem = $(this).attr("data-addmem");
@@ -680,7 +638,13 @@ $('#modal-uploading').modal('hide');
     }
     // ~~
 
-    // Loop through all children to check birthdate
+
+    /**
+     * Loop through all children to check birthdate of them smaller than parent or not
+     * @param parentId
+     * @param parentBirthDate
+     * @returns {boolean}
+     */
     function checkParentOlderThanAllChildren(parentId,parentBirthDate) {
         var isValid = true;
         $("#" + member + parentId).siblings("ul").children("li").each(function () {
@@ -695,7 +659,11 @@ $('#modal-uploading').modal('hide');
     }
 
 
-    // Search function for navbar
+
+    /**
+     * Search function for navbar
+     * @param data
+     */
     function search(data) {
         var dropdown = true;
         var search, $search;

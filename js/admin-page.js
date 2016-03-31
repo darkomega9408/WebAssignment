@@ -2,7 +2,10 @@
 $(document).ready(function () {
     var user = "user";
 
-    // Load header
+    
+    /**
+     * Load header
+     */
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
@@ -12,7 +15,10 @@ $(document).ready(function () {
     });
     // ~~
 
-    // Load all users
+
+    /**
+     * Load all users
+     */
     $.ajax({
         url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
@@ -40,7 +46,11 @@ $(document).ready(function () {
     });
     // ~~
 
-    // Search function
+
+    /**
+     * Search function
+     * @param data
+     */
     function search(data) {
         var dropdown = true;
         var search, $search;
@@ -59,6 +69,7 @@ $(document).ready(function () {
                 console.log("Search On Blur");
             },
             onChange: function(value){
+                $('#mytable tbody tr').css('display','');
                 try {
                     var ele = document.getElementById("user" + value);
                     ele.className = ("border-effect1");
@@ -93,63 +104,25 @@ $(document).ready(function () {
     }
     // ~~
 
-    // Load table first
-    /*$.ajax({
-     url: 'php-controller/ServerHandler.php',
-     type: 'GET',
-     data:{
-     role : "admin"
-     },
-     dataType: 'json'
-     }).done(function(data){
-     createTable(data);
-     }).fail(function () {
-     console.log("Create tree failed");
-     });*/
-    // ~~
 
-    // Create table
+    /**
+     * Create table with data from DB
+     * @param data
+     */
     function createTable(data) {
         $.each(data, function (index, val) {
             console.log(val);
             addUser($("#mytable tbody"), val)
         });
-        //console.log(data);
-
-
-        //$("#mytable tbody").html(data.tbody);
-        //$("#pagination").html(data.pagination);
     }
     // ~~
 
-    /*$(document).on("click", ".pagination>li>a" ,function (e) {
-     e.preventDefault();
-     var shownPage = $(this).html();
-     var pageTitle = $(this).attr("href");
-     console.log(pageTitle);
-     //location.hash = "page="+$(this).html();
-     $.ajax({
-     url: 'php-controller/ServerHandler.php',
-     type: 'GET',
-     data:{
-     role : "admin",
-     page : $(this).html()
-     },
-     dataType: 'json'
-     }).done(function(data){
-     createTable(data);
-     document.title = pageTitle;
-     window.history.pushState({"html":data,"pageTitle":pageTitle},pageTitle, pageTitle);
-     }).fail(function () {
-     console.log("Create tree failed");
-     });
 
-     //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
-     });*/
-
-
-
-    // Add member
+    /**
+     * Add new user to table
+     * @param root
+     * @param data
+     */
     function addUser(root,data) {
         root.append("<tr id='" + user + data.ID+ "'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
@@ -203,7 +176,10 @@ $(document).ready(function () {
         $("#" + user + data.ID).data(user, data);
     }
 
-    // Delete user triggered by btnDelete onclick()
+
+    /**
+     * Delete user
+     */
     $('#btnDelete').click(function () {
         console.log("Delete");
         $.ajax({
@@ -238,7 +214,9 @@ $(document).ready(function () {
     // ~~
 
 
-    // Add new relative
+    /**
+     * Add new user
+     */
     $('#btnAdd').click(function () {
 
         var userName = $("#add .userName").val();
@@ -293,7 +271,9 @@ $(document).ready(function () {
     // ~~
 
 
-    // Update member info
+    /**
+     * Update member info
+     */
     $('#btnUpdate').click(function () {
 
         var userName = $("#edit .userName").val();
@@ -364,7 +344,10 @@ $(document).ready(function () {
 
     var currUserID = -1;
 
-    // Open modal trigger this event
+
+    /**
+     * Open modal trigger this event
+     */
     $('.modal').on('show.bs.modal', function (e) {
         // Get memberID of current shown member
         try {
@@ -379,31 +362,29 @@ $(document).ready(function () {
         }
 
         // Assign some basic info to modal before display to user
-        /*try {
-         var userInfo = $("#" + user + currUserID).data(user);
-         //console.log("UserInfo: \n" + userInfo);
-         $("#edit .userID").val(userInfo.id);
-         $("#edit .userName").val(userInfo.username);
-         $("#edit .userEmail").val(userInfo.email);
-         $("#edit .name").val(userInfo.name);
-         }
-         catch(err) {*/
         var userObj = $("#" + user + currUserID + " td");
         //console.log("UserObj: \n" + userObj);
         $("#edit .userID").val(userObj.eq(1).html());
         $("#edit .userName").val(userObj.eq(2).html());
         $("#edit .userEmail").val(userObj.eq(3).html());
         $("#edit .name").val(userObj.eq(4).html());
-        //}
+
     });
     // ~~
 
-
+    /**
+     * Validate email
+     * @param $email
+     * @returns {boolean}
+     */
     function validateEmail($email) {
         var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
         return emailReg.test( $email );
     }
 
+    /**
+     * Log out func
+     */
     $(document).on("click", "#hrefLogOut", function() {
         deleteCookie("giaphaauth");
         document.location.href = "index.php";
