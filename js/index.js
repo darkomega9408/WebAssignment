@@ -14,8 +14,8 @@ $(document).ready(function(){
                 console.log(data);
                 setCookie("giaphaauth", authstring, 1);
                 if( data.role == "admin" )
-                    document.location.href = "admin-page.php";
-                else document.location.href = "tree.php";
+                    document.location.href = "../admin-page.html";
+                else document.location.href = "../tree.html";
             }
             else
                 alert("failed");
