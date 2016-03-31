@@ -3,7 +3,7 @@ $(document).ready(function(){
 	function checkUser(authstring) {
 		        $.ajax({
             type: "POST",
-            url: "https://tamrestfultest.herokuapp.com/webservice/giapha/checkuser",
+            url: "https://tamrestful2.herokuapp.com/webservice/giapha/checkuser",
             beforeSend: function(request) {
 				$('#modal-uploading').modal('show');
                 request.setRequestHeader("Authorization", "Basic " + authstring);
@@ -70,7 +70,7 @@ $(document).ready(function(){
         };
         console.log(sentData);
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({

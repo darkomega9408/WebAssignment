@@ -82,7 +82,7 @@ $(document).ready(function(){
      * Load tree
      */
     $.ajax({
-        url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
+        url: 'https://tamrestful2.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
         dataType: "json",
         beforeSend: function(request) {
@@ -286,7 +286,7 @@ $('#modal-uploading').modal('hide');
         console.log("Delete");
 
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/deletemember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/deletemember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -345,7 +345,7 @@ $('#modal-uploading').modal('hide');
 
         // Ajax POST
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: 'application/json',
             dataType: "json",
@@ -411,7 +411,7 @@ $('#modal-uploading').modal('hide');
          * Ajax POST
          */
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/updatemember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/updatemember',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -453,9 +453,12 @@ $('#modal-uploading').modal('hide');
             errMsg= ("Please fill in 'BirthPlace' field");
             isValid = false;
         }
-        else if( !checkChildBirthDate(modal,currMemberID,birthDate) ){
-            errMsg= ("Child can't be older than parent");
+        else if( currMemberID != 0 ){
+			if( !checkChildBirthDate(modal,currMemberID,birthDate) ) {
+				            errMsg= ("Child can't be older than parent");
             isValid = false;
+			}
+
         }
         else $("#modal-add-user .error-msg").html();
 
@@ -547,7 +550,7 @@ $('#modal-uploading').modal('hide');
         }
         else {
             $.ajax({
-                url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/changeavatar',
+                url: 'https://tamrestful2.herokuapp.com/webservice/giapha/changeavatar',
                 type: 'POST',
                 contentType: "application/json",
                 data: JSON.stringify({

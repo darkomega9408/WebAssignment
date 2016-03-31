@@ -20,7 +20,7 @@ $(document).ready(function () {
      * Load all users
      */
     $.ajax({
-        url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/getmembers',
+        url: 'https://tamrestful2.herokuapp.com/webservice/giapha/getmembers',
         type: 'POST',
         dataType: 'json',
         contentType: "application/json",
@@ -184,7 +184,7 @@ $(document).ready(function () {
     $('#btnDelete').click(function () {
         console.log("Delete");
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/deletemember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/deletemember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -242,7 +242,7 @@ $(document).ready(function () {
         };
         console.log(sentData);
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/addmember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/addmember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
@@ -295,7 +295,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: 'https://tamrestfultest.herokuapp.com/webservice/giapha/updatemember',
+            url: 'https://tamrestful2.herokuapp.com/webservice/giapha/updatemember',
             type: 'POST',
             contentType: "application/json",
             data: JSON.stringify({
