@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	function checkUser(authstring) {
 		        $.ajax({
             type: "POST",
@@ -12,10 +12,8 @@ $(document).ready(function(){
             if (data.length != 0) {
                 console.log(data);
                 setCookie("giaphaauth", authstring, 1);
-                if( data.role == "admin" ) {
-					alert("aaddmiinnn");
-					document.location.href = "admin-page.php";
-				}                   
+                if( data.role == "admin" )
+                    document.location.href = "admin-page.php";
                 else document.location.href = "tree.php";
             }
             else
@@ -24,7 +22,7 @@ $(document).ready(function(){
             console.log(err);
         });
 	}
-	
+
 	if (getCookie("giaphaauth") != '') {
 		checkUser(getCookie("giaphaauth"));
 	}

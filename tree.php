@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                          value="Nguyễn Xuân Thái" required></div>
+                                                          value="Nguyễn Xuân Thái" ></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Gender: </label>

@@ -84,6 +84,7 @@ $(document).ready(function(){
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
         memberCardObj = $(this).clone();
+
         $(this).html('');
     });
     // ~~
@@ -120,7 +121,7 @@ $(document).ready(function(){
                 document.location.href = "index.php";
         }
     }).done(function(data){
-        console.log(data);
+
         if (data.length == 0)
             $("#btnAddMember").show();
         else
@@ -150,7 +151,6 @@ $(document).ready(function(){
         }
 
         // Set default avatar
-        console.log(data.avatar);
         if( data.avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.avatar);
         memberCard.find('.memberName').html(data.name);
@@ -159,7 +159,7 @@ $(document).ready(function(){
 
         // Store all data
         memberCard.data("memberinfo", data);
-        console.log(memberCard.data("memberinfo"));
+
     }
     // ~~
 
@@ -277,14 +277,14 @@ $(document).ready(function(){
 
         $("#modal-edit-user .modal-title").html(memberinfo.name + " Information");
         $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.avatar);
-        $("#modal-edit-user .memberModalName").attr("value", memberinfo.name);
+        $("#modal-edit-user .memberModalName").val( memberinfo.name);
         $("#modal-edit-user .memberModalGender").val(memberinfo.gender);
-        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.birthDate.substring(0, 10));
-        $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.address);
-        $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.birthPlace);
+        $("#modal-edit-user .memberModalBirthDate").val( memberinfo.birthDate.substring(0, 10));
+        $("#modal-edit-user .memberModalAddress").val( memberinfo.address);
+        $("#modal-edit-user .memberModalBirthPlace").val(memberinfo.birthPlace);
         if( memberinfo.alive )
-            $("#edit-radio-alive").attr("checked", true);
-        else $("#edit-radio-dead").attr("checked", true);
+            $("#edit-radio-alive").prop("checked", true);
+        else $("#edit-radio-dead").prop("checked", true);
     });
     // ~~
 
@@ -341,19 +341,22 @@ $(document).ready(function(){
         // Validate
         var name = $("#modal-add-user .memberModalName").val();
         var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
-        if( name == "" || birthPlace == "" ){
-            $("#modal-add-user .error-msg").html("Some fields are invalid. Please try again!");
-            return;
-        }
-        else $("#modal-add-user .error-msg").html();
+        var birthDate = $("#modal-add-user .memberModalBirthDate").val();
+        var gender = $("#modal-add-user .memberModalGender").val();
+        var avatar = setDefaultAvatar($("#modal-add-user .memberModalAvatar").attr("src"),gender);
 
+        // Validate
+        if( !validateModal("add",name,birthPlace,birthDate) )
+            return;
+
+        // Otherwise continue send data to server
         var sentData = {
             userID: 2,
-            name: $("#modal-add-user .memberModalName").val(),
-            birthDate : $("#modal-add-user .memberModalBirthDate").val(),
-            birthPlace : $("#modal-add-user .memberModalBirthPlace").val(),
-            gender : $("#modal-add-user .memberModalGender").val(),
-            avatar : $("#modal-add-user .memberModalAvatar").attr("src")==""?"images/avatar-default.png":$("#modal-add-user .memberModalAvatar").attr("src"),
+            name: name,
+            birthDate : birthDate,
+            birthPlace : birthPlace,
+            gender : gender,
+            avatar : avatar,
             alive : $("#modal-add-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             address : $("#modal-add-user .memberModalAddress").val(),
             father : currMemberID
@@ -395,12 +398,17 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
-			
+            // If tree has only one child => do reload page
             if (currMemberID == 0)
                 window.location.reload();
+
+            // Set width for tree
             $(".tree").width( ($(".tree").width() + 30) + "em" );
+
+            // Add new member into tree and hide modal 'add'
             addMember(data);
-            console.log(data.memberID);
+            $("#modal-add-user").modal('hide');
+
         }).fail(function () {
             console.log("Failed to add new member!")
         });
@@ -413,11 +421,12 @@ $(document).ready(function(){
         // Validate
         var name = $("#modal-edit-user .memberModalName").val();
         var birthPlace = $("#modal-edit-user .memberModalBirthPlace").val();
-        if( name == "" || birthPlace == "" ){
-            $("#modal-edit-user .error-msg").html("Some fields are invalid. Please try again!");
+        var birthDate = $("#modal-edit-user .memberModalBirthDate").val();
+        var gender = $("#modal-edit-user .memberModalGender").val();
+        var avatar = setDefaultAvatar($("#modal-edit-user .memberModalAvatar").attr("src"), gender);
+
+        if( !validateModal("edit",name,birthPlace, birthDate) )
             return;
-        }
-        else $("#modal-edit-user .error-msg").html();
 
         var sentData = {
 /*            UserID: 2,
@@ -431,13 +440,13 @@ $(document).ready(function(){
             Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-edit-user .memberModalAddress").val()
             */
-            userID: 2,
+            userID: 2, // default
             memberID: currMemberID,
-            name: $("#modal-edit-user .memberModalName").val(),
-            birthDate : $("#modal-edit-user .memberModalBirthDate").val(),
-            birthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
-            gender : $("#modal-edit-user .memberModalGender").val(),
-            avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
+            name: name,
+            birthDate : birthDate,
+            birthPlace : birthPlace,
+            gender : gender ,
+            avatar : avatar,
             alive : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             address : $("#modal-edit-user .memberModalAddress").val()
         };
@@ -463,7 +472,7 @@ $(document).ready(function(){
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
-                'sentData': sentData
+                sentData: sentData
             }),
             dataType: 'json',
             beforeSend: function(request) {
@@ -474,14 +483,59 @@ $(document).ready(function(){
                     document.location.href = "index.php";
             }
         }).done(function (data) {
+            // Hide 'edit' modal and update member info
             $("#modal-edit-user").modal('hide');
             setInfoForMember(data);
-            console.log(data.memberID);
         }).fail(function () {
             console.log("Failed to update info member !")
         });
     });
 
+
+    /**
+     * Validate modal add and edit member
+     */
+    function validateModal(modal , name, birthPlace, birthDate) {
+        // Validate
+        var isValid = true;
+        var errMsg = "";
+        if( name == "" ){
+            errMsg = ("Please fill in 'Name' field");
+            isValid = false;
+        }
+        else if ( birthPlace == "" ){
+            errMsg= ("Please fill in 'BirthPlace' field");
+            isValid = false;
+        }
+        else if( !checkChildBirthDate(modal,currMemberID,birthDate) ){
+            errMsg= ("Child can't be older than parent");
+            isValid = false;
+        }
+        else $("#modal-add-user .error-msg").html();
+
+        // Log error msg and return immediately if any
+        if( modal == "add" )
+            $("#modal-add-user .error-msg").html(errMsg);
+        else if( modal == "edit" )
+            $("#modal-edit-user .error-msg").html(errMsg);
+
+        return isValid;
+    }
+    // ~~
+
+    /**
+     * Set default avatar if needed based on gender
+     */
+    function setDefaultAvatar(avatar ,gender) {
+        if( avatar == "" ) {
+            if (gender == "female")
+                avatar = "images/avatar-female-default.jpg";
+            else avatar = "images/avatar-default.png";
+        }
+
+        return avatar;
+    }
+    // ~~
 
     //Handle Image upload
     var imgUrl = "";
@@ -579,6 +633,56 @@ $(document).ready(function(){
     // ~~~
 
 
+    /**
+     * Check whether child 's birthdate is smaller than father's one or not
+     * @param modal
+ * @param childId
+     * @param childBirthDate
+ * @returns {boolean}
+     */
+    function checkChildBirthDate(modal,childId,childBirthDate) {
+        var isValid = true;
+        var parentBirthDate = "";
+        if( modal == "edit" ) {
+            try {
+                var parentIdSelector = $("#" + member + childId).parents().eq(1).siblings(".membercard").attr("id");
+
+                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").birthDate.substr(0, 10);
+            } catch (e) {
+                // It occurred when we modify the root member
+            }
+        }
+        else if ( modal == "add" ){
+            parentBirthDate = $("#" + member + currMemberID).data("memberinfo").birthDate.substr(0, 10);
+        }
+
+        // Compare
+        // If ( child older parent || child smaller than one of each grandchildren )=> return false
+        if (childBirthDate <= parentBirthDate || !checkParentOlderThanAllChildren(childId,childBirthDate)) // Invalid case
+        {
+            console.log("Parent must be older than child  ");
+            isValid =  false;
+        }
+
+        return isValid;
+    }
+    // ~~
+
+    // Loop through all children to check birthdate
+    function checkParentOlderThanAllChildren(parentId,parentBirthDate) {
+        var isValid = true;
+        $("#" + member + parentId).siblings("ul").children("li").each(function () {
+            var childBirthDate = $(this).children(".membercard").find(".memberBirthDate").html();
+            if (childBirthDate <= parentBirthDate) // Invalid case
+            {
+                isValid = false; // child can't be older than parent => so invalid
+                return; // break each function
+            }
+        });
+        return isValid;
+    }
+
+
     // Search function for navbar
     function search(data) {
         var dropdown = true;
@@ -589,7 +693,7 @@ $(document).ready(function(){
             selectOnTab: 'true',
             valueField: 'memberID',
             labelField: 'name',
-            searchField: ['name', "gender", 'adress', 'birthDate', 'birthPlace'],
+            searchField: ['name', "gender", 'address', 'birthDate', 'birthPlace'],
             options: data,
             onChange: function(value){
                 $('.membercard').removeClass('border-effect');
