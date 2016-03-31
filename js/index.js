@@ -98,6 +98,7 @@ $(document).ready(function(){
 
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
+            alert("User already existed. Please try new username or email instead...")
             console.log("Failed to add new user!")
         });
     });

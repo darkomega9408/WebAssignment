@@ -92,6 +92,7 @@ $(document).ready(function () {
             },
             render: {
                 item: function(item, escape) {
+                    console.log(item);
                     return '<div><strong>' + escape(item.username) + '</strong></div>';
                 },
                 option: function(item, escape) {
@@ -124,7 +125,7 @@ $(document).ready(function () {
      * @param data
      */
     function addUser(root,data) {
-        root.append("<tr id='" + user + data.ID+ "'> " +
+        root.append("<tr id='" + user + data.id+ "'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
             "<td>" + data.id + "</td> " +
             "<td>" + data.username + "</td> " +
