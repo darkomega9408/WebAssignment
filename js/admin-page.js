@@ -6,6 +6,11 @@ $(document).ready(function () {
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
+
+        $(document).on('click', 'a[href="#exit"]', function() {
+            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            window.location = '/';
+        })
     });
     // ~~
 
