@@ -66,7 +66,7 @@ $(document).ready(function(){
      */
     $(document).on("click", "#hrefLogOut", function() {
         deleteCookie("giaphaauth");
-        document.location.href = "../index.html";
+        document.location.href = "../index.php";
     })
 
     // Load member card from another file and assign to '@memberCardObj'
@@ -91,7 +91,7 @@ $(document).ready(function(){
             if (authstring != "")
                 request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
             else
-                document.location.href = "../index.html";
+                document.location.href = "../index.php";
         }
     }).done(function(data){
 $('#modal-uploading').modal('hide');
@@ -300,7 +300,7 @@ $('#modal-uploading').modal('hide');
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function (data) {
 			$('#modal-uploading').modal('hide');
@@ -358,7 +358,7 @@ $('#modal-uploading').modal('hide');
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function (data) {
 			$('#modal-uploading').modal('hide');
@@ -424,7 +424,7 @@ $('#modal-uploading').modal('hide');
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function (data) {
 			$('#modal-uploading').modal('hide');
@@ -565,7 +565,7 @@ $('#modal-uploading').modal('hide');
                     if (authstring != "")
                         request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                     else
-                        document.location.href = "../index.html";
+                        document.location.href = "../index.php";
                 }
             }).done(function (data) {
                 $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);

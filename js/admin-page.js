@@ -34,7 +34,7 @@ $(document).ready(function () {
             if (authstring != "")
                 request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
             else
-                document.location.href = "../index.html";
+                document.location.href = "../index.php";
         }
     }).done(function(data){
 		$('#modal-uploading').modal('hide');
@@ -200,7 +200,7 @@ $(document).ready(function () {
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function () {
 			$('#modal-uploading').modal('hide');
@@ -257,7 +257,7 @@ $(document).ready(function () {
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function (data) {
 			$('#modal-uploading').modal('hide');
@@ -310,7 +310,7 @@ $(document).ready(function () {
                 if (authstring != "")
                     request.setRequestHeader("Authorization", "Basic " + getCookie("giaphaauth"));
                 else
-                    document.location.href = "../index.html";
+                    document.location.href = "../index.php";
             }
         }).done(function (data) {
 			$('#modal-uploading').modal('hide');
@@ -388,6 +388,6 @@ $(document).ready(function () {
      */
     $(document).on("click", "#hrefLogOut", function() {
         deleteCookie("giaphaauth");
-        document.location.href = "../index.html";
+        document.location.href = "../index.php";
     })
 });
