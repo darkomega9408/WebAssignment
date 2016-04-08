@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function(){
     $('.login-form').submit(function(e) {
         e.preventDefault();
         var username = $('#inputUsername').val();
@@ -9,14 +9,15 @@ $(document).ready(function() {
             type: 'post',
             dataType: 'json'
         }).done(function(res) {
+            $('#modal-uploading').modal('hide');
             if (res.status == 'login_success') {
-                //alert('You have logged in succesfully');
                 setCookie('token', res.token, 30);
                 if (res.role == 'user') window.location = 'tree.php';
                 else window.location = 'admin-page.php';
             }
         }).fail(function(err) {
-            alert(err + " error");
+            $('#modal-uploading').modal('hide');
+            console.log(err);
         });
     });
 
@@ -59,6 +60,7 @@ $(document).ready(function() {
             },
             dataType: 'json'
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             $("#signUp").modal('hide');
             //alert("Sign up successfully. Now you can login and enjoy the rest !")
             console.log("Add new user successfully");
@@ -69,7 +71,10 @@ $(document).ready(function() {
             $('.login-form button[type="submit"]').trigger("click");
 
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
+            alert("User already existed. Please try new username or email instead...")
             console.log("Failed to add new user!")
         });
     });
 });
+

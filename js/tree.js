@@ -4,30 +4,36 @@ $(document).ready(function(){
     var memberCardObj = "";
     var member = "mem";
     var currMemberID ;
-    var text;
-
     var token = getCookie('token');
 
-
-    //$('.modal-wrapper').load('../card-demo/membercard-demo.html .member-modal-wrapper');
-
-    // Load header - navbar from file
+    /**
+     *  Load header - navbar from file
+     */
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
 
         // Change role & append new caret
         $("#navbar-user-name").prepend("Hi, User "+$("header").attr("data-id"));
-        /*$("#navbar-user-name")
-        <span class="caret"></span>*/
+        /*var authStr = atob(getCookie("giaphaauth"));
+        var userName = authStr.split(":")[0];
+        $("#navbar-user-name").prepend("Hi, "+ userName);*/
 
-
+        // Expire token until ...
         $(document).on('click', 'a[href="#exit"]', function() {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
             window.location = '/';
         })
     });
     // ~~
+
+    /**
+     * Log out
+     */
+    /*$(document).on("click", "#hrefLogOut", function() {
+        deleteCookie("giaphaauth");
+        document.location.href = "../index.php";
+    })*/
 
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
@@ -37,7 +43,9 @@ $(document).ready(function(){
     // ~~
 
 
-    // Load tree first
+    /**
+     * Load tree
+     */
     $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
@@ -47,24 +55,25 @@ $(document).ready(function(){
             $("#btnAddMember").show();
         else
             $("#btnAddMember").hide();
-
-        // Tree
         createTree(data);
         search(data);
     }).fail(function (err) {
-        console.log(err.responseText);
+		$('#modal-uploading').modal('hide');
+        console.log(err);
         console.log("Create tree failed");
     });
     // ~~
 
 
-    // Change member info displayed based on DB
+    /**
+     * Change member info displayed based on DB
+     * @param data : member info stored as JSON
+     */
     function setInfoForMember(data) {
         var memberCard = $("#"+member + data.MemberID);
 
         // Set avatar if any or leave default
         if(data.Alive == 0){
-            console.log(data);
             memberCard.css('background-image','url(images/watermark.png)');
             memberCard.css('background-repeat','no-repeat');
         }
@@ -73,6 +82,7 @@ $(document).ready(function(){
             memberCard.css('background-repeat','no-repeat');
         }
 
+        // Set default avatar
         if( data.Avatar != null )
             memberCard.find(".memberAvatar").attr("src", data.Avatar);
         memberCard.find('.memberName').html(data.Name);
@@ -81,11 +91,17 @@ $(document).ready(function(){
 
         // Store all data
         memberCard.data("memberinfo", data);
+
     }
     // ~~
 
 
-    // Set HTML layout for each member
+    /**
+     * Set HTML layout for each member
+     * @param data
+     * @param memberCardObj
+     * @returns {*|jQuery}
+     */
     var layoutMember = function (data, memberCardObj) {
         $(memberCardObj).find('.membercard').attr('id', member + data.MemberID);
         return $(memberCardObj).html();
@@ -93,8 +109,10 @@ $(document).ready(function(){
     // ~~
 
 
-    // Use to create tree html
-    // data: server 's response , get from DB
+    /**
+     * Use to create tree html
+     * @param data: server 's response , get from DB
+     */
     var createTree = function (data) {
         var nbrNode = data.length;
 
@@ -117,7 +135,10 @@ $(document).ready(function(){
     // ~~
 
 
-    // Add member
+    /**
+     * Add member
+     * @param data data to be added
+     */
     function addMember(data) {
         var content = "<li>" + layoutMember(data, memberCardObj) + "</li>";
 
@@ -127,7 +148,7 @@ $(document).ready(function(){
             $('#' + member + data.Father + '+ul').append(content);
 
         setInfoForMember(data);
-    };
+    }
     // ~~
 
 
@@ -143,8 +164,10 @@ $(document).ready(function(){
         else node.remove();
         if ($(".tree").has(".membercard").length == 0)
             $("#btnAddMember").show();
-    };
+    }
     // ~~
+
+
 
 
     /**
@@ -153,16 +176,22 @@ $(document).ready(function(){
      * @Author: TÂM
      */
     $('.modal').on('show.bs.modal', function (e) {
-        // Get memberID of current shown member
+        // Get memberID of current shown member : in EDIT modal
         try {
             var $trigger = $(e.relatedTarget);
             var $memberID = $trigger.parents().eq(3).attr('id');
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
-            currMemberID = 0;
+            if ($(this).attr("id") == "modal-add-user")
+                currMemberID = 0;
             var $trigger = $(e.relatedTarget);
-            var modalFather = $trigger.parents().eq(4);
+            var modalFather = $trigger.parents().eq(5);
+            if (modalFather.attr("id") == "modal-add-user")
+                $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
+            else {
+                $(this).find("#btnUploadAvatar").attr("data-addmem", 0);
+            }
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
             return;
         }
@@ -170,31 +199,39 @@ $(document).ready(function(){
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
-            if (currMemberID == 0) {
-                $(".modal-title").html("New member");
-            }
-            else {
-                $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
-            }
+			if (currMemberID == 0)
+				$(".modal-title").html("New member");
+			else $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
             return;
+        }
+            // Change title of UPLOAD AVATAR modal
+        else if(  $(this).attr("id") != "modal-upload-avatar"){
+            $("#modal-upload-avatar .modal-title").html("Change Avatar");
         }
 
         // Assign some basic info to modal before display to user
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
+        console.log(memberinfo);
         $("#modal-edit-user .modal-title").html(memberinfo.Name + " Information");
         $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.Avatar);
-        $("#modal-edit-user .memberModalName").attr("value", memberinfo.Name);
+        $("#modal-edit-user .memberModalName").val( memberinfo.Name);
         $("#modal-edit-user .memberModalGender").val(memberinfo.Gender);
-        $("#modal-edit-user .memberModalBirthDate").attr("value", memberinfo.BirthDate);
-        $("#modal-edit-user .memberModalAddress").attr("value", memberinfo.Address);
-        $("#modal-edit-user .memberModalBirthPlace").attr("value", memberinfo.BirthPlace);
+        $("#modal-edit-user .memberModalBirthDate").val( memberinfo.BirthDate.substring(0, 10));
+        $("#modal-edit-user .memberModalAddress").val( memberinfo.Address);
+        $("#modal-edit-user .memberModalBirthPlace").val(memberinfo.BirthPlace);
+        if( memberinfo.Alive == "1" )
+            $("#edit-radio-alive").prop("checked", true);
+        else $("#edit-radio-dead").prop("checked", true);
     });
     // ~~
 
 
-    // Delete user triggered by btnDelete onclick()
+    /**
+     * Delete user triggered by btnDelete onclick()
+     */
     $('#btnDelete').click(function () {
         console.log("Delete");
+
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
@@ -207,38 +244,47 @@ $(document).ready(function(){
                 }
             }
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             console.log("Delete member successfully");
             deleteMember();
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to delete member");
         });
     });
     // ~~
 
 
-    // Add new relative
+
+    /**
+     * Add new relative
+     */
     $('#btnAdd').click(function () {
         // Validate
         var name = $("#modal-add-user .memberModalName").val();
         var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
-        if( name == "" || birthPlace == "" ){
-            $("#modal-add-user .error-msg").html("Some fields are invalid. Please try again!");
-            return;
-        }
-        else $("#modal-add-user .error-msg").html();
+        var birthDate = $("#modal-add-user .memberModalBirthDate").val();
+        var gender = $("#modal-add-user .memberModalGender").val();
+        var avatar = setDefaultAvatar($("#modal-add-user .memberModalAvatar").attr("src"),gender);
 
+        // Validate
+        if( !validateModal("add",name,birthPlace,birthDate) )
+            return;
+
+        // Otherwise continue send data to server
         var sentData = {
             UserID: 2,
             Name: name,
-            BirthDate : $("#modal-add-user .memberModalBirthDate").val(),
+            BirthDate : birthDate,
             BirthPlace : birthPlace,
-            Gender : $("#modal-add-user .memberModalGender").val(),
-            Avatar : $("#modal-add-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+            Gender : gender,
+            Avatar : avatar,
+            Alive : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-add-user .memberModalAddress").val(),
             Father : currMemberID
         };
 
+        // Ajax POST
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
@@ -249,44 +295,57 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
+			$('#modal-uploading').modal('hide')
+            $("#modal-add-user").modal('hide');
+
+            // If tree has only one child => do reload page
             if (currMemberID == 0)
                 window.location.reload();
-            $("#modal-add-user").modal('hide');
+
+            // Set width for tree
             $(".tree").width( ($(".tree").width() + 30) + "em" );
+
+            // Add new member into tree and hide modal 'add'
             addMember(data[0]);
-            //console.log(data[0]);
+            $("#modal-add-user").modal('hide');
+
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to add new member!")
         });
     });
     // ~~
 
 
-    // Update member info
+    /**
+     * Update member info
+     */
     $('#btnUpdate').click(function () {
         // Validate
         var name = $("#modal-edit-user .memberModalName").val();
         var birthPlace = $("#modal-edit-user .memberModalBirthPlace").val();
-        if( name == "" || birthPlace == "" ){
-            $("#modal-edit-user .error-msg").html("Some fields are invalid. Please try again!");
+        var birthDate = $("#modal-edit-user .memberModalBirthDate").val();
+        var gender = $("#modal-edit-user .memberModalGender").val();
+        var avatar = setDefaultAvatar($("#modal-edit-user .memberModalAvatar").attr("src"), gender);
+
+        if( !validateModal("edit",name,birthPlace, birthDate) )
             return;
-        }
-        else $("#modal-edit-user .error-msg").html();
 
         var sentData = {
-            UserID: 2,
+            UserID: 2, // default
             MemberID: currMemberID,
-            Name: $("#modal-edit-user .memberModalName").val(),
-            BirthDate : $("#modal-edit-user .memberModalBirthDate").val(),
-            BirthPlace : $("#modal-edit-user .memberModalBirthPlace").val(),
-            Gender : $("#modal-edit-user .memberModalGender").val(),
-            Avatar : $("#modal-edit-user .memberModalAvatar").attr("src"),
-            Status : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+            Name: name,
+            BirthDate : birthDate,
+            BirthPlace : birthPlace,
+            Gender : gender ,
+            Avatar : avatar,
+            Alive : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-edit-user .memberModalAddress").val()
-            //,
-            //Father : currMemberID
         };
 
+        /**
+         * Ajax POST
+         */
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
@@ -297,16 +356,74 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
+            // Hide 'edit' modal and update member info
             $("#modal-edit-user").modal('hide');
             setInfoForMember(data[0]);
-            console.log(data[0].MemberID);
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
     });
 
 
-    //Handle Image upload
+    /**
+     * Validate modal add and edit member
+     */
+    function validateModal(modal , name, birthPlace, birthDate) {
+        // Validate
+        var isValid = true;
+        var errMsg = "";
+        if( name == "" ){
+            errMsg = ("Please fill in 'Name' field");
+            isValid = false;
+        }
+        else if ( birthPlace == "" ){
+            errMsg= ("Please fill in 'BirthPlace' field");
+            isValid = false;
+        }
+        else if( currMemberID != 0 ){
+			if( !checkChildBirthDate(modal,currMemberID,birthDate) ) {
+				            errMsg= ("Child can't be older than parent");
+            isValid = false;
+			}
+
+        }
+        else $("#modal-add-user .error-msg").html();
+
+        // Log error msg and return immediately if any
+        if( modal == "add" )
+            $("#modal-add-user .error-msg").html(errMsg);
+        else if( modal == "edit" )
+            $("#modal-edit-user .error-msg").html(errMsg);
+
+        return isValid;
+    }
+    // ~~
+
+    /**
+     * Set default avatar if needed based on gender
+     */
+    function setDefaultAvatar(avatar ,gender) {
+        if( avatar == "" || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
+            if (gender == "female")
+                avatar = "images/avatar-female-default.jpg";
+            else avatar = "images/avatar-default.png";
+        }
+
+        return avatar;
+    }
+    // ~~
+
+    /********************************************************
+     *
+     * Handle Image upload
+     */
+
+
+    /**
+     *  Some var
+     */
     var imgUrl = "";
     var memberUploadAvatarId;
 
@@ -331,64 +448,149 @@ $(document).ready(function(){
                 canvas.width = this.width;
                 canvas.height = this.height;
                 context.drawImage(this, 0, 0);
+				console.log("DATAURL: " + canvas.toDataURL());
                 imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
             })
         }
         reader.readAsDataURL(file);
-    })
+    });
 
     var clientId = "ae6e3c4095f9247";
 
+    /**
+     * Show err
+     * @param err
+     */
     function showMeError(err) {
         console.log(err);
     }
-    function updateAvatarForDB(data) {
+
+
+    /**
+     * Update avatar to DB
+     * @param data
+     * @param isAddMem
+     */
+    function updateAvatarForDB(data, isAddMem) {
         var imgLink = data.data.link;
-        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'GET',
-            data: {
-                role: "user",
-                operation: "changeAvatar",
-                sentData: {
-                    role: "user",
-                    Avatar : data.data.link,
-                    UserID : 2,
-                    MemberID : memberUploadAvatarId
-                }
-            },
-            dataType: 'json'
-        }).done(function (data) {
-            $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
-            $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
-            $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+        if (isAddMem == 1) {
+            $("#modal-add-user .memberModalAvatar").attr("src", imgLink);
             $('#modal-uploading').modal('hide');
-        }).fail(function () {
-            console.log("Failed to upload avatar !")
-        });
+        }
+        else {
+            $.ajax({
+                url: 'php-controller/ServerHandler.php',
+                type: 'GET',
+                data: {
+                    role: "user",
+                    operation: "changeAvatar",
+                    sentData: {
+                        role: "user",
+                        Avatar : data.data.link,
+                        UserID : 2,
+                        MemberID : memberUploadAvatarId
+                    }
+                },
+                dataType: 'json'
+            }).done(function (data) {
+                $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
+                $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
+                $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+                $('#modal-uploading').modal('hide');
+            }).fail(function () {
+                console.log("Failed to upload avatar !")
+            });
+        }
     }
 
 
+    /**
+     * Button upload on click
+     */
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
+        var isAddMem = $(this).attr("data-addmem");
         $.ajax({
             url: "https://api.imgur.com/3/upload",
             type: "POST",
-            datatype: "json",
+            dataType: "json",
             data: {image: imgUrl},
-            success: updateAvatarForDB,
+            success: function(data) {
+                updateAvatarForDB(data, isAddMem);
+
+            },
             error: showMeError,
             beforeSend: function (xhr) {
                 $('#modal-uploading').modal('show');
                 xhr.setRequestHeader("Authorization", "Client-ID " + clientId);
             }
         });
-    })
+    });
 
     // ~~~
 
 
-    // Search function for navbar
+    /**
+     * Check whether child 's birthdate is smaller than father's one or not
+     * @param modal
+ * @param childId
+     * @param childBirthDate
+ * @returns {boolean}
+     */
+    function checkChildBirthDate(modal,childId,childBirthDate) {
+        var isValid = true;
+        var parentBirthDate = "";
+        if( modal == "edit" ) {
+            try {
+                var parentIdSelector = $("#" + member + childId).parents().eq(1).siblings(".membercard").attr("id");
+
+                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").birthDate.substr(0, 10);
+            } catch (e) {
+                // It occurred when we modify the root member
+            }
+        }
+        else if ( modal == "add" ){
+            parentBirthDate = $("#" + member + currMemberID).data("memberinfo").BirthDate.substr(0, 10);
+        }
+
+        // Compare
+        // If ( child older parent || child smaller than one of each grandchildren )=> return false
+        if (childBirthDate <= parentBirthDate || !checkParentOlderThanAllChildren(childId,childBirthDate)) // Invalid case
+        {
+            console.log("Parent must be older than child  ");
+            isValid =  false;
+        }
+
+        return isValid;
+    }
+    // ~~
+
+
+    /**
+     * Loop through all children to check birthdate of them smaller than parent or not
+     * @param parentId
+     * @param parentBirthDate
+     * @returns {boolean}
+     */
+    function checkParentOlderThanAllChildren(parentId,parentBirthDate) {
+        var isValid = true;
+        $("#" + member + parentId).siblings("ul").children("li").each(function () {
+            var childBirthDate = $(this).children(".membercard").find(".memberBirthDate").html();
+            if (childBirthDate <= parentBirthDate) // Invalid case
+            {
+                isValid = false; // child can't be older than parent => so invalid
+                return; // break each function
+            }
+        });
+        return isValid;
+    }
+
+
+
+    /**
+     * Search function for navbar
+     * @param data
+     */
     function search(data) {
         var dropdown = true;
         var search, $search;

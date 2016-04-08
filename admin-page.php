@@ -14,46 +14,6 @@ else {
   }
   $id = $personData['id'];
 }
-
-/*require_once 'php-controller/DBConnection.php';
-require_once 'php-controller/Paginate.php'; //include of paginate page
-
-$dbConn = new DBConnection();
-
-$per_page = 5;         // number of results to show per page
-$stmt = $dbConn->conn->prepare("SELECT * FROM `person` WHERE `Role` = 'user'");
-$stmt->execute();
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$result = $stmt->fetchAll();
-$total_results = $stmt->rowCount();
-$total_pages = ceil($total_results / $per_page);//total pages we going to have
-$shown_page = 0;
-
-//-------------if page is setcheck------------------//
-if (isset($_GET['page'])) {
-    $show_page = $_GET['page'];             //it will telles the current page
-
-    if ($show_page > 0 && $show_page <= $total_pages) {
-        $start = ($show_page - 1) * $per_page;
-        $end = $start + $per_page;
-    } else {
-        // error - show first set of results
-        $start = 0;
-        $end = $per_page;
-    }
-
-    // display pagination
-    $shown_page = intval($_GET['page']);
-} else {
-    // if page isn't set, show first set of results
-    $start = 0;
-    $end = $per_page;
-}
-
-$tpages = $total_pages;
-if ($shown_page <= 0)
-    $shown_page = 1;*/
-
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +28,7 @@ if ($shown_page <= 0)
     <meta name="author" content="">
 
     <title>
-        Admin Page id <?php echo $id;?>
+        Admin Page
     </title>
 
     <!-- Bootstrap Core CSS -->
@@ -82,11 +42,13 @@ if ($shown_page <= 0)
 
     <!-- Bootstrap Script -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/authrestful.js" type="text/javascript"></script>
 
     <!-- Font Awesome 4.5 -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
 
     <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="css/border-effect.css"/>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>
@@ -143,55 +105,12 @@ if ($shown_page <= 0)
                         </thead>
 
                         <tbody>
-                        <?php
-                        /*$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
 
-                        // loop through results of database query, displaying them in the table
-                        for ($i = $start; $i < $end; $i++) {
-                            // make sure that PHP doesn't try to show results that don't exist
-                            if ($i == $total_results) {
-                                break;
-                            }
-
-                            // echo out the contents of each row into a table
-                            echo '<tr id="user'.$result[$i]['ID'].'">';
-                            echo '<td><input type=\'checkbox\' class=\'checkthis\' /></td>';
-                            echo '<td>' . $result[$i]['ID']. '</td>';
-                            echo '<td>' . $result[$i]['Username']. '</td>';
-                            echo '<td>' . $result[$i]['Email']. '</td>';
-                            echo '<td>' . $result[$i]['Name']. '</td>';
-                            echo '<td><p data-placement="top" data-toggle="tooltip" title="Edit">'.
-                                '<button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>';
-                            echo '<td><p data-placement="top" data-toggle="tooltip" title="Delete">'.
-                                '<button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>';
-                            echo "</tr>";
-                        }
-                        // ~~
-                        */?>
                         </tbody>
 
                     </table>
 
 
-
-                    <!-- Pagination here -->
-                    <?php
-                    /*//$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
-                    echo '<ul class="pagination pull-right ">';
-                    if ($total_pages > 1)
-                        echo paginate($reload, $shown_page, $total_pages);
-                    echo "</ul>";*/
-                    ?>
-
-                    <!--<ul class="pagination pull-right">
-                        <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-                    </ul>-->
 
                     <div class="clearfix"></div>
 
@@ -319,6 +238,21 @@ if ($shown_page <= 0)
     </div>
 </div>
 <!-- Modal Delete user-->
+
+<!-- Modal Uploading  -->
+<div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
+                     width="100em"
+                     height="100em">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Uploading -->
 
 </body>
 

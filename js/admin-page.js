@@ -2,19 +2,28 @@
 $(document).ready(function () {
     var user = "user";
 
-    // Load header
+    
+    /**
+     * Load header
+     */
     $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
         // Change logo relative path
         $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
 
-        $(document).on('click', 'a[href="#exit"]', function() {
+        $(document).on('click', '#hrefLogOut', function() {
             document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
             window.location = '/';
         })
+
+        // Change role in navbar
+        $("#navbar-user-name").prepend("Hi, Admin");
     });
     // ~~
 
-    // Load all users
+
+    /**
+     * Load all users
+     */
     $.ajax({
         url: 'php-controller/ServerHandler.php',
         type: 'GET',
@@ -24,14 +33,20 @@ $(document).ready(function () {
             AdminId: 1
         }
     }).done(function(data){
+		$('#modal-uploading').modal('hide');
         createTable(data);
         search(data);
     }).fail(function () {
+		$('#modal-uploading').modal('hide');
         console.log("Load users failed");
     });
     // ~~
 
-    // Search function
+
+    /**
+     * Search function
+     * @param data
+     */
     function search(data) {
         var dropdown = true;
         var search, $search;
@@ -44,34 +59,42 @@ $(document).ready(function () {
             searchField: ['Username', "Name", 'Email'],
             options: data,
             onDropdownOpen: function($dropdown){
-                // $dropdown.css('visibility','hidden');
+                $(".border-effect1").removeClass("border-effect1");
             },
             onBlur: function(){
                 // $('.selectize-input input').val(text);
 
             },
             onChange: function(value){
-              $('#mytable tbody tr').css('display','none');
-              $('#mem' + value).addClass('border-effect');
-              $('#user' + value).css('display','');
+                $('#mytable tbody tr').css('display','');
+                try {
+                    var ele = document.getElementById("user" + value);
+                    ele.className = ("border-effect1");
+                    ele.scrollIntoView({block: "start", behavior: "instant"});
+                    console.log("Search On Change " + value);
+                }catch(err){
+                    $('#mytable tbody tr').css('display','');
+                }
             },
             onType: function(str){
-              text = str;
-              if(str){
-                $('#mytable tbody tr').css('display','none');
-                $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
-                  $('#user' + $(this).attr('data-value')).css('display','');
-                });
-              }
+                if(str){
+                    $('#mytable tbody tr').css('display','none');
+                    $('.selectize-dropdown .selectize-dropdown-content div').each( function(){
+                        $('#user' + $(this).attr('data-value')).css('display','');
+                    });
+                }
+                else
+                    $('#mytable tbody tr').css('display','');
+                console.log("Search On Type " + str);
             },
             render: {
                 item: function(item, escape) {
                     console.log(item);
-                    return '<div><strong style="text-transform: capitalize">' + escape(item.Name) + '</strong></div>';
+                    return '<div><strong>' + escape(item.username) + '</strong></div>';
                 },
                 option: function(item, escape) {
-                    return '<div data-id="' + escape(item.Name) + '"><strong style="text-transform: capitalize">' + escape(item.Name) +
-                        '</strong><br><small style=" opacity:0.8;">' + escape(item.Email) + '</small><br></div>';
+                    return '<div data-id="' + escape(item.id) + '"><strong>' + escape(item.username) +
+                        '</strong><br><small style=" opacity:0.8;">' + escape(item.email) + '</small><br></div>';
                 }
             }
         });
@@ -79,63 +102,25 @@ $(document).ready(function () {
     }
     // ~~
 
-    // Load table first
-    /*$.ajax({
-        url: 'php-controller/ServerHandler.php',
-        type: 'GET',
-        data:{
-          role : "admin"
-        },
-        dataType: 'json'
-    }).done(function(data){
-        createTable(data);
-    }).fail(function () {
-        console.log("Create tree failed");
-    });*/
-    // ~~
 
-    // Create table
+    /**
+     * Create table with data from DB
+     * @param data
+     */
     function createTable(data) {
         $.each(data, function (index, val) {
             console.log(val);
             addUser($("#mytable tbody"), val)
         });
-        //console.log(data);
-
-
-        //$("#mytable tbody").html(data.tbody);
-        //$("#pagination").html(data.pagination);
     }
     // ~~
 
-    /*$(document).on("click", ".pagination>li>a" ,function (e) {
-        e.preventDefault();
-        var shownPage = $(this).html();
-        var pageTitle = $(this).attr("href");
-        console.log(pageTitle);
-        //location.hash = "page="+$(this).html();
-        $.ajax({
-            url: 'php-controller/ServerHandler.php',
-            type: 'GET',
-            data:{
-                role : "admin",
-                page : $(this).html()
-            },
-            dataType: 'json'
-        }).done(function(data){
-            createTable(data);
-            document.title = pageTitle;
-            window.history.pushState({"html":data,"pageTitle":pageTitle},pageTitle, pageTitle);
-        }).fail(function () {
-            console.log("Create tree failed");
-        });
 
-        //window.history.replaceState($(this).html(), "Title", $(this).attr("href"));
-    });*/
-
-
-
-    // Add member
+    /**
+     * Add new user to table
+     * @param root
+     * @param data
+     */
     function addUser(root,data) {
         root.append("<tr id='" + user + data.ID+ "'> " +
             "<td><input type='checkbox' class='checkthis' /> </td> " +
@@ -168,9 +153,9 @@ $(document).ready(function () {
      * @Author Vinh
      */
     function deleteUser() {
-        //$("#" + user + currUserID).remove();
+        $("#" + user + currUserID).remove();
         // Force reload page is the fastest way
-        location.reload();
+        //location.reload();
     }
     // ~~
 
@@ -188,7 +173,10 @@ $(document).ready(function () {
         $("#" + user + data.ID).data(user, data);
     }
 
-    // Delete user triggered by btnDelete onclick()
+
+    /**
+     * Delete user
+     */
     $('#btnDelete').click(function () {
         console.log("Delete");
         $.ajax({
@@ -202,16 +190,21 @@ $(document).ready(function () {
                 }
             }
         }).done(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Delete member successfully");
             deleteUser();
+            $("#delete").modal('hide');
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to delete member");
         });
     });
     // ~~
 
 
-    // Add new relative
+    /**
+     * Add new user
+     */
     $('#btnAdd').click(function () {
 
         var userName = $("#add .userName").val();
@@ -244,17 +237,21 @@ $(document).ready(function () {
             },
             dataType: 'json'
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             addUser($("#mytable tbody"),data[0]);
             $("#add").modal('hide');
             console.log("Add new user successfully");
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to add new user!")
         });
     });
     // ~~
 
 
-    // Update member info
+    /**
+     * Update member info
+     */
     $('#btnUpdate').click(function () {
 
         var userName = $("#edit .userName").val();
@@ -284,9 +281,11 @@ $(document).ready(function () {
             },
             dataType: 'json'
         }).done(function (data) {
+			$('#modal-uploading').modal('hide');
             updateUser(data[0]);
             $("#edit").modal('hide');
         }).fail(function () {
+			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
     });
@@ -314,13 +313,17 @@ $(document).ready(function () {
 
     var currUserID = -1;
 
-    // Open modal trigger this event
+
+    /**
+     * Open modal trigger this event
+     */
     $('.modal').on('show.bs.modal', function (e) {
         // Get memberID of current shown member
-        var $trigger = $(e.relatedTarget);
-        var $userID = $trigger.parents().eq(2).attr('id');
-        currUserID = $userID.substr(user.length);
-
+        try {
+            var $trigger = $(e.relatedTarget);
+            var $userID = $trigger.parents().eq(2).attr('id');
+            currUserID = $userID.substr(user.length);
+        }catch(e){}
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "add" ) {
             return;
@@ -346,7 +349,11 @@ $(document).ready(function () {
     });
     // ~~
 
-
+    /**
+     * Validate email
+     * @param $email
+     * @returns {boolean}
+     */
     function validateEmail($email) {
         var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
         return emailReg.test( $email );

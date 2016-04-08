@@ -14,7 +14,7 @@ else {
 
 <html>
 <head>
-    <title>Tree Demo userID <?php echo $id; ?></title>
+    <title>Tree of user  <?php echo $id; ?></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +62,10 @@ else {
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                            <img src="images/avatar-default.png" 
+							class="img-circle center-block img-responsive memberModalAvatar"
+							width="300px"
+							height="300px"
                                  alt="/*name*/">
                         </a>
                     </div>
@@ -239,7 +242,7 @@ else {
             </div>
             <div class="modal-body">
                 <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
-                     src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
+                     src="images/avatar-default.png"
                      alt="New Avatar">
                 <div class="row" style="margin-top:2em">
                     <div class="col-md-4"></div>
@@ -250,7 +253,7 @@ else {
                 </div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-success" id="btnUploadAvatar" ><span
+                <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
                         class="glyphicon glyphicon-ok-sign"></span> Upload
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span

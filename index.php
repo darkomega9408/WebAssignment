@@ -1,15 +1,3 @@
-<?php
-require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
-require("lib/vendor/firebase/php-jwt/src/JWT.php");
-use Firebase\JWT\JWT;
-if (isset($_COOKIE['token'])) {
-  $token = $_COOKIE['token'];
-  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
-  $personData = (array) $data['data'];
-  if ($personData['role'] == 'admin') header('Location: admin-page.php');
-  else header('Location: tree.php');
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +20,7 @@ if (isset($_COOKIE['token'])) {
                 <h1>GENEALOGY WEBSITE</h1>
                 <p>Connect Generations</p>
                 <div class="login-form">
-                    <form role="form" method="post" action="">
+                    <form role="form" method="post" action="" id="formLogin">
                         <div class="form-group">
                             <input type="text"
                                    class="form-control input-lg"
@@ -203,6 +191,20 @@ if (isset($_COOKIE['token'])) {
 </div>
 <!-- End Modal Add User Detail -->
 
+<!-- Modal Uploading  -->
+<div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
+                     width="100em"
+                     height="100em">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Uploading -->
 
 </body>
 </html>
