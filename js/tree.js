@@ -196,7 +196,10 @@ $(document).ready(function(){
             return;
         }
 
-
+		// Hide error msg
+		$(".error-msg").html("");
+		
+		
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
 			if (currMemberID == 0)
@@ -384,8 +387,8 @@ $(document).ready(function(){
         }
         else if( currMemberID != 0 ){
 			if( !checkChildBirthDate(modal,currMemberID,birthDate) ) {
-				            errMsg= ("Child can't be older than parent");
-            isValid = false;
+				errMsg= ("Child can't be older than parent");
+				isValid = false;
 			}
 
         }
@@ -544,7 +547,7 @@ $(document).ready(function(){
             try {
                 var parentIdSelector = $("#" + member + childId).parents().eq(1).siblings(".membercard").attr("id");
 
-                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").birthDate.substr(0, 10);
+                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").BirthDate.substr(0, 10);
             } catch (e) {
                 // It occurred when we modify the root member
             }
@@ -555,11 +558,16 @@ $(document).ready(function(){
 
         // Compare
         // If ( child older parent || child smaller than one of each grandchildren )=> return false
-        if (childBirthDate <= parentBirthDate || !checkParentOlderThanAllChildren(childId,childBirthDate)) // Invalid case
+        if (childBirthDate <= parentBirthDate ) // Invalid case
         {
             console.log("Parent must be older than child  ");
             isValid =  false;
         }
+		else if( modal == "edit" && !checkParentOlderThanAllChildren(childId,childBirthDate) )
+		{
+			console.log("Parent must be older than child  ");
+            isValid =  false;
+		}
 
         return isValid;
     }
