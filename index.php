@@ -1,3 +1,17 @@
+<?php
+require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("lib/vendor/firebase/php-jwt/src/JWT.php");
+use Firebase\JWT\JWT;
+if (isset($_COOKIE['token'])) {
+  $token = $_COOKIE['token'];
+  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+  $personData = (array) $data['data'];
+  $id = $personData['id'];
+  $role = $personData['role'];
+  if ($role == 'admin') header('Location: admin-page.php');
+  else header('Location: tree.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

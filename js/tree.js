@@ -36,7 +36,7 @@ $(document).ready(function(){
     })*/
 
     // Load member card from another file and assign to '@memberCardObj'
-    $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
+    $('.tree').load('templates/membercard/membercard.html .membercard', function () {
         memberCardObj = $(this).clone();
         $(this).html('');
     });
@@ -198,8 +198,8 @@ $(document).ready(function(){
 
 		// Hide error msg
 		$(".error-msg").html("");
-		
-		
+
+
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
 			if (currMemberID == 0)

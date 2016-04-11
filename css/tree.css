@@ -8,7 +8,7 @@ body{
 
 .tree{
     height: 100%;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 .tree ul {

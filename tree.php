@@ -62,7 +62,7 @@ else {
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png" 
+                            <img src="images/avatar-default.png"
 							class="img-circle center-block img-responsive memberModalAvatar"
 							width="300px"
 							height="300px"
@@ -303,7 +303,9 @@ else {
       $('[data-toggle="tooltip"]').show();
     }
 </script>
-<input style="position:fixed; z-index:10000;" id = "clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+<div style="position:fixed; z-index:10000;">
+  <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+</div>
 
 
 
