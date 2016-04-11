@@ -2,25 +2,6 @@
 $(document).ready(function () {
     var user = "user";
 
-    
-    /**
-     * Load header
-     */
-    $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
-        // Change logo relative path
-        $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
-
-        $(document).on('click', '#hrefLogOut', function() {
-            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-            window.location = '/';
-        })
-
-        // Change role in navbar
-        $("#navbar-user-name").prepend("Hi, Admin");
-    });
-    // ~~
-
-
     /**
      * Load all users
      */

@@ -7,27 +7,6 @@ $(document).ready(function(){
     var token = getCookie('token');
 
     /**
-     *  Load header - navbar from file
-     */
-    $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
-        // Change logo relative path
-        $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
-
-        // Change role & append new caret
-        $("#navbar-user-name").prepend("Hi, User "+$("header").attr("data-id"));
-        /*var authStr = atob(getCookie("giaphaauth"));
-        var userName = authStr.split(":")[0];
-        $("#navbar-user-name").prepend("Hi, "+ userName);*/
-
-        // Expire token until ...
-        $(document).on('click', 'a[href="#exit"]', function() {
-            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-            window.location = '/';
-        })
-    });
-    // ~~
-
-    /**
      * Log out
      */
     /*$(document).on("click", "#hrefLogOut", function() {
