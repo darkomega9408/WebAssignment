@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Card Demo</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/member-card.css" rel="stylesheet">
+    <link href="../../css/member-modal.css" rel="stylesheet">
+    <script src="../../js/jquery-2.2.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/membercard.js"></script>
+</head>
+<body>
+
+
+<!-- membercard -->
+<div class ='membercard-wrapper'>
+    <div class="membercard panel panel-default text-center">
+        <div class="panel-body">
+            <div class="member-avatar">
+                <img src="" class="img-rounded img-responsive memberAvatar" alt="/*AVATAR*/">
+            </div>
+            <div class="info">
+                <strong class="memberName">Nguyễn Xuân Thái</strong>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class = 'member-modal-wrapper'>
+    <!-- Member-info-modal -->
+    <div id="modal-edit-user" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Someone's Information</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="member-modal-avatar">
+                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
+                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                 alt="/*name*/">
+                        </a>
+                    </div>
+
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Name: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                          value="Nguyễn Xuân Thái" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Gender: </label>
+                            <div class="col-sm-10">
+                                <select class="memberModalGender form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female" selected>Female</option>
+                                    <option value="undefined">Undefined</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Date of birth: </label>
+                            <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
+                                                          value="October 29, 1994" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Address: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                          value="Too long, lazy to type" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Birthplace: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                          value="HCMC"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Status: </label>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked id="edit-radio-alive">
+                            <label for="edit-radio-alive">Alive</label></span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead" id="edit-radio-dead">
+                            <label for="edit-radio-dead">Dead</label></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnUpdate"><span
+                            class="glyphicon glyphicon-upload"></span> Update
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ~~ Member-info-modal -->
+
+
+    <div id="modal-add-user" class="modal fade" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="member-modal-avatar">
+                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
+                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                 alt="/*name*/">
+                        </a>
+                    </div>
+
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Name: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                          placeholder="Enter Name here..." required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">Gender: </label>
+                            <div class="col-sm-10">
+                                <select class="memberModalGender form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female" selected>Female</option>
+                                    <option value="undefined">Undefined</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Date of birth: </label>
+                            <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control" required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Address: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                          placeholder="Enter Addess here..." required></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Birthplace: </label>
+                            <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                          placeholder="Enter Birthplace here..."></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Status: </label>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive" checked id="add-radio-alive">
+                            <label for="add-radio-alive">Alive</label></span>
+                        <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead" id="add-radio-dead">
+                            <label for="add-radio-dead">Dead</label></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAdd"><span
+                            class="glyphicon glyphicon-plus"></span> Add
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove"></span> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Delete  -->
+    <div class="modal fade" id="modal-delete-user" tabindex="-1" role="dialog" aria-labelledby="edit"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align Heading">Delete this entry</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure
+                        you want to delete this member?
+                    </div>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-success" id="btnDelete" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-ok-sign"></span> Yes
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove"></span> No
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ~~ Modal Delete -->
+
+<!-- Modal Upload Avatar  -->
+<div class="modal fade" id="modal-upload-avatar" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align Heading">Change Avatar</h4>
+            </div>
+            <div class="modal-body">
+                <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
+                     src="https://image.freepik.com/free-icon/user-male-shape-in-a-circle--ios-7-interface-symbol_318-35357.png"
+                     alt="New Avatar">
+                <div class="row" style="margin-top:2em">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <input type="file" id="file-input">
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-ok-sign"></span> Upload
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove"></span> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Upload Avatar -->
+
+<!-- Modal Uploading  -->
+<div class="modal fade" id="modal-uploading" tabindex="-1" role="dialog" aria-labelledby="edit"
+     aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img class="center-block" id="imgUploading" src="http://www.bis.org/img/uploading.gif" alt="Uploading..."
+                     width="100em"
+                     height="100em">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ~~ Modal Uploading -->
+</div>
+
+</body>
+</html>
