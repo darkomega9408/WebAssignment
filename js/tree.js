@@ -7,27 +7,6 @@ $(document).ready(function(){
     var token = getCookie('token');
 
     /**
-     *  Load header - navbar from file
-     */
-    $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
-        // Change logo relative path
-        $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
-
-        // Change role & append new caret
-        $("#navbar-user-name").prepend("Hi, User "+$("header").attr("data-id"));
-        /*var authStr = atob(getCookie("giaphaauth"));
-        var userName = authStr.split(":")[0];
-        $("#navbar-user-name").prepend("Hi, "+ userName);*/
-
-        // Expire token until ...
-        $(document).on('click', 'a[href="#exit"]', function() {
-            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-            window.location = '/';
-        })
-    });
-    // ~~
-
-    /**
      * Log out
      */
     /*$(document).on("click", "#hrefLogOut", function() {
@@ -36,7 +15,7 @@ $(document).ready(function(){
     })*/
 
     // Load member card from another file and assign to '@memberCardObj'
-    $('.tree').load('templates/card-demo/membercard-demo.html .membercard', function () {
+    $('.tree').load('templates/membercard/membercard.html .membercard', function () {
         memberCardObj = $(this).clone();
         $(this).html('');
     });
@@ -198,8 +177,8 @@ $(document).ready(function(){
 
 		// Hide error msg
 		$(".error-msg").html("");
-		
-		
+
+
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
 			if (currMemberID == 0)

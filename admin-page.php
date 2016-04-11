@@ -12,7 +12,7 @@ else {
     echo 'You are not allowed here';
     exit;
   }
-  $id = $personData['id'];
+  $name = $personData['name'];
 }
 ?>
 
@@ -52,6 +52,7 @@ else {
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
     <script src="js/admin-page.js"></script>
+    <script src="js/navbar.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
@@ -62,7 +63,9 @@ else {
 
 <!-- Navigation -->
 <header>
-
+  <?php
+    include 'templates/nav-bar/nav-bar.php';
+  ?>
 </header>
 <!-- Full Width Image Header -->
 

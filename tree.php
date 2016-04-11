@@ -7,14 +7,14 @@ else {
   $token = $_COOKIE['token'];
   $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
   $personData = (array) $data['data'];
-  $id = $personData['id'];
+  $name = $personData['name'];
 }
 ?>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Tree of user  <?php echo $id; ?></title>
+    <title><?php echo $name; ?>'s tree</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +35,7 @@ else {
     <script src="js/membercard.js"></script>
     <script src="js/cookie-management.js"></script>
     <script src="js/tree.js"></script>
+    <script src="js/navbar.js"></script>
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
     <script src="js/render/html2canvas.js"></script>
@@ -43,7 +44,11 @@ else {
 <body>
 
 
-<header data-id="<?php echo $id ?>"></header>
+<header>
+  <?php
+    include 'templates/nav-bar/nav-bar.php';
+  ?>
+</header>
 
 
 <div class="tree" style="margin-top:5em">
@@ -62,7 +67,7 @@ else {
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png" 
+                            <img src="images/avatar-default.png"
 							class="img-circle center-block img-responsive memberModalAvatar"
 							width="300px"
 							height="300px"
@@ -303,7 +308,9 @@ else {
       $('[data-toggle="tooltip"]').show();
     }
 </script>
-<input style="position:fixed; z-index:10000;" id = "clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+<div style="position:fixed; z-index:10000;">
+  <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+</div>
 
 
 

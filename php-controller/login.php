@@ -10,13 +10,14 @@
     $numRows = $conn->query("SELECT COUNT(*) FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetchColumn();
     if ($numRows == 0) echo json_encode(array('status' => 'user_not_found'));
     else {
-      $res = $conn->query("SELECT ID, Role FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetch(PDO::FETCH_ASSOC);
+      $res = $conn->query("SELECT ID, Role, Name FROM `person` WHERE Username = '$username' AND Password = '$password'")->fetch(PDO::FETCH_ASSOC);
 
       $data = [
         'iss'  => 'localhost',
         'data' => [
             'id'   => $res['ID'],
-            'role' => $res['Role']
+            'role' => $res['Role'],
+            'name' => $res['Name']
         ]
       ];
       $token = JWT::encode($data, Token::$jwt_key, 'HS512');
