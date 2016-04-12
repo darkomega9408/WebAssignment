@@ -21,7 +21,7 @@
         ]
       ];
       $token = JWT::encode($data, Token::$jwt_key, 'HS512');
-      echo json_encode(array('status' => 'login_success', 'token' => $token, 'role' => $res['Role']));
+      echo json_encode(array('status' => 'login_success', 'token' => $token, 'role' => $res['Role'] , 'id' => $res['ID']));
     }
   } catch (Exception $e) {
     echo $e->getMessage();

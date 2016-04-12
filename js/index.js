@@ -12,8 +12,8 @@ $(document).ready(function(){
             $('#modal-uploading').modal('hide');
             if (res.status == 'login_success') {
                 setCookie('token', res.token, 30);
-                if (res.role == 'user') window.location = 'tree.php';
-                else window.location = 'admin-page.php';
+                if (res.role == 'user') location.href = 'tree.php'+ '?userid=' + res.id;
+                else location.href = 'admin-page.php'+ '?userid=' + res.id;
             }
         }).fail(function(err) {
             $('#modal-uploading').modal('hide');
