@@ -4,11 +4,11 @@ $(document).ajaxComplete(function () {
     //
     // General
     $('.effect-winston p a').attr({
-        'data-toggle':'tooltip',
-        'data-placement' : 'bottom'
+        /*'data-toggle':'tooltip',
+        'data-placement' : 'right'*/
     });
     
-    // Edit tooltip
+    /*// Edit tooltip
     $('.effect-winston p a:nth-child(1)').attr('title','Edit');
 
     // Add Relative tooltip
@@ -16,7 +16,7 @@ $(document).ajaxComplete(function () {
 
     // Delete tooltip
     $('.effect-winston p a:nth-child(3)').attr('title','Delete');
-    /* ~~~ */
+    /!* ~~~ *!/*/
 
     // Enable tooltip
     $('[data-toggle="tooltip"]').tooltip();

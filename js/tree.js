@@ -13,26 +13,6 @@ $(document).ready(function(){
 
     
 
-    /**
-     *  Load header - navbar from file
-     */
-    $("header").load("templates/nav-bar-demo/nav-bar.html .navbar", function () {
-        // Change logo relative path
-        $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
-
-        // Change role & append new caret
-        $("#navbar-user-name").prepend("Hi, User "+$("header").attr("data-id"));
-        /*var authStr = atob(getCookie("giaphaauth"));
-         var userName = authStr.split(":")[0];
-         $("#navbar-user-name").prepend("Hi, "+ userName);*/
-
-        // Expire token until ...
-        $(document).on('click', 'a[href="#exit"]', function() {
-            document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-            window.location = '/';
-        })
-    });
-    // ~~
 
 
     // Load member card from another file and assign to '@memberCardObj'
@@ -58,6 +38,7 @@ $(document).ready(function(){
         try {
             var $trigger = $(e.relatedTarget);
             var $memberID = $trigger.parents().eq(3).attr('id');
+            //var $memberID = $trigger.attr('id');
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
@@ -284,10 +265,14 @@ $(document).ready(function(){
 
         // Set avatar if any or leave default
         if(data.Alive == 0){
-            memberCard.css('background-image','url(images/watermark.png)');
+            //memberCard.css('background-image','url(images/watermark.png)');
             memberCard.css('background-repeat','no-repeat');
+            memberCard.css('background-color', '#9E9E9E');
         }
         else{
+            if ( data.Gender == 'female' )
+                memberCard.css('background-color', '#F06292');
+            else memberCard.css('background-color', '#64B5F6');
             memberCard.css('background-image','');
             memberCard.css('background-repeat','no-repeat');
         }

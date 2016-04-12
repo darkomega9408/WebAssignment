@@ -18,8 +18,8 @@
 
 
 <!-- membercard -->
-<div class ='membercard-wrapper'>
-    <div class="membercard panel panel-default text-center">
+<div class ='membercard-wrapper' >
+    <div class="membercard panel panel-default text-center effect-winston" >
         <div class="panel-body">
             <div class="member-avatar">
                 <img src="" class="img-rounded img-responsive memberAvatar" alt="/*AVATAR*/">
@@ -27,12 +27,17 @@
             <div class="info">
                 <strong class="memberName">Nguyễn Xuân Thái</strong>
             </div>
+            <p>
+                <a href="#"><i class="fa fa-fw fa-pencil-square-o fa-2x"></i><span>Edit</span></a>
+                <a href="#"><i class="fa fa-fw fa-plus fa-2x"></i><span>Add</span></a>
+                <a href="#"><i class="fa fa-fw fa-times fa-2x"></i><span>Delete</span></a>
+            </p>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
 
-<div class = 'member-modal-wrapper'>
+<div class = 'member-modal-wrapper' >
     <!-- Member-info-modal -->
     <div id="modal-edit-user" class="modal fade" role="dialog" data-backdrop="static">
         <div class="modal-dialog">
@@ -90,6 +95,12 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnAdd"><span
+                            class="glyphicon glyphicon-upload"></span> Update
+                    </button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="btnDelete"><span
+                            class="glyphicon glyphicon-upload"></span> Update
+                    </button>
                     <button type="button" class="btn btn-success" data-dismiss="modal" id="btnUpdate"><span
                             class="glyphicon glyphicon-upload"></span> Update
                     </button>
