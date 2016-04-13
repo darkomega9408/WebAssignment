@@ -1,7 +1,6 @@
 $(document).ready(function(){
     $('.login-form').submit(function(e) {
         e.preventDefault();
-        $('#modal-uploading').modal('show');
         var username = $('#inputUsername').val();
         var password = $('#inputPassword').val();
         $.ajax({
