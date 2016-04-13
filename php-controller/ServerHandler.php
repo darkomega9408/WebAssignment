@@ -47,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $userHandler->deleteMember($sentData);
             else if ( $_GET['operation'] == "changeAvatar")
                 $userHandler->uploadAvatar($sentData);
+            else if ( $_GET['operation'] == "loadAvatar")
+                $userHandler->loadAvatar($sentData);
         }
         else $userHandler->getAllMembers($id);
 

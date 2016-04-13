@@ -34,16 +34,38 @@ class UserHandler
 			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive']."','" .$data['Avatar']."')";
 
         // use exec() because no results are returned
-        $this->conn->exec($sql);
+        //$this->conn->exec($sql);
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt->execute()) {
+            $sql = "SELECT MemberID FROM member ORDER BY MemberID DESC LIMIT 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $memberID = $stmt->fetchAll()[0][0];
+
+            $xml = new DOMDocument();
+            $xml_avatars = $xml->createElement("avatars");
+            $xml_initAvatar = $xml->createElement("avatar");
+            $xml_initAvatar->nodeValue = $data['Avatar'];
+            $xml_avatars->appendChild($xml_initAvatar);
+            for ($i = 1; $i <= 4; $i++) {
+                $xml_avatar = $xml->createElement("avatar");
+                $xml_avatar->nodeValue = "empty";
+                $xml_avatars->appendChild($xml_avatar);
+            }
+            $xml->appendChild($xml_avatars);
+            $xml->save('../member_avatar/' . $memberID . '.xml');
+        }
 
         // return new inserted member as JSON
         $this->getMember($userID,$this->conn->lastInsertId());
+
     }
 
     public function deleteMember($data)
     {
         $sql = "DELETE FROM `member` WHERE `UserID`= ".$data['UserID']." AND `MemberID`=". $data['MemberID'];
         $this->conn->exec($sql);
+        unlink('../member_avatar/' . $data['MemberID'] . '.xml');
         echo "Success";
     }
 
@@ -62,6 +84,13 @@ class UserHandler
     {
         $sql = "UPDATE `member` SET `Avatar`='". $data['Avatar'] ."' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
         $this->conn->exec($sql);
+
+        $memberID = $data["MemberID"];
+        $xml = new DOMDocument();
+        $xml->load('../member_avatar/' . $memberID . '.xml');
+        $xml->getElementsByTagName("avatar")[$data["AvatarID"]]->nodeValue=$data['Avatar'];
+        $xml->save('../member_avatar/' . $memberID . '.xml');
+
         $this->getMember($data['UserID'],$data['MemberID']);
     }
 
@@ -74,5 +103,13 @@ class UserHandler
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $result = $stmt->fetchAll();
         echo json_encode($result);
+    }
+
+    public function loadAvatar($data)
+    {
+        $memberID = $data["MemberID"];
+        $xml = new DOMDocument();
+        $xml->load('../member_avatar/' . $memberID . '.xml');
+        echo $xml->saveXML();
     }
 }

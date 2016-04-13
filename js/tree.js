@@ -45,12 +45,22 @@ $(document).ready(function(){
             if ($(this).attr("id") == "modal-add-user")
                 currMemberID = 0;
             var $trigger = $(e.relatedTarget);
-            var modalFather = $trigger.parents().eq(5);
-            if (modalFather.attr("id") == "modal-add-user")
+            var modalFather = $trigger.parents().eq(8);
+            if (modalFather.attr("id") == "modal-add-user") {
+                console.log("WWWTTFFFF");
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
+            }
             else {
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 0);
             }
+
+            if ($(this).attr("id") == "modal-upload-avatar") {
+                if (modalFather.attr("id") == "modal-edit-user") {
+                    var avatarID = $trigger.children().eq(0).attr("class").split(" ")[3].substr(-1);
+                    $(this).find("#btnUploadAvatar").attr("data-avatarid", avatarID);
+                }
+            }
+
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
             return;
         }
@@ -75,7 +85,27 @@ $(document).ready(function(){
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         console.log(memberinfo);
         $("#modal-edit-user .modal-title").html(memberinfo.Name + " Information");
-        $("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.Avatar);
+        //$("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.Avatar);
+        $.ajax({
+            url: 'php-controller/ServerHandler.php',
+            type: 'GET',
+            data: {
+                role: "user",
+                operation: "loadAvatar",
+                sentData: {
+                    MemberID: currMemberID
+                }
+            }
+        }).done(function(xmldata) {
+            var avatars = $(xmldata).find("avatar");
+            $(avatars).each(function (index, val) {
+                if (val.childNodes[0].data != "empty")
+                    $("#modal-edit-user .memberModalAvatar" + index).attr("src", val.childNodes[0].data);
+            })
+
+        }).fail(function(err) {
+            console.log(err);
+        });
         $("#modal-edit-user .memberModalName").val( memberinfo.Name);
         $("#modal-edit-user .memberModalGender").val(memberinfo.Gender);
         $("#modal-edit-user .memberModalBirthDate").val( memberinfo.BirthDate.substring(0, 10));
@@ -161,7 +191,7 @@ $(document).ready(function(){
             $("#modal-add-user").modal('hide');
 
             // If tree has only one child => do reload page
-            if (currMemberID == 0)
+            //if (currMemberID == 0)
                 window.location.reload();
 
             // Set width for tree
@@ -278,8 +308,32 @@ $(document).ready(function(){
         }
 
         // Set default avatar
-        if( data.Avatar != null )
-            memberCard.find(".memberAvatar").attr("src", data.Avatar);
+/*        if( data.Avatar != null )
+            memberCard.find(".memberAvatar").attr("src", data.Avatar);*/
+
+        $.ajax({
+            url: 'php-controller/ServerHandler.php',
+            type: 'GET',
+            data: {
+                role: "user",
+                operation: "loadAvatar",
+                sentData: {
+                    MemberID: data.MemberID
+                }
+            }
+        }).done(function(xmldata) {
+            //console.log($(data).find("avatar")[0].childNodes[0]);
+            var avatars = $(xmldata).find("avatar");
+            if (avatars.length > 0 && avatars[0].childNodes[0].data != "empty")
+                memberCard.find(".memberAvatar").attr("src", avatars[0].childNodes[0].data);
+            else
+                memberCard.find(".memberAvatar").attr("src", data.Avatar);
+
+
+        }).fail(function(err) {
+            console.log(err);
+        });
+
         memberCard.find('.memberName').html(data.Name);
         memberCard.find('.memberBirthDate').html(data.BirthDate);
         memberCard.find('.memberBirthPlace').html(data.BirthPlace);
@@ -486,6 +540,7 @@ $(document).ready(function(){
      */
     var imgUrl = "";
     var memberUploadAvatarId;
+    var avatarId;
 
     $('#file-input').change(function(e) {
 
@@ -508,7 +563,6 @@ $(document).ready(function(){
                 canvas.width = this.width;
                 canvas.height = this.height;
                 context.drawImage(this, 0, 0);
-                console.log("DATAURL: " + canvas.toDataURL());
                 imgUrl = canvas.toDataURL().replace(/^data:image\/(png|jpg);base64,/, "");
             })
         }
@@ -548,17 +602,19 @@ $(document).ready(function(){
                         role: "user",
                         Avatar : data.data.link,
                         UserID : 2,
-                        MemberID : memberUploadAvatarId
+                        MemberID : memberUploadAvatarId,
+                        AvatarID: avatarId
                     }
                 },
                 dataType: 'json'
             }).done(function (data) {
-                $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
-                $("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
+                if (avatarId == 0)
+                    $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
+                $("#modal-edit-user .memberModalAvatar" + avatarId).attr("src", imgLink);
                 $("#mem" + memberUploadAvatarId).data("memberinfo", data);
                 $('#modal-uploading').modal('hide');
-            }).fail(function () {
-                console.log("Failed to upload avatar !")
+            }).fail(function (err) {
+                console.log(err);
             });
         }
     }
@@ -569,6 +625,7 @@ $(document).ready(function(){
      */
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
+        avatarId = $(this).attr("data-avatarid");
         var isAddMem = $(this).attr("data-addmem");
         $.ajax({
             url: "https://api.imgur.com/3/upload",

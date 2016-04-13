@@ -4,10 +4,10 @@ require("lib/vendor/firebase/php-jwt/src/JWT.php");
 use Firebase\JWT\JWT;
 if (!isset($_COOKIE['token'])) header('Location: index.php');
 else {
-  $token = $_COOKIE['token'];
-  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
-  $personData = (array) $data['data'];
-  $name = $personData['name'];
+    $token = $_COOKIE['token'];
+    $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+    $personData = (array) $data['data'];
+    $name = $personData['name'];
 }
 ?>
 <!DOCTYPE html>
@@ -45,9 +45,9 @@ else {
 
 
 <header>
-  <?php
+    <?php
     include 'templates/nav-bar/nav-bar.php';
-  ?>
+    ?>
 </header>
 
 
@@ -66,13 +66,76 @@ else {
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
-                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png"
-							class="img-circle center-block img-responsive memberModalAvatar"
-							width="300px"
-							height="300px"
-                                 alt="/*name*/">
-                        </a>
+                        <!--                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
+                                                    <img src="images/avatar-default.png"
+                                                    class="img-circle center-block img-responsive memberModalAvatar"
+                                                    width="300px"
+                                                    height="300px"
+                                                         alt="/*name*/">
+                                                </a>-->
+
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                <li data-target="#myCarousel" data-slide-to="3"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar0"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar1"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar2"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar3"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
 
                     <form role="form" class="form-horizontal">
@@ -143,52 +206,59 @@ else {
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
-                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
-                                 alt="/*name*/">
-                        </a>
+                        <div>
+                            <div>
+                                <div>
+                                    <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
+                                        <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                          placeholder="Enter Name here..." required></div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                      placeholder="Enter Name here..." required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2">Gender: </label>
+                        <div class="col-sm-10">
+                            <select class="memberModalGender form-control">
+                                <option value="male">Male</option>
+                                <option value="female" selected>Female</option>
+                                <option value="undefined">Undefined</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Gender: </label>
-                            <div class="col-sm-10">
-                                <select class="memberModalGender form-control">
-                                    <option value="male">Male</option>
-                                    <option value="female" selected>Female</option>
-                                    <option value="undefined">Undefined</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
-                            <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
-                                                          required></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Address: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                          placeholder="Enter Addess here..." required></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
-                                                          placeholder="Enter Birthplace here..."></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Status: </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                        <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
+                                                      required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Address: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                      placeholder="Enter Addess here..." required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                        <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                      placeholder="Enter Birthplace here..."></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status: </label>
                                     <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
                                                                       checked id="add-radio-alive">
                                         <label for="add-radio-alive">Alive</label></span>
                                     <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
                                                                       id="add-radio-dead">
                                         <label for="add-radio-dead">Dead</label></span>
-                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -288,28 +358,28 @@ else {
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
 <script type="text/javascript">
     function clone(){
-      $('header').hide();
-      $('#clone').hide();
-      $('[data-toggle="tooltip"]').hide();
-      $('.membercard img').css('border','0px solid white');
-      html2canvas(document.body, {
-        onrendered: function(canvas) {
-          var a = document.createElement('a');
-          a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-          a.download = 'somefilename.jpg';
-          a.click();
-        },
-        useCORS: true,
-        background: 'white'
-      });
-      $('.membercard img').css('border','');
-      $('#clone').show();
-      $('header').show();
-      $('[data-toggle="tooltip"]').show();
+        $('header').hide();
+        $('#clone').hide();
+        $('[data-toggle="tooltip"]').hide();
+        $('.membercard img').css('border','0px solid white');
+        html2canvas(document.body, {
+            onrendered: function(canvas) {
+                var a = document.createElement('a');
+                a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+                a.download = 'somefilename.jpg';
+                a.click();
+            },
+            useCORS: true,
+            background: 'white'
+        });
+        $('.membercard img').css('border','');
+        $('#clone').show();
+        $('header').show();
+        $('[data-toggle="tooltip"]').show();
     }
 </script>
 <div style="position:fixed; z-index:10000;">
-  <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+    <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
 </div>
 
 
