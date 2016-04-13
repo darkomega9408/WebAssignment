@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('.login-form').submit(function(e) {
         e.preventDefault();
+        $('#modal-uploading').modal('show');
         var username = $('#inputUsername').val();
         var password = $('#inputPassword').val();
         $.ajax({
@@ -10,10 +11,14 @@ $(document).ready(function(){
             dataType: 'json'
         }).done(function(res) {
             $('#modal-uploading').modal('hide');
+            $('#warning').text('');
             if (res.status == 'login_success') {
                 setCookie('token', res.token, 30);
                 if (res.role == 'user') location.href = 'tree.php'+ '?userid=' + res.id;
                 else location.href = 'admin-page.php'+ '?userid=' + res.id;
+            }
+            else if (res.status == 'user_not_found') {
+                $('#warning').text('Username or password is incorrect');
             }
         }).fail(function(err) {
             $('#modal-uploading').modal('hide');
@@ -77,4 +82,3 @@ $(document).ready(function(){
         });
     });
 });
-

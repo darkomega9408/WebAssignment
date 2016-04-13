@@ -49,6 +49,7 @@ if (isset($_COOKIE['token'])) {
                                    id="inputPassword"
                                    name="password" required/>
                         </div>
+                        <label id="warning"></label>
                         <div class="form-group">
                             <button type="submit"
                                     class="btn btn-primary form-control input-lg">
