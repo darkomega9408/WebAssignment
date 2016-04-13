@@ -13,8 +13,10 @@ $(document).ready(function(){
             $('#warning').text('');
             if (res.status == 'login_success') {
                 setCookie('token', res.token, 30);
-                if (res.role == 'user') location.href = 'tree.php'+ '?userid=' + res.id;
-                else location.href = 'admin-page.php'+ '?userid=' + res.id;
+                if (res.role == 'user' || res.role == 'guest')
+                    document.location.href = 'tree.php';
+                else document.location.href = 'admin-page.php';
+                console.log(document.location.href);
             }
             else if (res.status == 'user_not_found') {
                 $('#warning').text('Username or password is incorrect');

@@ -27,19 +27,19 @@ $(document).ajaxComplete(function () {
     });
 
     /* Click icon EDIT open modal  */
-    $('.effect-winston p a:nth-child(1) i').attr({
+    $('.effect-winston p a:nth-child(1)').attr({
         'data-toggle':'modal',
         'data-target':'#modal-edit-user'
     });
 
     /* Click icon ADD RELATIVE open modal */
-    $('.effect-winston p a:nth-child(2) i').attr({
+    $('.effect-winston p a:nth-child(2)').attr({
         'data-toggle':'modal',
         'data-target':'#modal-add-user'
     });
 
     /* Click icon DELETE open modal */
-    $('.effect-winston p a:nth-child(3) i').attr({
+    $('.effect-winston p a:nth-child(3)').attr({
         'data-toggle':'modal',
         'data-target':'#modal-delete-user'
     });
