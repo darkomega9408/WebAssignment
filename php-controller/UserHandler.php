@@ -18,7 +18,7 @@ class UserHandler
 
     public function getAllMembers($data)
     {
-        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Avatar, Alive FROM `member` WHERE UserID = $data");
+        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive FROM `member` WHERE UserID = $data");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -29,9 +29,9 @@ class UserHandler
         $userID = $data['UserID'];
         $father = $data['Father'];
 		if ($father == 0)
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive']."','" .$data['Avatar']."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
 		else
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive']."','" .$data['Avatar']."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
 
         // use exec() because no results are returned
         //$this->conn->exec($sql);
@@ -71,7 +71,7 @@ class UserHandler
 
     public function updateMember($data)
     {
-        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']."',`Avatar`='". $data['Avatar'] ."' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
