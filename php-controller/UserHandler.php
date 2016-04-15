@@ -82,9 +82,6 @@ class UserHandler
 
     public function uploadAvatar($data)
     {
-        $sql = "UPDATE `member` SET `Avatar`='". $data['Avatar'] ."' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
-        $this->conn->exec($sql);
-
         $memberID = $data["MemberID"];
         $xml = new DOMDocument();
         $xml->load('../member_avatar/' . $memberID . '.xml');
