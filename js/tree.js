@@ -11,7 +11,7 @@ $(document).ready(function(){
      * LOAD SOME COMMON FILE : NAVBAR , MEMBERCARD
      */
 
-    
+
 
 
 
@@ -365,8 +365,6 @@ $(document).ready(function(){
     var createTree = function (data) {
         var nbrNode = data.length;
 
-        // Set width for tree
-        $(".tree").width((data.length * 30) + "em");
 
         // Add Root node ( if any )
         if( nbrNode <= 0 ) return;
@@ -378,6 +376,12 @@ $(document).ready(function(){
         // Add Child node
         for(i = 1 ; i< nbrNode ; ++i)
             addMember(data[i]);
+
+
+        // Set width for tree
+        var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
+        console.log(numOfLeaf);
+        $(".tree").width((numOfLeaf * 170) + "px");
     };
     // ~~
 
