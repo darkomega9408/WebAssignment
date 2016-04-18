@@ -58,11 +58,12 @@ else {
     <link rel="stylesheet" type="text/css" href="css/border-effect.css"/>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
+
 <!--    <script src="js/admin-page.js"></script>-->
     <script type="text/javascript" src="js/navbar.js"></script>
     <script type="text/javascript" src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <script type="text/javascript" src="js/common.js"></script>
 
     <!--  Dynamically load js file corresponding to role , such as : admin or user  -->
     <script>

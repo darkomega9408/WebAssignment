@@ -124,7 +124,7 @@ $(document).ready(function () {
             "</tr>");
 
         // Cache user info
-        $("#" + user + data.id).data(user, data);
+        $("#" + user + data.ID).data(user, data);
 
         // Force reload page is the fastest way
         //location.reload();
@@ -195,10 +195,10 @@ $(document).ready(function () {
         var userID = $("#add .userID").val();
         var userPassword = $("#add .userPassword").val();
         var userEmail = $("#add .userEmail").val();
-        if( !validateEmail(userEmail) || userName == "" || userID=="" || userPassword== "" || userEmail == "" ) {
-            $("#add .error-msg").html("Some fields are invalid. Please try again!");
+
+        // Validate step here
+        if ( !validateModal("add",userName,userPassword,userPassword,userEmail) )
             return;
-        }else $("#modal-edit-user .error-msg").html();
 
         var name = $("#add .name").val();
 
@@ -242,10 +242,10 @@ $(document).ready(function () {
         var userID = $("#edit .userID").val();
         var userEmail = $("#edit .userEmail").val();
         var name = $("#edit .name").val();
-        if( !validateEmail(userEmail) || userID == "" || userName == "") {
-            $("#edit .error-msg").html("Some fields are invalid. Please try again!");
+
+        // Validate step here
+        if ( !validateModal("edit",userName,"","",userEmail) )
             return;
-        }else $("#edit .error-msg").html();
 
 
         var sentData = {
@@ -316,7 +316,6 @@ $(document).ready(function () {
         // Assign some basic info to modal before display to user
         try {
             var userInfo = $("#" + user + currUserID).data(user);
-            //console.log("UserInfo: \n" + userInfo);
             $("#edit .userID").val(userInfo.ID);
             $("#edit .userName").val(userInfo.Username);
             $("#edit .userEmail").val(userInfo.Email);
@@ -324,7 +323,6 @@ $(document).ready(function () {
         }
         catch(err) {
             var userObj = $("#" + user + currUserID + " td");
-            //console.log("UserObj: \n" + userObj);
             $("#edit .userID").val(userObj.eq(1).html());
             $("#edit .userName").val(userObj.eq(2).html());
             $("#edit .userEmail").val(userObj.eq(3).html());
@@ -333,13 +331,4 @@ $(document).ready(function () {
     });
     // ~~
 
-    /**
-     * Validate email
-     * @param $email
-     * @returns {boolean}
-     */
-    function validateEmail($email) {
-        var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
-        return emailReg.test( $email );
-    }
 });

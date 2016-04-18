@@ -55,7 +55,7 @@ $(document).ready(function(){
         // Get memberID of current shown member : in EDIT modal
         try {
             var $trigger = $(e.relatedTarget);
-            var $memberID = $trigger.parents().eq(2).attr('id');
+            var $memberID = $trigger.parents().eq(3).attr('id');
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
@@ -95,7 +95,7 @@ $(document).ready(function(){
         }
         // Change title of UPLOAD AVATAR modal
         else if(  $(this).attr("id") != "modal-upload-avatar"){
-            $("#modal-upload-avatar .modal-title").html("Change Avatar");
+            $("#modal-upload-avatar .modal-title").html("Upload Image");
         }
 
         // Assign some basic info to modal before display to user

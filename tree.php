@@ -40,6 +40,7 @@ else {
     <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script src="js/search.js"></script>
     <script src="js/render/html2canvas.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
 
 </head>
 <body>

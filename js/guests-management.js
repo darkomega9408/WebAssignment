@@ -128,7 +128,7 @@ $(document).ready(function () {
             "</tr>");
 
         // Cache user info
-        $("#" + user + data.id).data(user, data);
+        $("#" + user + data.ID).data(user, data);
 
         // Force reload page is the fastest way
         //location.reload();
@@ -199,10 +199,10 @@ $(document).ready(function () {
         var userID = $("#add .userID").val();
         var userPassword = $("#add .userPassword").val();
         var userEmail = $("#add .userEmail").val();
-        if( !validateEmail(userEmail) || userName == "" || userID=="" || userPassword== "" || userEmail == "" ) {
-            $("#add .error-msg").html("Some fields are invalid. Please try again!");
+
+        // Validate step here
+        if ( !validateModal("add",userName,userPassword,userPassword,userEmail) )
             return;
-        }else $("#modal-edit-user .error-msg").html();
 
         var name = $("#add .name").val();
 
@@ -247,11 +247,10 @@ $(document).ready(function () {
         var userID = $("#edit .userID").val();
         var userEmail = $("#edit .userEmail").val();
         var name = $("#edit .name").val();
-        if( !validateEmail(userEmail) || userID == "" || userName == "") {
-            $("#edit .error-msg").html("Some fields are invalid. Please try again!");
-            return;
-        }else $("#edit .error-msg").html();
 
+        // Validate step here
+        if ( !validateModal("edit",userName,"","",userEmail) )
+            return;
 
         var sentData = {
             ID: userID,
@@ -338,13 +337,4 @@ $(document).ready(function () {
     });
     // ~~
 
-    /**
-     * Validate email
-     * @param $email
-     * @returns {boolean}
-     */
-    function validateEmail($email) {
-        var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
-        return emailReg.test( $email );
-    }
 });

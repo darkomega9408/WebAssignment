@@ -27,12 +27,7 @@ $(document).ready(function(){
         });
     });
 
-
-    function validateEmail($email) {
-        var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
-        return emailReg.test( $email );
-    }
-
+    
 
     $("#modal-sign-up-btn").click(function (e) {
         //$("#signUp .form-horizontal").preventDefault();
@@ -41,11 +36,10 @@ $(document).ready(function(){
         var userPassword = $("#signUp .userPassword").val();
         var userRePassword = $("#signUp .userRePassword").val();
         var userEmail = $("#signUp .userEmail").val();
-        if( userName == "" || userPassword== "" ||  userPassword != userRePassword || !validateEmail(userEmail) || userEmail == "") {
-            $("#signUp .error-msg").html("Some fields are invalid. Please try again!");
+
+        // Validate step here
+        if ( !validateModal("signUp",userName,userPassword,userRePassword,userEmail) )
             return;
-        }
-        else $("#signUp .error-msg").html("");
 
         var name = $("#signUp .name").val();
 
