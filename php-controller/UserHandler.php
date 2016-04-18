@@ -33,14 +33,9 @@ class UserHandler
 		else
 			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
 
-        // use exec() because no results are returned
-        //$this->conn->exec($sql);
         $stmt = $this->conn->prepare($sql);
         if ($stmt->execute()) {
-            $sql = "SELECT MemberID FROM member ORDER BY MemberID DESC LIMIT 1";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute();
-            $memberID = $stmt->fetchAll()[0][0];
+            $memberID = $this->conn->lastInsertId();
 
             $xml = new DOMDocument();
             $xml_avatars = $xml->createElement("avatars");

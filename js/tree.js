@@ -191,7 +191,7 @@ $(document).ready(function(){
             $("#modal-add-user").modal('hide');
 
             // If tree has only one child => do reload page
-            //if (currMemberID == 0)
+            if (currMemberID == 0)
                 window.location.reload();
 
             // Set width for tree
