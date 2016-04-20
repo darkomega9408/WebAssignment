@@ -69,13 +69,69 @@ else {
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
-                        <a>
-                            <img src="images/avatar-default.png"
-                                 class="img-circle center-block img-responsive memberModalAvatar"
-                                 width="300px"
-                                 height="300px"
-                                 alt="/*name*/">
-                        </a>
+
+                        <div id="myGuestCarousel" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                                <li data-target="#myCarousel" data-slide-to="3"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <a data-toggle="modal" >
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar0"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" >
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar1"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" >
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar2"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+
+                                <div class="item">
+                                    <a data-toggle="modal" >
+                                        <img src="images/avatar-default.png"
+                                             class="img-circle center-block img-responsive memberModalAvatar3"
+                                             width="300px"
+                                             height="300px"
+                                             alt="/*name*/">
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myGuestCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#myGuestCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
 
                     <form role="form" class="form-horizontal">
