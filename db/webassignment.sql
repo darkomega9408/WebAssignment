@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2016 at 05:38 PM
+-- Generation Time: Apr 20, 2016 at 01:55 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.6.15
 
@@ -57,50 +57,34 @@ CREATE TABLE `member` (
   `BirthPlace` varchar(255) DEFAULT NULL,
   `Gender` varchar(6) CHARACTER SET latin1 NOT NULL,
   `Father` int(11) DEFAULT NULL,
-  `Level` int(11) DEFAULT '0',
-  `Alive` tinyint(1) NOT NULL DEFAULT '1',
-  `Avatar` varchar(255) NOT NULL
+  `Alive` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `member`
 --
 
-INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Level`, `Alive`, `Avatar`) VALUES
-(2, 1, 'Nguyễn Thành Tâm', '1994-12-15', '345 Red Street', 'Paradise', 'male', NULL, 0, 0, 'http://i.imgur.com/gtWulgo.jpg'),
-(2, 2, 'Nguyễn Xuân Thái', '2016-03-11', '482 Black Street', 'Hotel', 'male', 1, 1, 1, 'http://i.imgur.com/qEei3AS.jpg'),
-(2, 3, 'Lê Đức Quí', '2016-03-18', 'ds', '382 Pink Street', 'female', 2, 2, 1, 'http://i.imgur.com/6pQf6Ur.jpg'),
-(2, 4, 'Bùi Quang Vinh', '2016-03-25', '583 Yellow Street', '583 Yellow Street', 'male', 2, 2, 1, 'http://i.imgur.com/zEcz4bx.jpg'),
-(2, 5, 'Uzumaki Naruto', '2016-03-10', '333', '333', 'male', 1, 1, 1, 'http://i.imgur.com/VRM1KB9.png'),
-(2, 6, 'Michael Jackson', '2016-03-02', '253 NewYork', '253 NewYork', 'male', 1, 1, 1, 'http://i.imgur.com/EYflj2s.jpg'),
-(2, 7, 'Mike Tyson', '2016-03-02', '374 Las Vegas', '374 Las Vegas', 'male', 2, 2, 1, 'http://i.imgur.com/xyNvaBI.jpg'),
-(2, 8, 'Monkey de Luffy', '2016-03-09', 'Big Sea', 'Big Sea', 'male', 5, 2, 1, 'http://i.imgur.com/2noknZD.jpg?1'),
-(2, 10, 'anhdeptrai', '2016-01-01', 'b?nh h?ng h?a', 'tr?i ??t', 'male', 4, 3, 1, 'http://i.imgur.com/zEcz4bx.jpg'),
-(2, 14, 'Anh dep trai', '2999-12-21', 'dadada', 'asdasdasdas', 'male', 7, 3, 1, 'http://i.imgur.com/QlKj4Dy.png'),
-(2, 15, 'tam gay', '1994-12-13', 'asd', 'zczxczx', 'female', NULL, 0, 1, 'images/avatar-default.png'),
-(2, 16, 'asf', '2015-07-07', 'sasa', 'asdas', 'female', NULL, 0, 1, 'images/avatar-default.png'),
-(79, 35, 'tam gay', '1213-04-03', 'dada', 'asdasda', 'female', NULL, 0, 1, 'images/avatar-female-default.jpg'),
-(79, 40, 'asd', '1212-12-12', 'xzczxcz', 'tào lao', 'female', 35, 1, 1, 'images/avatar-female-default.jpg'),
-(81, 36, 'test11', '1994-01-02', 'hòa h?ng', 'asad', 'male', NULL, 0, 0, 'images/avatar-default.png'),
-(81, 38, 'test231', '1995-11-11', '', 'heaven', 'female', 36, 1, 1, 'images/avatar-female-default.jpg'),
-(81, 39, 'hello tam gay be de', '1996-01-01', '', 'hoho', 'female', 38, 2, 0, 'images/avatar-female-default.jpg'),
-(81, 44, 'zaas', '1997-11-11', '', 'asda', 'male', 39, 3, 0, 'images/avatar-default.png'),
-(81, 45, 'hihi', '1994-01-03', '', 'z', 'female', 36, 1, 1, 'images/avatar-female-default.jpg');
-
---
--- Triggers `member`
---
-DELIMITER $$
-CREATE TRIGGER `triggerAutoLevel` BEFORE INSERT ON `member` FOR EACH ROW BEGIN
-IF NEW.Father IS NULL
-THEN
-	SET NEW.Level = 0;
-ELSE
-SET NEW.Level = (SELECT Level FROM member WHERE MemberID = NEW.Father) + 1;
-END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Alive`) VALUES
+(2, 1, 'Nguyễn Thành Tâm', '1994-12-15', '345 Red Street', 'Paradise', 'male', NULL, 0),
+(2, 2, 'Nguyễn Xuân Thái', '2016-03-11', '482 Black Street', 'Hotel', 'male', 1, 1),
+(2, 3, 'Lê Đức Quí', '2016-03-18', 'ds', '382 Pink Street', 'female', 2, 1),
+(2, 4, 'Bùi Quang Vinh', '2016-03-25', '583 Yellow Street', '583 Yellow Street', 'male', 2, 1),
+(2, 5, 'Uzumaki Naruto', '2016-03-10', '333', '333', 'male', 1, 1),
+(2, 6, 'Michael Jackson', '2016-03-02', '253 NewYork', '253 NewYork', 'male', 1, 1),
+(2, 7, 'Mike Tyson', '2016-03-02', '374 Las Vegas', '374 Las Vegas', 'male', 2, 1),
+(2, 8, 'Monkey de Luffy', '2016-03-09', 'Big Sea', 'Big Sea', 'male', 5, 1),
+(2, 10, 'anhdeptrai', '2016-01-01', 'b?nh h?ng h?a', 'tr?i ??t', 'male', 4, 1),
+(2, 14, 'Anh dep trai', '2999-12-21', 'dadada', 'asdasdasdas', 'male', 7, 1),
+(2, 15, 'tam gay', '1994-12-13', 'asd', 'zczxczx', 'female', NULL, 1),
+(2, 16, 'asf', '2015-07-07', 'sasa', 'asdas', 'female', NULL, 1),
+(15, 46, 'thaigay', '1912-12-12', '', 'thaigay', 'male', NULL, 0),
+(79, 35, 'tam gay', '1213-04-03', 'dada', 'asdasda', 'female', NULL, 1),
+(79, 40, 'asd', '1212-12-12', 'xzczxcz', 'tào lao', 'female', 35, 1),
+(81, 36, 'test11', '1994-01-02', 'hòa h?ng', 'asad', 'male', NULL, 0),
+(81, 38, 'test231', '1995-11-11', '', 'heaven', 'female', 36, 1),
+(81, 39, 'hello tam gay be de', '1996-01-01', '', 'hoho', 'female', 38, 0),
+(81, 44, 'zaas', '1997-11-11', '', 'asda', 'male', 39, 0),
+(81, 45, 'hihi', '1994-01-03', '', 'z', 'female', 36, 1);
 
 -- --------------------------------------------------------
 
@@ -279,7 +263,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `notfamilyperson`
 --
