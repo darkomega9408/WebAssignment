@@ -119,7 +119,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "loadAvatar",
                 sentData: {
                     MemberID: currMemberID
@@ -162,7 +162,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "delete",
                 sentData : {
                     UserID : 2,
@@ -215,7 +215,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                role: "user",
+                role: role,
                 operation: "add",
                 sentData: sentData
             },
@@ -276,7 +276,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                role: "user",
+                role: role,
                 operation: "update",
                 sentData: sentData
             },
@@ -349,7 +349,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "loadAvatar",
                 sentData: {
                     MemberID: data.MemberID
@@ -634,10 +634,10 @@ $(document).ready(function(){
                 url: 'php-controller/ServerHandler.php',
                 type: 'GET',
                 data: {
-                    role: "user",
+                    role: role,
                     operation: "changeAvatar",
                     sentData: {
-                        role: "user",
+                        role: role,
                         Avatar : data.data.link,
                         UserID : 2,
                         MemberID : memberUploadAvatarId,

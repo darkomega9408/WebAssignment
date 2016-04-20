@@ -249,7 +249,7 @@ $(document).ready(function () {
         var name = $("#edit .name").val();
 
         // Validate step here
-        if ( !validateModal("edit",userName,"","",userEmail) )
+        if ( !validateModal("edit",userName,userName,userName,userEmail) )
             return;
 
         var sentData = {

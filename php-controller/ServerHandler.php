@@ -79,6 +79,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $userHandler = new UserHandler($dbConn->conn);
 
+        if( isset($_GET['operation']) ){
+            if ( $_GET['operation'] == "loadAvatar")
+                $userHandler->loadAvatar($sentData);
+            else $userHandler->getAllMembersForGuest($id);
+        }
+        else
         // $id here is guestID => 
         $userHandler->getAllMembersForGuest($id);
     }
