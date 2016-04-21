@@ -75,8 +75,6 @@ INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `Bir
 (2, 8, 'Monkey de Luffy', '2016-03-09', 'Big Sea', 'Big Sea', 'male', 5, 1),
 (2, 10, 'anhdeptrai', '2016-01-01', 'b?nh h?ng h?a', 'tr?i ??t', 'male', 4, 1),
 (2, 14, 'Anh dep trai', '2999-12-21', 'dadada', 'asdasdasdas', 'male', 7, 1),
-(2, 15, 'tam gay', '1994-12-13', 'asd', 'zczxczx', 'female', NULL, 1),
-(2, 16, 'asf', '2015-07-07', 'sasa', 'asdas', 'female', NULL, 1),
 (15, 46, 'thaigay', '1912-12-12', '', 'thaigay', 'male', NULL, 0),
 (79, 35, 'tam gay', '1213-04-03', 'dada', 'asdasda', 'female', NULL, 1),
 (79, 40, 'asd', '1212-12-12', 'xzczxcz', 'tào lao', 'female', 35, 1),
