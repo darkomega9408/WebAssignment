@@ -23,10 +23,10 @@
                         <li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Game</span> Sun Sun Sun</a></li>
                     </ul>
                 </li>-->
-                <li>
-                    <a href="#"><i class="fa fa-fw fa-sitemap"></i> Family Tree</a>
+                <li class="family-tree-tab">
+                    <a href="tree.php"><i class="fa fa-fw fa-sitemap active"></i> Family Tree</a>
                 </li>
-                <li>
+                <li class="guests-man-tab">
                     <a href="admin-page.php"><i class="fa fa-fw fa-users"></i> Guests Management</a>
                 </li>
                 <li class="dropdown">

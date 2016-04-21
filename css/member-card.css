@@ -123,6 +123,7 @@
 /*Modify*/
 .effect-winston p a{
     border: none;
+    outline: none;
 }
 
 .effect-winston p a span{

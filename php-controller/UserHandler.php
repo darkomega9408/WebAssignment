@@ -104,4 +104,72 @@ class UserHandler
         $xml->load('../member_avatar/' . $memberID . '.xml');
         echo $xml->saveXML();
     }
+
+    public function getAllMembersForGuest($guestID)
+    {
+        // Use $guestID to get managedUserID first
+        $res = $this->conn->query("SELECT adminID FROM `user` WHERE ID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
+        $managedUserID = $res['adminID'];
+        if( $managedUserID == null )
+            return;
+
+        $this->getAllMembers($managedUserID);
+
+    }
+    
+    public function getAllGuests($data){
+        $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT ID FROM `user` WHERE adminID = $data )");
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        echo json_encode($stmt->fetchAll());
+    }
+
+    public function insertGuest($managedUserID,$data)
+    {
+        $sql = "INSERT INTO `person` (`Username`, `Password`, `Email`, `Name`, `Role`) VALUES ('".$data['UserName']."', '".$data['Password']."','".$data['Email']."', '".$data['Name']."', 'guest')";
+
+        // use exec() because no results are returned
+        $this->conn->exec($sql);
+
+        $lastInsertId = $this->conn->lastInsertId();
+
+        $sql = "INSERT INTO `user` (`ID` , `adminID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
+        $this->conn->exec($sql);
+        
+        // return new inserted member as JSON
+        $this->getUser($lastInsertId);
+
+
+    }
+
+    public function deleteGuest($data)
+    {
+        // Delete cascade , don't need to consider `user` table anymore
+        $sql = "DELETE FROM `person` WHERE `ID`= ".$data['ID'];
+        $this->conn->exec($sql);
+        echo "Success";
+    }
+
+    public function updateGuest($data)
+    {
+        // Update cascade
+        $sql = "UPDATE `person` SET `Username`='". $data['UserName'] ."',`Email`='". $data['Email'] ."',`Name`='". $data['Name'] ."' WHERE `ID`=". $data['ID'] ;
+
+        // use exec() because no results are returned
+        $this->conn->exec($sql);
+
+        // return new inserted member as JSON
+        $this->getUser($data['ID']);
+    }
+
+    public function getUser($userID)
+    {
+        // return last inserted member ID
+        $sql = "SELECT * FROM `person` WHERE `ID`= ". $userID ;
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
+        echo json_encode($result);
+    }
 }

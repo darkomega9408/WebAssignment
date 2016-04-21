@@ -76,3 +76,7 @@ nav.navbar-findcond span.badge.new {
 .navbar-brand>img {
     margin: -10px auto;
 }
+
+nav.navbar-findcond ul.navbar-nav a.active{
+    border-color: #7ECC00;
+}

@@ -49,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $userHandler->uploadAvatar($sentData);
             else if ( $_GET['operation'] == "loadAvatar")
                 $userHandler->loadAvatar($sentData);
+            else if( $_GET['operation'] == "getAllGuests" )
+                $userHandler->getAllGuests($id);
+                // Delete cascade
+            else if( $_GET['operation'] == "deleteGuest" )
+                $userHandler->deleteGuest($sentData);
         }
         else $userHandler->getAllMembers($id);
 
@@ -68,7 +73,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         else $adminHandler->getAllUsers();
     }
     // End AdminHandler
-    else echo "leu leu"; //header('HTTP/1.1 400 Bad Request');
+
+    // Guest
+    else if( $role == 'guest'){
+
+        $userHandler = new UserHandler($dbConn->conn);
+
+        if( isset($_GET['operation']) ){
+            if ( $_GET['operation'] == "loadAvatar")
+                $userHandler->loadAvatar($sentData);
+            else $userHandler->getAllMembersForGuest($id);
+        }
+        else
+        // $id here is guestID => 
+        $userHandler->getAllMembersForGuest($id);
+    }
 }
 else if ( $_SERVER['REQUEST_METHOD'] = 'POST'){
     if( isset($_POST['sentData']) )
@@ -85,6 +104,11 @@ else if ( $_SERVER['REQUEST_METHOD'] = 'POST'){
                 $userHandler->insertMember($sentData);
             else if ( $_POST['operation'] == "update" )
                 $userHandler->updateMember($sentData);
+            else if( $_POST['operation'] == "addGuest" )
+                $userHandler->insertGuest($id,$sentData);
+                // Update cascade
+            else if ( $_POST['operation'] == "updateGuest" )
+                $userHandler->updateGuest($sentData);
         }
 
     }

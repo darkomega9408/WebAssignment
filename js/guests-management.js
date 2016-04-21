@@ -1,7 +1,7 @@
-console.log("Load admin-page.js");
+console.log("Load guests-management.js");
 $(document).ready(function () {
-    // Load navbar of admin page
-    navbarAdminPage();
+    // Load navbar of guests management 's page of user
+    navbarGuestPage();
 
     var user = "user";
 
@@ -13,16 +13,20 @@ $(document).ready(function () {
         type: 'GET',
         dataType: 'json',
         data:{
-            role : "admin",
-            AdminId: 1
+            role : "user",
+            operation: "getAllGuests",
+            UserID: $("head").prop('data-id')
         }
     }).done(function(data){
 		$('#modal-uploading').modal('hide');
         createTable(data);
         search(data);
+        //navbarGuestPage();
+        console.log("Load guests successfully");
     }).fail(function () {
 		$('#modal-uploading').modal('hide');
-        console.log("Load users failed");
+        console.log("Load guests failed");
+        //navbarGuestPage();
     });
     // ~~
 
@@ -93,7 +97,7 @@ $(document).ready(function () {
      */
     function createTable(data) {
         $.each(data, function (index, val) {
-            //console.log(val);
+            console.log(val);
             addUser($("#mytable tbody"), val)
         });
     }
@@ -137,7 +141,7 @@ $(document).ready(function () {
      * @Author Vinh
      */
     function deleteUser() {
-        $("#" + user + currUserID).remove();
+        $("#" + user + currGuestID).remove();
         // Force reload page is the fastest way
         //location.reload();
     }
@@ -162,25 +166,25 @@ $(document).ready(function () {
      * Delete user
      */
     $('#btnDelete').click(function () {
-        console.log("Delete");
+        console.log("Delete guest");
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                operation: "delete",
-                role : "admin",
+                operation: "deleteGuest",
+                role : "user",
                 sentData : {
-                    ID : currUserID
+                    ID : currGuestID
                 }
             }
         }).done(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Delete member successfully");
+            console.log("Delete guest successfully");
             deleteUser();
             $("#delete").modal('hide');
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to delete member");
+            console.log("Failed to delete guest");
         });
     });
     // ~~
@@ -215,8 +219,9 @@ $(document).ready(function () {
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                operation: "add",
-                role : "admin",
+                operation: "addGuest",
+                role : "user",
+                UserID: $("head").prop('data-id') ,
                 sentData: sentData
             },
             dataType: 'json'
@@ -224,10 +229,10 @@ $(document).ready(function () {
 			$('#modal-uploading').modal('hide');
             addUser($("#mytable tbody"),data[0]);
             $("#add").modal('hide');
-            console.log("Add new user successfully");
+            console.log("Add new guest successfully");
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to add new user!")
+            console.log("Failed to add new guest!")
         });
     });
     // ~~
@@ -244,9 +249,8 @@ $(document).ready(function () {
         var name = $("#edit .name").val();
 
         // Validate step here
-        if ( !validateModal("edit",userName,"","",userEmail) )
+        if ( !validateModal("edit",userName,userName,userName,userEmail) )
             return;
-
 
         var sentData = {
             ID: userID,
@@ -259,8 +263,8 @@ $(document).ready(function () {
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                operation: "update",
-                role : "admin",
+                operation: "updateGuest",
+                role : "user",
                 sentData: sentData
             },
             dataType: 'json'
@@ -295,7 +299,7 @@ $(document).ready(function () {
     $("[data-toggle=tooltip]").tooltip();
 
 
-    var currUserID = -1;
+    var currGuestID = -1;
 
 
     /**
@@ -306,7 +310,7 @@ $(document).ready(function () {
         try {
             var $trigger = $(e.relatedTarget);
             var $userID = $trigger.parents().eq(2).attr('id');
-            currUserID = $userID.substr(user.length);
+            currGuestID = $userID.substr(user.length);
         }catch(e){}
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "add" ) {
@@ -315,14 +319,16 @@ $(document).ready(function () {
 
         // Assign some basic info to modal before display to user
         try {
-            var userInfo = $("#" + user + currUserID).data(user);
+            var userInfo = $("#" + user + currGuestID).data(user);
+            //console.log("UserInfo: \n" + userInfo);
             $("#edit .userID").val(userInfo.ID);
             $("#edit .userName").val(userInfo.Username);
             $("#edit .userEmail").val(userInfo.Email);
             $("#edit .name").val(userInfo.Name);
         }
         catch(err) {
-            var userObj = $("#" + user + currUserID + " td");
+            var userObj = $("#" + user + currGuestID + " td");
+            //console.log("UserObj: \n" + userObj);
             $("#edit .userID").val(userObj.eq(1).html());
             $("#edit .userName").val(userObj.eq(2).html());
             $("#edit .userEmail").val(userObj.eq(3).html());

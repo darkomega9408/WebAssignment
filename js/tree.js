@@ -5,19 +5,36 @@ $(document).ready(function(){
     var member = "mem";
     var currMemberID ;
     var token = getCookie('token');
+    var role = $("head").data("role");
+    var managedUserID = $("head").data("managedUserID");
+    var guestID = $("head").data("guestID");
+
+
+    // Determine whether current user is guest or not -> choose appropriate navbar for them
+    // Default is navbar of normal user
+    if (  role == 'guest' )
+        navbarAdminPage();
+    // ~~
+
 
     /********************************************************
      *
      * LOAD SOME COMMON FILE : NAVBAR , MEMBERCARD
      */
 
-
-
-
-
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/membercard/membercard.html .membercard', function () {
         memberCardObj = $(this).clone();
+
+        // Turn on SEE ONLY mode for guest
+        if ( role == 'guest' ){
+            $(memberCardObj).find('.effect-winston p').hide();
+            $(memberCardObj).find('.membercard').removeClass('effect-winston');
+
+            $(memberCardObj).find('.membercard').attr('data-toggle','modal');
+            $(memberCardObj).find('.membercard').attr('data-target','#modal-see-info-guest');
+        }
+
         $(this).html('');
     });
     // ~~
@@ -34,11 +51,11 @@ $(document).ready(function(){
      * @Author: TÂM
      */
     $('.modal').on('show.bs.modal', function (e) {
+
         // Get memberID of current shown member : in EDIT modal
         try {
             var $trigger = $(e.relatedTarget);
             var $memberID = $trigger.parents().eq(3).attr('id');
-            //var $memberID = $trigger.attr('id');
             currMemberID = $memberID.substr(member.length);
             $(this).attr("data-memid", currMemberID);
         } catch (err) {
@@ -78,19 +95,31 @@ $(document).ready(function(){
         }
         // Change title of UPLOAD AVATAR modal
         else if(  $(this).attr("id") != "modal-upload-avatar"){
-            $("#modal-upload-avatar .modal-title").html("Change Avatar");
+            $("#modal-upload-avatar .modal-title").html("Upload Image");
         }
 
         // Assign some basic info to modal before display to user
+        populateDataIntoModal("modal-edit-user");
+    });
+    // ~~
+
+
+    $('#modal-see-info-guest').on('show.bs.modal', function (e) {
+        currMemberID = $(e.relatedTarget).attr('id').substr(member.length);
+        populateDataIntoModal("modal-see-info-guest");
+    });
+
+    
+    function populateDataIntoModal (modalName) {
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         console.log(memberinfo);
-        $("#modal-edit-user .modal-title").html(memberinfo.Name + " Information");
-        //$("#modal-edit-user .memberModalAvatar").attr("src", memberinfo.Avatar);
+        $("#"+modalName+" .modal-title").html(memberinfo.Name + " Information");
+        //$("#"+modalName+" .memberModalAvatar").attr("src", memberinfo.Avatar);
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "loadAvatar",
                 sentData: {
                     MemberID: currMemberID
@@ -100,23 +129,28 @@ $(document).ready(function(){
             var avatars = $(xmldata).find("avatar");
             $(avatars).each(function (index, val) {
                 if (val.childNodes[0].data != "empty")
-                    $("#modal-edit-user .memberModalAvatar" + index).attr("src", val.childNodes[0].data);
+                    $("#"+modalName+" .memberModalAvatar" + index).attr("src", val.childNodes[0].data);
             })
 
         }).fail(function(err) {
             console.log(err);
         });
-        $("#modal-edit-user .memberModalName").val( memberinfo.Name);
-        $("#modal-edit-user .memberModalGender").val(memberinfo.Gender);
-        $("#modal-edit-user .memberModalBirthDate").val( memberinfo.BirthDate.substring(0, 10));
-        $("#modal-edit-user .memberModalAddress").val( memberinfo.Address);
-        $("#modal-edit-user .memberModalBirthPlace").val(memberinfo.BirthPlace);
-        if( memberinfo.Alive == "1" )
+        $("#"+modalName+" .memberModalName").val( memberinfo.Name);
+        $("#"+modalName+" .memberModalGender").val(memberinfo.Gender);
+        $("#"+modalName+" .memberModalBirthDate").val( memberinfo.BirthDate.substr(0, 10));
+        $("#"+modalName+" .memberModalAddress").val( memberinfo.Address);
+        $("#"+modalName+" .memberModalBirthPlace").val(memberinfo.BirthPlace);
+        if( memberinfo.Alive == "1" ) {
             $("#edit-radio-alive").prop("checked", true);
-        else $("#edit-radio-dead").prop("checked", true);
-    });
-    // ~~
-
+            $("#see-radio-alive").prop("checked", true);
+        }
+        else {
+            $("#edit-radio-dead").prop("checked", true);
+            $("#see-radio-dead").prop("checked", true);
+        }
+    } 
+    
+    
 
     /**
      * Delete user triggered by btnDelete onclick()
@@ -128,7 +162,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "delete",
                 sentData : {
                     UserID : 2,
@@ -171,7 +205,7 @@ $(document).ready(function(){
             BirthPlace : birthPlace,
             Gender : gender,
             Avatar : avatar,
-            Alive : $("#modal-edit-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+            Alive : $("#modal-add-user input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
             Address : $("#modal-add-user .memberModalAddress").val(),
             Father : currMemberID
         };
@@ -181,7 +215,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                role: "user",
+                role: role,
                 operation: "add",
                 sentData: sentData
             },
@@ -242,7 +276,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'POST',
             data: {
-                role: "user",
+                role: role,
                 operation: "update",
                 sentData: sentData
             },
@@ -315,7 +349,7 @@ $(document).ready(function(){
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
             data: {
-                role: "user",
+                role: role,
                 operation: "loadAvatar",
                 sentData: {
                     MemberID: data.MemberID
@@ -600,10 +634,10 @@ $(document).ready(function(){
                 url: 'php-controller/ServerHandler.php',
                 type: 'GET',
                 data: {
-                    role: "user",
+                    role: role,
                     operation: "changeAvatar",
                     sentData: {
-                        role: "user",
+                        role: role,
                         Avatar : data.data.link,
                         UserID : 2,
                         MemberID : memberUploadAvatarId,

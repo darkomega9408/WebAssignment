@@ -4,22 +4,28 @@ require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 use Firebase\JWT\JWT;
 if (!isset($_COOKIE['token'])) header('Location: index.php');
 else {
-  $token = $_COOKIE['token'];
-  $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
-  $personData = (array) $data['data'];
-  $role = $personData['role'];
-  if ($role != 'admin') {
-    echo 'You are not allowed here';
-    exit;
-  }
-  $name = $personData['name'];
+    $token = $_COOKIE['token'];
+    $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
+    $personData = (array) $data['data'];
+    $role = $personData['role'];
+    if( $role == 'user' ){
+
+    }
+    else if ($role == 'admin'){
+
+    }
+    else {
+        echo 'You are not allowed here. Role : '.$role;
+        exit;
+    }
+    $name = $personData['name'];
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head data-role="<?php echo $personData['role'] ; ?>" data-id="<?php echo $personData['id'] ?>">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,6 +36,7 @@ else {
     <title>
         Admin Page
     </title>
+
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -51,21 +58,36 @@ else {
     <link rel="stylesheet" type="text/css" href="css/border-effect.css"/>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
-    <script src="js/admin-page.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
-    <script src="js/search.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/modal.css">
 
+<!--    <script src="js/admin-page.js"></script>-->
+    <script type="text/javascript" src="js/navbar.js"></script>
+    <script type="text/javascript" src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+
+    <!--  Dynamically load js file corresponding to role , such as : admin or user  -->
+    <script>
+        var head = document.getElementsByTagName('head')[0];
+        var js = document.createElement("script");
+        js.type = "text/javascript";
+        var role = head.getAttribute("data-role");
+        if( role == 'user' )
+            js.src = 'js/guests-management.js';
+        else if( role == 'admin' )
+            js.src = 'js/admin-page.js';
+        head.appendChild(js);
+
+        //adminPage();
+    </script>
 </head>
 
 <body>
 
 <!-- Navigation -->
 <header>
-  <?php
+    <?php
     include 'templates/nav-bar/nav-bar.php';
-  ?>
+    ?>
 </header>
 <!-- Full Width Image Header -->
 
@@ -167,7 +189,7 @@ else {
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate"
-                            ><span class="glyphicon glyphicon-ok-sign"></span> Update
+                    ><span class="glyphicon glyphicon-ok-sign"></span> Update
                     </button>
                 </div>
             </form>
@@ -210,7 +232,7 @@ else {
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd"
-                            ><span class="glyphicon glyphicon-plus-sign"></span> Add
+                    ><span class="glyphicon glyphicon-plus-sign"></span> Add
                     </button>
                 </div>
             </form>

@@ -13,8 +13,10 @@ $(document).ready(function(){
             $('#warning').text('');
             if (res.status == 'login_success') {
                 setCookie('token', res.token, 30);
-                if (res.role == 'user') location.href = 'tree.php'+ '?userid=' + res.id;
-                else location.href = 'admin-page.php'+ '?userid=' + res.id;
+                if (res.role == 'user' || res.role == 'guest')
+                    document.location.href = 'tree.php';
+                else document.location.href = 'admin-page.php';
+                console.log(document.location.href);
             }
             else if (res.status == 'user_not_found') {
                 $('#warning').text('Username or password is incorrect');
@@ -25,12 +27,7 @@ $(document).ready(function(){
         });
     });
 
-
-    function validateEmail($email) {
-        var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
-        return emailReg.test( $email );
-    }
-
+    
 
     $("#modal-sign-up-btn").click(function (e) {
         //$("#signUp .form-horizontal").preventDefault();
@@ -39,11 +36,10 @@ $(document).ready(function(){
         var userPassword = $("#signUp .userPassword").val();
         var userRePassword = $("#signUp .userRePassword").val();
         var userEmail = $("#signUp .userEmail").val();
-        if( userName == "" || userPassword== "" ||  userPassword != userRePassword || !validateEmail(userEmail) || userEmail == "") {
-            $("#signUp .error-msg").html("Some fields are invalid. Please try again!");
+
+        // Validate step here
+        if ( !validateModal("signUp",userName,userPassword,userRePassword,userEmail) )
             return;
-        }
-        else $("#signUp .error-msg").html("");
 
         var name = $("#signUp .name").val();
 
