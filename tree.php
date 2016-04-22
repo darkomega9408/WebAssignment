@@ -490,11 +490,14 @@ else {
 <!-- ~~ Modal Uploading -->
 
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
+<div style="position:fixed; z-index:10000;">
+    <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
+</div>
 <script type="text/javascript">
     function clone(){
         $('header').hide();
         $('#clone').hide();
-        $('[data-toggle="tooltip"]').hide();
+        $('ul [data-toggle="modal"]').hide();
         $('.membercard img').css('border','0px solid white');
         html2canvas(document.body, {
             onrendered: function(canvas) {
@@ -509,19 +512,8 @@ else {
         $('.membercard img').css('border','');
         $('#clone').show();
         $('header').show();
-        $('[data-toggle="tooltip"]').show();
+        $('ul [data-toggle="modal"]').show();
     }
 </script>
-<div style="position:fixed; z-index:10000;">
-    <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
-</div>
-
-
-
-
-<!--<div class="modal-wrapper">
-
-</div>-->
-
 </body>
 </html>
