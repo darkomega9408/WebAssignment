@@ -32,10 +32,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navbar-user-name" role="button" aria-expanded="false"><?php echo $name;?> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <!--<li><a href="#">Sairam</a></li>-->
-                        <!--<li><a href="#">Gopal</a></li>-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li><a href="#">Login</a></li>-->
+                        <li><a id="hrefExport" href="#">Export tree</a></li>
+                        <li class="divider"></li>
                         <li><a id="hrefLogOut" href="#exit">Log out</a></li>
                     </ul>
                 </li>
