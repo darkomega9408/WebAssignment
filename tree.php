@@ -33,6 +33,7 @@ else {
 
 
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/interact.min.js"></script>
     <script src="js/membercard.js"></script>
     <script src="js/cookie-management.js"></script>
     <script src="js/tree.js"></script>
@@ -52,8 +53,12 @@ else {
     ?>
 </header>
 
+<div class="tree-container">
+    <div class="tree clearfix"></div>
+</div>
 
-<div class="tree" style="margin-top:5em">
+<div style="position:fixed; z-index:10000;">
+   <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
 </div>
 
 
@@ -515,5 +520,13 @@ else {
         $('ul [data-toggle="modal"]').show();
     }
 </script>
+
+
+
+
+<!--<div class="modal-wrapper">
+
+</div>-->
+
 </body>
 </html>
