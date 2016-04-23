@@ -173,6 +173,8 @@ $(document).ready(function(){
             $('#modal-uploading').modal('hide');
             console.log("Delete member successfully");
             deleteMember();
+
+            setupTreeBehavior();
         }).fail(function () {
             $('#modal-uploading').modal('hide');
             console.log("Failed to delete member");
@@ -228,8 +230,7 @@ $(document).ready(function(){
             if (currMemberID == 0)
                 window.location.reload();
 
-            // Set width for tree
-            $(".tree").width( ($(".tree").width() + 30) + "em" );
+            setupTreeBehavior();
 
             // Add new member into tree and hide modal 'add'
             addMember(data[0]);
@@ -391,6 +392,44 @@ $(document).ready(function(){
     };
     // ~~
 
+    var makeTreeDraggable = function() {
+        // target elements with the "draggable" class
+        var heightOffset = 1 - $('.tree-container').height() / $('.tree').height();
+        if (heightOffset <= 0) heightOffset = 0;
+
+        var widthOffset = 1 - $('.tree-container').width() / $('.tree').width();
+        if (widthOffset <= 0) widthOffset = 0;
+        interact('.tree').draggable({
+            // enable inertial throwing
+            inertia: true,
+            // keep the element within the area of it's parent
+            restrict: {
+              restriction: "parent",
+              endOnly: true,
+              elementRect: { top: 0 + heightOffset, left: 0 + widthOffset, bottom: 1 - heightOffset, right: 1- widthOffset }
+            },
+            // enable autoScroll
+            autoScroll: true,
+
+            // call this function on every dragmove event
+            onmove: function (event) {
+                var target = event.target,
+                    // keep the dragged position in the data-x/data-y attributes
+                    x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                    y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                // translate the element
+                target.style.webkitTransform =
+                target.style.transform =
+                  'translate(' + x + 'px, ' + y + 'px)';
+
+                // update the posiion attributes
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+            }
+        });
+    }
+
 
     /**
      * Use to create tree html
@@ -412,12 +451,18 @@ $(document).ready(function(){
             addMember(data[i]);
 
 
-        // Set width for tree
-        var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
-        console.log(numOfLeaf);
-        $(".tree").width((numOfLeaf * 170) + "px");
+        setupTreeBehavior();
     };
     // ~~
+
+    var setupTreeBehavior = function() {
+      // Set width for tree
+      var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
+      console.log(numOfLeaf);
+      $(".tree").width((numOfLeaf * 170) + "px");
+
+      makeTreeDraggable();
+    }
 
 
     /**
@@ -744,41 +789,7 @@ $(document).ready(function(){
     }
     // ~~
 
-    // target elements with the "draggable" class
-    var heightOffset = 1 - $('.tree-container').height() / $('.tree').height();
-    if (heightOffset <= 0) heightOffset = 0;
 
-    var widthOffset = 1 - $('.tree-container').width() / $('.tree').width();
-    if (widthOffset <= 0) widthOffset = 0;
-    interact('.tree').draggable({
-        // enable inertial throwing
-        inertia: true,
-        // keep the element within the area of it's parent
-        restrict: {
-          restriction: "parent",
-          endOnly: true,
-          elementRect: { top: 0 + heightOffset, left: 0 + widthOffset, bottom: 1 - heightOffset, right: 1- widthOffset }
-        },
-        // enable autoScroll
-        autoScroll: true,
-
-        // call this function on every dragmove event
-        onmove: function (event) {
-            var target = event.target,
-                // keep the dragged position in the data-x/data-y attributes
-                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-            // translate the element
-            target.style.webkitTransform =
-            target.style.transform =
-              'translate(' + x + 'px, ' + y + 'px)';
-
-            // update the posiion attributes
-            target.setAttribute('data-x', x);
-            target.setAttribute('data-y', y);
-        }
-    });
 
 
 });
