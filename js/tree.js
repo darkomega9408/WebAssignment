@@ -109,7 +109,7 @@ $(document).ready(function(){
         populateDataIntoModal("modal-see-info-guest");
     });
 
-    
+
     function populateDataIntoModal (modalName) {
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         console.log(memberinfo);
@@ -148,9 +148,9 @@ $(document).ready(function(){
             $("#edit-radio-dead").prop("checked", true);
             $("#see-radio-dead").prop("checked", true);
         }
-    } 
-    
-    
+    }
+
+
 
     /**
      * Delete user triggered by btnDelete onclick()
@@ -743,5 +743,42 @@ $(document).ready(function(){
         search = $search[0].selectize;
     }
     // ~~
+
+    // target elements with the "draggable" class
+    var heightOffset = 1 - $('.tree-container').height() / $('.tree').height();
+    if (heightOffset <= 0) heightOffset = 0;
+
+    var widthOffset = 1 - $('.tree-container').width() / $('.tree').width();
+    if (widthOffset <= 0) widthOffset = 0;
+    interact('.tree').draggable({
+        // enable inertial throwing
+        inertia: true,
+        // keep the element within the area of it's parent
+        restrict: {
+          restriction: "parent",
+          endOnly: true,
+          elementRect: { top: 0 + heightOffset, left: 0 + widthOffset, bottom: 1 - heightOffset, right: 1- widthOffset }
+        },
+        // enable autoScroll
+        autoScroll: true,
+
+        // call this function on every dragmove event
+        onmove: function (event) {
+            var target = event.target,
+                // keep the dragged position in the data-x/data-y attributes
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+            // translate the element
+            target.style.webkitTransform =
+            target.style.transform =
+              'translate(' + x + 'px, ' + y + 'px)';
+
+            // update the posiion attributes
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+        }
+    });
+
 
 });

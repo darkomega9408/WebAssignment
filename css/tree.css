@@ -1,13 +1,28 @@
 /*Now the CSS*/
 * {margin: 0; padding: 0;}
 
-body{
+html {
     height: 100%;
+}
+
+body{
+    height: calc(100% - 5em);
+    height: -o-calc(100% - 5em); /* opera */
+    height: -webkit-calc(100% - 5em); /* google, safari */
+    height: -moz-calc(100% - 5em); /* firefox */
+    height: -ms-calc(100% - 5em); /* firefox */
     width: 100%;
 }
 
-.tree{
+.tree-container{
+    overflow: hidden;
     height: 100%;
+    margin-top: 5em;
+}
+
+.tree{
+    margin: 1px;
+    cursor: move;
     /*white-space: nowrap;*/
 }
 
