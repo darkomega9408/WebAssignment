@@ -5,6 +5,10 @@ $(document).ready(function() {
         window.location="/";
     });
 
+    $('#hrefExport').click(function() {
+        clone();
+    });
+
     // Change logo relative path
     $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
 
@@ -40,4 +44,15 @@ function chooseGuestsManagementTab() {
     $("nav.navbar-findcond ul.navbar-nav .guests-man-tab a").prop("class", "active");
 }
 
-
+function clone(){
+    html2canvas(document.getElementsByClassName("tree")[0], {
+        onrendered: function(canvas) {
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+            a.download = name + ' - Family Tree.jpg' ;
+            a.click();
+        },
+        useCORS: true,
+        background: 'white'
+    });
+}

@@ -31,7 +31,7 @@ else {
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
     <link rel="stylesheet" type="text/css" href="css/modal.css">
 
-
+    <script>var name=<?php echo json_encode($name); ?></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/interact.min.js"></script>
     <script src="js/membercard.js"></script>
@@ -55,10 +55,6 @@ else {
 
 <div class="tree-container">
     <div class="tree clearfix"></div>
-</div>
-
-<div style="position:fixed; z-index:10000;">
-   <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
 </div>
 
 
@@ -495,31 +491,6 @@ else {
 <!-- ~~ Modal Uploading -->
 
 <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
-<div style="position:fixed; z-index:10000;">
-    <input  id="clone" onclick="clone()"  type="button" class="btn btn-success center-block" value="Export"></input>
-</div>
-<script type="text/javascript">
-    function clone(){
-        $('header').hide();
-        $('#clone').hide();
-        $('ul [data-toggle="modal"]').hide();
-        $('.membercard img').css('border','0px solid white');
-        html2canvas(document.body, {
-            onrendered: function(canvas) {
-                var a = document.createElement('a');
-                a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
-                a.download = 'somefilename.jpg';
-                a.click();
-            },
-            useCORS: true,
-            background: 'white'
-        });
-        $('.membercard img').css('border','');
-        $('#clone').show();
-        $('header').show();
-        $('ul [data-toggle="modal"]').show();
-    }
-</script>
 
 
 
