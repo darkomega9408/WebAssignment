@@ -230,11 +230,11 @@ $(document).ready(function(){
             if (currMemberID == 0)
                 window.location.reload();
 
-            setupTreeBehavior();
-
             // Add new member into tree and hide modal 'add'
             addMember(data[0]);
             $("#modal-add-user").modal('hide');
+
+            setupTreeBehavior();
 
         }).fail(function () {
             $('#modal-uploading').modal('hide');
