@@ -34,6 +34,7 @@ class UserHandler
 			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
 
         $stmt = $this->conn->prepare($sql);
+		
         if ($stmt->execute()) {
             $memberID = $this->conn->lastInsertId();
 

@@ -224,8 +224,7 @@ else {
                                     <a data-toggle="modal" data-target="#modal-upload-avatar">
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar0"
-                                             width="300px"
-                                             height="300px"
+                                             style="width:300px; height:215px"
                                              alt="/*name*/">
                                     </a>
                                 </div>
@@ -234,8 +233,7 @@ else {
                                     <a data-toggle="modal" data-target="#modal-upload-avatar">
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar1"
-                                             width="300px"
-                                             height="300px"
+                                             style="width:300px; height:215px"
                                              alt="/*name*/">
                                     </a>
                                 </div>
@@ -244,8 +242,7 @@ else {
                                     <a data-toggle="modal" data-target="#modal-upload-avatar">
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar2"
-                                             width="300px"
-                                             height="300px"
+                                             style="width:300px; height:215px"
                                              alt="/*name*/">
                                     </a>
                                 </div>
@@ -254,8 +251,7 @@ else {
                                     <a data-toggle="modal" data-target="#modal-upload-avatar">
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar3"
-                                             width="300px"
-                                             height="300px"
+                                             style="width:300px; height:215px"
                                              alt="/*name*/">
                                     </a>
                                 </div>

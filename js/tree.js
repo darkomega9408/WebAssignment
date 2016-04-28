@@ -753,8 +753,8 @@ $(document).ready(function(){
             options: data,
             onChange: function(value){
                 $('.membercard').removeClass('border-effect');
-                $('body').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
-                $('body').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
+                $('.tree-container').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
+                $('.tree-container').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
                 $('#mem' + value).addClass('border-effect');
             },
             onDropdownOpen: function($dropdown){
