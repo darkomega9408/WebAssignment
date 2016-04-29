@@ -749,7 +749,7 @@ $(document).ready(function(){
             selectOnTab: 'true',
             valueField: 'MemberID',
             labelField: 'Name',
-            searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+            searchField: ['Name', "Gender", 'Address', 'BirthDate', 'BirthPlace'],
             options: data,
             onChange: function(value){
                 $('.membercard').removeClass('border-effect');
