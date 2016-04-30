@@ -45,12 +45,32 @@ function chooseGuestsManagementTab() {
 }
 
 function clone(){
-    html2canvas(document.getElementsByClassName("tree")[0], {
+    var target = document.getElementsByClassName('tree')[0];
+    var widthRate = $('.tree-container').width() / $('.tree').width();
+    var heightRate = $('.tree-container').height() / $('.tree').height();
+    var scaleRate;
+    if (Math.abs(widthRate-1) > Math.abs(heightRate-1)) scaleRate = heightRate;
+    else scaleRate = widthRate;
+
+    // scale the tree to fit container
+    target.style.webkitTransform = target.style.transform = 'scale(' + String(scaleRate) + ', ' + String(scaleRate) + ') '
+        + 'translate(0px, 0px) ';
+
+    var x = (parseFloat(target.getAttribute('data-x')) || 0);
+    var y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+    $('ul [data-toggle="modal"]').hide();
+    html2canvas(document.getElementsByClassName('tree')[0], {
         onrendered: function(canvas) {
             var a = document.createElement('a');
             a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
             a.download = name + ' - Family Tree.jpg' ;
             a.click();
+
+            $('ul [data-toggle="modal"]').show();
+            //translate the element to former position
+            target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) '
+                + 'scale(1, 1) ';
         },
         useCORS: true,
         background: 'white'

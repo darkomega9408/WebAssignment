@@ -23,6 +23,7 @@ body{
 .tree{
     margin: 1px;
     cursor: move;
+    transform-origin: left top;
     /*white-space: nowrap;*/
 }
 
