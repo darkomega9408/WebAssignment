@@ -230,11 +230,11 @@ $(document).ready(function(){
             if (currMemberID == 0)
                 window.location.reload();
 
-            setupTreeBehavior();
-
             // Add new member into tree and hide modal 'add'
             addMember(data[0]);
             $("#modal-add-user").modal('hide');
+
+            setupTreeBehavior();
 
         }).fail(function () {
             $('#modal-uploading').modal('hide');
@@ -749,12 +749,30 @@ $(document).ready(function(){
             selectOnTab: 'true',
             valueField: 'MemberID',
             labelField: 'Name',
-            searchField: ['Name', "Gender", 'Adress', 'BirthDate', 'BirthPlace'],
+            searchField: ['Name', "Gender", 'Address', 'BirthDate', 'BirthPlace'],
             options: data,
             onChange: function(value){
+                if (!value) {
+                    $('.membercard').removeClass('border-effect');
+                    return;
+                }
+                var target = $('.tree:first');
+                //tree coordinate
+                var x = (parseFloat(target.attr('data-x')) || 0);
+                var y = (parseFloat(target.attr('data-y')) || 0);
+
+                var topScroll = y - $('#mem'+ value).offset().top + $('.tree-container').height()/2;
+                var leftScroll = x - $('#mem'+ value).offset().left +  $('.tree-container').width()/2;
+                target.css({
+                    transform: 'translate(' + leftScroll + 'px, ' + topScroll + 'px)',
+                    '-ms-transform': 'translate(' + leftScroll + 'px, ' + topScroll + 'px)',
+                    '-webkit-transform': 'translate(' + leftScroll + 'px, ' + topScroll + 'px)',
+                    '-moz-transform': 'translate(' + leftScroll + 'px, ' + topScroll + 'px)'
+                });
+                target.attr('data-x', leftScroll);
+                target.attr('data-y', topScroll);
+
                 $('.membercard').removeClass('border-effect');
-                $('.tree-container').scrollTop($('#mem'+ value).offset().top - $( window ).height()/2);
-                $('.tree-container').scrollLeft($('#mem'+ value).offset().left -  $( window ).width()/2 + 160);
                 $('#mem' + value).addClass('border-effect');
             },
             onDropdownOpen: function($dropdown){
