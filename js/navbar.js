@@ -45,6 +45,7 @@ function chooseGuestsManagementTab() {
 }
 
 function clone(){
+    $('#modal-uploading').modal('show');
     var target = document.getElementsByClassName('tree')[0];
     var widthRate = $('.tree-container').width() / $('.tree').width();
     var heightRate = $('.tree-container').height() / $('.tree').height();
@@ -71,6 +72,7 @@ function clone(){
             //translate the element to former position
             target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px) '
                 + 'scale(1, 1) ';
+            $('#modal-uploading').modal('hide');
         },
         useCORS: true,
         background: 'white'
