@@ -54,6 +54,7 @@ else {
 </header>
 
 <div class="tree-container">
+    <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
     <div class="tree clearfix"></div>
 </div>
 
@@ -478,7 +479,6 @@ else {
 </div>
 <!-- ~~ Modal Uploading -->
 
-<button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
 
 
 
