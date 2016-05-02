@@ -18,7 +18,7 @@ class UserHandler
 
     public function getAllMembers($data)
     {
-        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive FROM `member` WHERE UserID = $data");
+        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive FROM `member` WHERE UserID = $data ORDER BY Father,BirthDate");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -72,8 +72,9 @@ class UserHandler
         // use exec() because no results are returned
         $this->conn->exec($sql);
 
-        // return new inserted member as JSON
-        $this->getMember($data['UserID'],$data['MemberID']);
+        // update avatar if needed
+        $data['AvatarID'] = 0;
+        $this->uploadAvatar($data);
     }
 
     public function uploadAvatar($data)

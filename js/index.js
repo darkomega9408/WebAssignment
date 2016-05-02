@@ -19,7 +19,7 @@ $(document).ready(function(){
                 console.log(document.location.href);
             }
             else if (res.status == 'user_not_found') {
-                $('#warning').text('Username or password is incorrect');
+                $('#warning').html('<i class="fa fa-fw fa-exclamation-circle fa-2x"></i><span>Username or password is incorrect</span>');
             }
         }).fail(function(err) {
             $('#modal-uploading').modal('hide');

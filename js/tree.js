@@ -193,7 +193,7 @@ $(document).ready(function(){
         var birthPlace = $("#modal-add-user .memberModalBirthPlace").val();
         var birthDate = $("#modal-add-user .memberModalBirthDate").val();
         var gender = $("#modal-add-user .memberModalGender").val();
-        var avatar = setDefaultAvatar($("#modal-add-user .memberModalAvatar").attr("src"),gender);
+        var avatar = setDefaultAvatar($("#modal-add-user .memberModalAvatar0").attr("src"),gender);
 
         // Validate
         if( !validateModal("add",name,birthPlace,birthDate) )
@@ -223,16 +223,7 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
-            $('#modal-uploading').modal('hide')
-            $("#modal-add-user").modal('hide');
-
-            // If tree has only one child => do reload page
-            if (currMemberID == 0)
-                window.location.reload();
-
-            // Add new member into tree and hide modal 'add'
-            addMember(data[0]);
-            $("#modal-add-user").modal('hide');
+            window.location.reload();
 
             setupTreeBehavior();
 
@@ -253,7 +244,7 @@ $(document).ready(function(){
         var birthPlace = $("#modal-edit-user .memberModalBirthPlace").val();
         var birthDate = $("#modal-edit-user .memberModalBirthDate").val();
         var gender = $("#modal-edit-user .memberModalGender").val();
-        var avatar = setDefaultAvatar($("#modal-edit-user .memberModalAvatar").attr("src"), gender);
+        var avatar = setDefaultAvatar($("#modal-edit-user .memberModalAvatar0").attr("src"), gender);
 
         if( !validateModal("edit",name,birthPlace, birthDate) )
             return;
@@ -283,14 +274,34 @@ $(document).ready(function(){
             },
             dataType: 'json'
         }).done(function (data) {
-            $('#modal-uploading').modal('hide');
-            // Hide 'edit' modal and update member info
-            $("#modal-edit-user").modal('hide');
-            setInfoForMember(data[0]);
+            window.location.reload();
         }).fail(function () {
             $('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
+    });
+
+
+    /**
+     * Click button edit to enable all fields in modal edit user
+     */
+    $('#btnEdit').click(function () {
+        $('.modal input').prop('disabled', false);
+        $('.modal select').prop('disabled', false);
+        $('#modal-edit-user .modal-footer button').show();
+        $(this).hide();
+        $('#modal-edit-user .item>a').attr('data-target','#modal-upload-avatar');
+    });
+
+    /**
+     * Close modal edit user set everything as default
+     */
+    $('#modal-edit-user').on('hidden.bs.modal', function () {
+        $('.modal input').prop('disabled', true);
+        $('.modal select').prop('disabled', true);
+        $('#modal-edit-user .modal-footer button').hide();
+        $('#btnEdit').show();
+        $('#modal-edit-user .item>a').attr('data-target', '');
     });
 
 
@@ -343,8 +354,8 @@ $(document).ready(function(){
         }
 
         // Set default avatar
-/*        if( data.Avatar != null )
-            memberCard.find(".memberAvatar").attr("src", data.Avatar);*/
+        /*        if( data.Avatar != null )
+         memberCard.find(".memberAvatar").attr("src", data.Avatar);*/
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
@@ -404,9 +415,9 @@ $(document).ready(function(){
             inertia: true,
             // keep the element within the area of it's parent
             restrict: {
-              restriction: "parent",
-              endOnly: true,
-              elementRect: { top: 0 + heightOffset, left: 0 + widthOffset, bottom: 1 - heightOffset, right: 1- widthOffset }
+                restriction: "parent",
+                endOnly: true,
+                elementRect: { top: 0 + heightOffset, left: 0 + widthOffset, bottom: 1 - heightOffset, right: 1- widthOffset }
             },
             // enable autoScroll
             autoScroll: true,
@@ -414,14 +425,14 @@ $(document).ready(function(){
             // call this function on every dragmove event
             onmove: function (event) {
                 var target = event.target,
-                    // keep the dragged position in the data-x/data-y attributes
+                // keep the dragged position in the data-x/data-y attributes
                     x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
                     y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
                 // translate the element
                 target.style.webkitTransform =
-                target.style.transform =
-                  'translate(' + x + 'px, ' + y + 'px)';
+                    target.style.transform =
+                        'translate(' + x + 'px, ' + y + 'px)';
 
                 // update the posiion attributes
                 target.setAttribute('data-x', x);
@@ -456,12 +467,12 @@ $(document).ready(function(){
     // ~~
 
     var setupTreeBehavior = function() {
-      // Set width for tree
-      var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
-      console.log(numOfLeaf);
-      $(".tree").width((numOfLeaf * 170) + "px");
+        // Set width for tree
+        var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
+        console.log(numOfLeaf);
+        $(".tree").width((numOfLeaf * 170) + "px");
 
-      makeTreeDraggable();
+        makeTreeDraggable();
     }
 
 
@@ -806,8 +817,5 @@ $(document).ready(function(){
         search = $search[0].selectize;
     }
     // ~~
-
-
-
 
 });
