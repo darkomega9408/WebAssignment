@@ -34,14 +34,17 @@ class UserHandler
 			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
 
         $stmt = $this->conn->prepare($sql);
-		
+
         if ($stmt->execute()) {
             $memberID = $this->conn->lastInsertId();
 
             $xml = new DOMDocument();
             $xml_avatars = $xml->createElement("avatars");
             $xml_initAvatar = $xml->createElement("avatar");
-            $xml_initAvatar->nodeValue = $data['Avatar'];
+            if ($data['Avatar'])
+                $xml_initAvatar->nodeValue = $data['Avatar'];
+            else
+                $xml_initAvatar->nodeValue = "empty";
             $xml_avatars->appendChild($xml_initAvatar);
             for ($i = 1; $i <= 4; $i++) {
                 $xml_avatar = $xml->createElement("avatar");
@@ -118,7 +121,7 @@ class UserHandler
         $this->getAllMembers($managedUserID);
 
     }
-    
+
     public function getAllGuests($data){
         $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT ID FROM `user` WHERE adminID = $data )");
         $stmt->execute();
@@ -137,7 +140,7 @@ class UserHandler
 
         $sql = "INSERT INTO `user` (`ID` , `adminID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
         $this->conn->exec($sql);
-        
+
         // return new inserted member as JSON
         $this->getUser($lastInsertId);
 

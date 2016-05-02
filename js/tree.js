@@ -553,7 +553,7 @@ $(document).ready(function(){
      * Set default avatar if needed based on gender
      */
     function setDefaultAvatar(avatar ,gender) {
-        if( avatar == "" || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
+        if( !avatar || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
             if (gender == "female")
                 avatar = "images/avatar-female-default.jpg";
             else avatar = "images/avatar-default.png";
