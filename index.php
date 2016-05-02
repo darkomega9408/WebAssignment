@@ -29,6 +29,7 @@ if (isset($_COOKIE['token'])) {
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
 	<link rel="stylesheet" href="css/index.css"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid">

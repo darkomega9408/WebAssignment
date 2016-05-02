@@ -28,7 +28,7 @@ else {
     <link href="css/navbar.css" rel="stylesheet">
     <link href="css/border-effect.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
 
     <script>var name=<?php echo json_encode($name); ?></script>
@@ -147,7 +147,6 @@ else {
                                 <select class="memberModalGender form-control " disabled>
                                     <option value="male">Male</option>
                                     <option value="female" selected>Female</option>
-                                    <option value="undefined">Undefined</option>
                                 </select>
                             </div>
                         </div>
@@ -201,14 +200,6 @@ else {
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="member-modal-avatar">
-                        <!--                        <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                                                    <img src="images/avatar-default.png"
-                                                    class="img-circle center-block img-responsive memberModalAvatar"
-                                                    width="300px"
-                                                    height="300px"
-                                                         alt="/*name*/">
-                                                </a>-->
-
                         <div id="myCarousel" class="carousel slide" data-ride="carousel">
                             <!-- Indicators -->
                             <ol class="carousel-indicators">
@@ -221,7 +212,7 @@ else {
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active">
-                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                    <a data-toggle="modal" >
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar0"
                                              style="width:300px; height:215px"
@@ -230,7 +221,7 @@ else {
                                 </div>
 
                                 <div class="item">
-                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                    <a data-toggle="modal" >
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar1"
                                              style="width:300px; height:215px"
@@ -239,7 +230,7 @@ else {
                                 </div>
 
                                 <div class="item">
-                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                    <a data-toggle="modal" >
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar2"
                                              style="width:300px; height:215px"
@@ -248,7 +239,7 @@ else {
                                 </div>
 
                                 <div class="item">
-                                    <a data-toggle="modal" data-target="#modal-upload-avatar">
+                                    <a data-toggle="modal" >
                                         <img src="images/avatar-default.png"
                                              class="img-circle center-block img-responsive memberModalAvatar3"
                                              style="width:300px; height:215px"
@@ -270,52 +261,54 @@ else {
                     </div>
 
                     <form role="form" class="form-horizontal">
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                            <div class="col-sm-10"><input disabled type="text" class="memberModalName form-control"
                                                           value="Nguyễn Xuân Thái" required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2">Gender: </label>
                             <div class="col-sm-10">
-                                <select class="memberModalGender form-control">
+                                <select disabled class="memberModalGender form-control">
                                     <option value="male">Male</option>
                                     <option value="female" selected>Female</option>
-                                    <option value="undefined">Undefined</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
-                            <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
+                            <div class="col-sm-10"><input disabled type="date" class="memberModalBirthDate form-control"
                                                           value="October 29, 1994" required></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Address: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                            <div class="col-sm-10"><input disabled type="text" class="memberModalAddress form-control"
                                                           value="Too long, lazy to type" required></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                            <div class="col-sm-10"><input disabled type="text" class="memberModalBirthPlace form-control"
                                                           value="HCMC"></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Status: </label>
-                                    <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
+                                    <span class="radio-inline"><input disabled type="radio" name="radioStatus" value="Alive"
                                                                       checked id="edit-radio-alive">
                                         <label for="edit-radio-alive">Alive</label></span>
-                                    <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
+                                    <span class="radio-inline"><input disabled type="radio" name="radioStatus" value="Dead"
                                                                       id="edit-radio-dead">
                                         <label for="edit-radio-dead">Dead</label></span>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnUpdate"><span
+                    <button type="button" class="btn btn-primary" id="btnEdit">
+                        <i class="fa fa-fw fa-pencil" aria-hidden="true"></i> Edit
+                    </button>
+                    <button style="display: none;" type="button" class="btn btn-success" id="btnUpdate"><span
                             class="glyphicon glyphicon-upload"></span> Update
                     </button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                    <button style="display: none;" type="button" class="btn btn-danger" data-dismiss="modal"><span
                             class="glyphicon glyphicon-remove"></span> Cancel
                     </button>
                 </div>
@@ -362,7 +355,6 @@ else {
                             <select class="memberModalGender form-control">
                                 <option value="male">Male</option>
                                 <option value="female" selected>Female</option>
-                                <option value="undefined">Undefined</option>
                             </select>
                         </div>
                     </div>
@@ -393,7 +385,7 @@ else {
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="btnAdd"><span
+                    <button type="submit" class="btn btn-success" id="btnAdd"><span
                             class="glyphicon glyphicon-plus"></span> Add
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><span
