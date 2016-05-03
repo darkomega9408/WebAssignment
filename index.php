@@ -8,8 +8,8 @@ if (isset($_COOKIE['token'])) {
   $personData = (array) $data['data'];
   $id = $personData['id'];
   $role = $personData['role'];
-  if ($role == 'admin') header('Location: admin-page.php');
-  else header('Location: tree.php');
+  if ($role == 'admin') header('Location: management');
+  else header('Location: tree');
 }
 ?>
 <!DOCTYPE html>

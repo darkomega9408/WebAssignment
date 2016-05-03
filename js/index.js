@@ -14,8 +14,8 @@ $(document).ready(function(){
             if (res.status == 'login_success') {
                 setCookie('token', res.token, 30);
                 if (res.role == 'user' || res.role == 'guest')
-                    document.location.href = 'tree.php';
-                else document.location.href = 'admin-page.php';
+                    document.location.href = 'tree';
+                else document.location.href = 'management';
                 console.log(document.location.href);
             }
             else if (res.status == 'user_not_found') {
@@ -27,7 +27,7 @@ $(document).ready(function(){
         });
     });
 
-    
+
 
     $("#modal-sign-up-btn").click(function (e) {
         //$("#signUp .form-horizontal").preventDefault();

@@ -2,7 +2,7 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 require("lib/vendor/firebase/php-jwt/src/JWT.php");
 use Firebase\JWT\JWT;
-if (!isset($_COOKIE['token'])) header('Location: index.php');
+if (!isset($_COOKIE['token'])) header('Location: /');
 else {
     $token = $_COOKIE['token'];
     $data = (array) JWT::decode($token, Token::$jwt_key, ['alg' => 'HS512']);
