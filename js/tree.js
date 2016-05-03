@@ -294,9 +294,17 @@ $(document).ready(function(){
     });
 
     /**
-     * Close modal edit user set everything as default
+     * Close modal edit user set input to enabled
      */
     $('#modal-edit-user').on('hidden.bs.modal', function () {
+        $('.modal input').prop('disabled', false);
+        $('.modal select').prop('disabled', false);
+    });
+
+    /**
+     * Open modal edit user set everything as default
+     */
+    $('#modal-edit-user').on('show.bs.modal', function () {
         $('.modal input').prop('disabled', true);
         $('.modal select').prop('disabled', true);
         $('#modal-edit-user .modal-footer button').hide();
@@ -553,7 +561,7 @@ $(document).ready(function(){
      * Set default avatar if needed based on gender
      */
     function setDefaultAvatar(avatar ,gender) {
-        if( avatar == "" || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
+        if( !avatar || avatar == "images/avatar-default.png" || avatar == "images/avatar-female-default.jpg") {
             if (gender == "female")
                 avatar = "images/avatar-female-default.jpg";
             else avatar = "images/avatar-default.png";
