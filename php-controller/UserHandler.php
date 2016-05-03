@@ -37,7 +37,7 @@ class UserHandler
 
         if ($stmt->execute()) {
             $memberID = $this->conn->lastInsertId();
-
+            if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
             $xml = new DOMDocument();
             $xml_avatars = $xml->createElement("avatars");
             $xml_initAvatar = $xml->createElement("avatar");
@@ -82,6 +82,7 @@ class UserHandler
 
     public function uploadAvatar($data)
     {
+        if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
         $memberID = $data["MemberID"];
         $xml = new DOMDocument();
         $xml->load('../member_avatar/' . $memberID . '.xml');
@@ -104,6 +105,7 @@ class UserHandler
 
     public function loadAvatar($data)
     {
+        if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
         $memberID = $data["MemberID"];
         $xml = new DOMDocument();
         $xml->load('../member_avatar/' . $memberID . '.xml');
