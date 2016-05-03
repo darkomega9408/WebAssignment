@@ -16,9 +16,32 @@ class UserHandler
         $this->conn = $dbConn;
     }
 
+    public function addPartner($data){
+      // echo "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
+      $sql = "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
+      $stmt = $this->conn->prepare($sql);
+      echo json_encode($stmt->execute());
+    }
+
+    public function updatePartner($data){
+      $sql = "UPDATE `notfamilyperson` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+      $this->conn->exec($sql);
+      $this->getPartner($data);
+    }
+
+    public function getPartner($data){
+      $sql = "SELECT * FROM `notfamilyperson` WHERE `userID`=". $data['UserID'] ." AND `MemberID`= ". $data['MemberID'];
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $stmt->fetchAll();
+
+      echo json_encode($result);
+    }
+
     public function getAllMembers($data)
     {
-        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive FROM `member` WHERE UserID = $data");
+        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive,Married FROM `member` WHERE UserID = $data");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -29,12 +52,12 @@ class UserHandler
         $userID = $data['UserID'];
         $father = $data['Father'];
 		if ($father == 0)
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Married`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] . "','" . $data['Married'] . "')";
 		else
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Married`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] . "','" . $data['Married'] . "')";
 
         $stmt = $this->conn->prepare($sql);
-		
+
         if ($stmt->execute()) {
             $memberID = $this->conn->lastInsertId();
 
@@ -52,9 +75,7 @@ class UserHandler
             $xml->save('../member_avatar/' . $memberID . '.xml');
         }
 
-        // return new inserted member as JSON
         $this->getMember($userID,$this->conn->lastInsertId());
-
     }
 
     public function deleteMember($data)
@@ -67,7 +88,7 @@ class UserHandler
 
     public function updateMember($data)
     {
-        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "',`Married`='" . $data['Married'] . "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
@@ -117,7 +138,7 @@ class UserHandler
         $this->getAllMembers($managedUserID);
 
     }
-    
+
     public function getAllGuests($data){
         $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT ID FROM `user` WHERE adminID = $data )");
         $stmt->execute();
@@ -136,7 +157,7 @@ class UserHandler
 
         $sql = "INSERT INTO `user` (`ID` , `adminID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
         $this->conn->exec($sql);
-        
+
         // return new inserted member as JSON
         $this->getUser($lastInsertId);
 

@@ -54,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 // Delete cascade
             else if( $_GET['operation'] == "deleteGuest" )
                 $userHandler->deleteGuest($sentData);
+            else if($_GET['operation'] == "getPartner")
+              $userHandler->getPartner($sentData);
+
         }
         else $userHandler->getAllMembers($id);
 
@@ -85,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             else $userHandler->getAllMembersForGuest($id);
         }
         else
-        // $id here is guestID => 
+        // $id here is guestID =>
         $userHandler->getAllMembersForGuest($id);
     }
 }
@@ -109,6 +112,10 @@ else if ( $_SERVER['REQUEST_METHOD'] = 'POST'){
                 // Update cascade
             else if ( $_POST['operation'] == "updateGuest" )
                 $userHandler->updateGuest($sentData);
+            else if($_POST['operation'] == "updatePartner")
+                $userHandler->updatePartner($sentData);
+            else if($_POST['operation'] == "addPartner")
+                $userHandler->addPartner($sentData);
         }
 
     }
