@@ -22,6 +22,15 @@ $(document).ready(function(){
      * LOAD SOME COMMON FILE : NAVBAR , MEMBERCARD
      */
 
+     $("#modal-add-user input[type=radio][name=radioMarried]").change(function(){
+      if(this.value == 'No'){
+         $('#modal-add-user ul li a[href="#partner1"]').hide();
+      }
+      else {
+        $('#modal-add-user ul li a[href="#partner1"]').show();
+       }
+     });
+
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/membercard/membercard.html .membercard', function () {
         memberCardObj = $(this).clone();
@@ -30,7 +39,6 @@ $(document).ready(function(){
         if ( role == 'guest' ){
             $(memberCardObj).find('.effect-winston p').hide();
             $(memberCardObj).find('.membercard').removeClass('effect-winston');
-
             $(memberCardObj).find('.membercard').attr('data-toggle','modal');
             $(memberCardObj).find('.membercard').attr('data-target','#modal-see-info-guest');
         }
@@ -153,10 +161,12 @@ $(document).ready(function(){
         console.log(memberinfo);
         if( memberinfo.Married == "1" ) {
             $("#info #edit-radio-yes").prop("checked", true);
+            $('#modal-edit-user a[href="#partner"]').show();
             // $("#info #info #see-radio-yes").prop("checked", true);
         }
         else {
             $("#info #edit-radio-no").prop("checked", true);
+            $('#modal-edit-user a[href="#partner"]').hide();
             // $("#info #info #see-radio-dead").prop("checked", true);
         }
 
