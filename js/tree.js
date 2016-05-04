@@ -31,6 +31,15 @@ $(document).ready(function(){
        }
      });
 
+     $("#modal-edit-user input[type=radio][name=radioMarried]").change(function(){
+      if(this.value == 'No'){
+         $('#modal-edit-user ul li a[href="#partner"]').hide();
+      }
+      else {
+        $('#modal-edit-user ul li a[href="#partner"]').show();
+       }
+     });
+
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/membercard/membercard.html .membercard', function () {
         memberCardObj = $(this).clone();
@@ -59,7 +68,6 @@ $(document).ready(function(){
      * @Author: TÂM
      */
     $('.modal').on('show.bs.modal', function (e) {
-
         // Get memberID of current shown member : in EDIT modal
         try {
             var $trigger = $(e.relatedTarget);
@@ -96,6 +104,9 @@ $(document).ready(function(){
 
         // Don't automatically add data for modal ADD RELATIVE
         if( $(this).attr("id") == "modal-add-user" ) {
+            $('#modal-add-user ul li:nth-child(2)').removeClass('active');
+            $('#modal-add-user ul li:first').addClass('active');
+            $('#modal-add-user ul li a[href="#partner1"]').hide();
             if (currMemberID == 0)
                 $(".modal-title").html("New member");
             else $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
@@ -119,6 +130,11 @@ $(document).ready(function(){
 
 
     function populateDataIntoModal (modalName) {
+        $('#modal-edit-user ul li:first').addClass('active');
+        $('#modal-edit-user #info').addClass('in active');
+        $('#modal-edit-user ul li:nth-child(2)').removeClass('active');
+        $('#modal-edit-user #partner').removeClass('in active');
+
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         var partnerinfo = $("#"+member + currMemberID).data("partnerinfo");
         console.log(partnerinfo);
@@ -262,33 +278,33 @@ $(document).ready(function(){
             dataType: 'json'
         }).done(function (data) {
             console.log(data[0].Married);
-            if(data[0].Married == 1) {
+
               var partnerData = {
-                  MemberID: data[0].MemberID,
-                  Name: $("#modal-add-user #partner1 .memberModalName").val(),
-                  BirthPlace : $("#modal-add-user #partner1 .memberModalBirthPlace").val(),
-                  BirthDate : $("#modal-add-user #partner1 .memberModalBirthDate").val(),
-                  Gender : $("#modal-add-user #partner1 .memberModalGender"),
-                  Alive : $("#modal-add-user #partner1 input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
-                  Address : $("#modal-add-user #partner1 .memberModalAddress").val(),
-                  Gender : $("#modal-add-user #partner1 .memberModalGender").val() ,
+                    MemberID: data[0].MemberID,
+                    Name: $("#modal-add-user #partner1 .memberModalName").val(),
+                    BirthPlace : $("#modal-add-user #partner1 .memberModalBirthPlace").val(),
+                    BirthDate : $("#modal-add-user #partner1 .memberModalBirthDate").val(),
+                    Gender : $("#modal-add-user #partner1 .memberModalGender"),
+                    Alive : $("#modal-add-user #partner1 input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+                    Address : $("#modal-add-user #partner1 .memberModalAddress").val(),
+                    Gender : $("#modal-add-user #partner1 .memberModalGender").val() ,
               };
 
-              $.ajax({
-                  url: 'php-controller/ServerHandler.php',
-                  type: 'POST',
-                  data: {
-                      role: role,
-                      operation: "addPartner",
-                      sentData: partnerData
-                  },
-                  dataType: 'json'
-              }).done(function(data){
-                console.log(data);
-              }).fail(function(err){
-                console.log(err);
-              });
-            }
+                $.ajax({
+                    url: 'php-controller/ServerHandler.php',
+                    type: 'POST',
+                    data: {
+                        role: role,
+                        operation: "addPartner",
+                        sentData: partnerData
+                    },
+                    dataType: 'json'
+                }).done(function(data){
+                  console.log(data);
+                }).fail(function(err){
+                  console.log(err);
+                });
+
 
             $('#modal-uploading').modal('hide')
             $("#modal-add-user").modal('hide');
@@ -339,43 +355,44 @@ $(document).ready(function(){
             Married: $("#modal-edit-user #info input[name='radioMarried']:checked").val()=="Yes" ? 1 : 0
         };
 
+        if( $("#modal-edit-user #info input[name='radioMarried']:checked").val()=="Yes" ? 1 : 0){
+          console.log("qui");
+          var partnerData = {
+              MemberID: currMemberID,
+              Name: $("#modal-edit-user #partner .memberModalName").val(),
+              BirthPlace : $("#modal-edit-user #partner .memberModalBirthPlace").val(),
+              BirthDate : $("#modal-edit-user #partner .memberModalBirthDate").val(),
+              Gender : $("#modal-edit-user #partner .memberModalGender"),
+              Alive : $("#modal-edit-user #partner input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
+              Address : $("#modal-edit-user #partner .memberModalAddress").val(),
+              Gender : $("#modal-edit-user #partner .memberModalGender").val() ,
+          };
+
+          console.log(partnerData);
+
+          $.ajax({
+              url: 'php-controller/ServerHandler.php',
+              type: 'POST',
+              data: {
+                  role: role,
+                  operation: "updatePartner",
+                  sentData: partnerData
+              },
+              dataType: 'json'
+          }).done(function (data) {
+             console.log(data);
+             $("#"+member + data[0].MemberID).data("partnerinfo", data[0]);
+             // setInfoForMember(data[0]);
+          }).fail(function (err) {
+             console.log(err);
+              $('#modal-uploading').modal('hide');
+              console.log("Failed to update info member !")
+          });
+        }
 
         /**
          * Ajax POST
          */
-         if($("#"+member + currMemberID).data("partnerinfo")) {
-           var partnerData = {
-               MemberID: 1,
-               Name: $("#modal-edit-user #partner .memberModalName").val(),
-               BirthPlace : $("#modal-edit-user #partner .memberModalBirthPlace").val(),
-               BirthDate : $("#modal-edit-user #partner .memberModalBirthDate").val(),
-               Gender : $("#modal-edit-user #partner .memberModalGender"),
-               Alive : $("#modal-edit-user #partner input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
-               Address : $("#modal-edit-user #partner .memberModalAddress").val(),
-               Gender : $("#modal-edit-user #partner .memberModalGender").val() ,
-           };
-
-           console.log(partnerData);
-
-           $.ajax({
-               url: 'php-controller/ServerHandler.php',
-               type: 'POST',
-               data: {
-                   role: role,
-                   operation: "updatePartner",
-                   sentData: partnerData
-               },
-               dataType: 'json'
-           }).done(function (data) {
-              console.log(data);
-              $("#"+member + data[0].MemberID).data("partnerinfo", data[0]);
-              // setInfoForMember(data[0]);
-           }).fail(function (err) {
-              console.log(err);
-               $('#modal-uploading').modal('hide');
-               console.log("Failed to update info member !")
-           });
-         }
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
@@ -392,7 +409,8 @@ $(document).ready(function(){
             // Hide 'edit' modal and update member info
             $("#modal-edit-user").modal('hide');
             setInfoForMember(data[0]);
-        }).fail(function () {
+        }).fail(function (err) {
+          console.log(err);
             $('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
         });
@@ -421,13 +439,13 @@ $(document).ready(function(){
     /**
      * Open modal edit user set everything as default
      */
-    $('#modal-edit-user').on('show.bs.modal', function () {
-        $('.modal input').prop('disabled', true);
-        $('.modal select').prop('disabled', true);
-        $('#modal-edit-user .modal-footer button').hide();
-        $('#btnEdit').show();
-        $('#modal-edit-user .item>a').attr('data-target', '');
-    });
+    // $('#modal-edit-user').on('show.bs.modal', function () {
+    //     $('.modal input').prop('disabled', true);
+    //     $('.modal select').prop('disabled', true);
+    //     $('#modal-edit-user .modal-footer button').hide();
+    //     $('#btnEdit').show();
+    //     $('#modal-edit-user .item>a').attr('data-target', '');
+    // });
 
 
     /**
