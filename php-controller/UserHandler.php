@@ -103,7 +103,7 @@ class UserHandler
 
     public function uploadAvatar($data)
     {
-		if (!$data["IsPartner"]) {
+		if ($data["IsPartner"] == "no") {
 			if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
 			$memberID = $data["MemberID"];
 			$xml = new DOMDocument();

@@ -82,10 +82,11 @@ $(document).ready(function(){
 			var modalFather = null;
 			if ($trigger.attr("id") != "btnAddMember") {
 				modalFather = $trigger.parents().eq(10);
-				if ( ($trigger.parents().eq(6)).attr("id") == "partner" )
-					modalFather.attr("isPartner", true);
+				if ( (modalFather.attr("id") == "modal-add-user" && ($trigger.parents().eq(6)).attr("id") == "partner1") ||
+	(modalFather.attr("id") == "modal-edit-user" && ($trigger.parents().eq(6)).attr("id") == "partner")			)
+					modalFather.attr("isPartner", "yes");
 				else
-					modalFather.attr("isPartner", false);
+					modalFather.attr("isPartner", "no");
 			}
 			
 			if (modalFather != null) {
@@ -97,7 +98,7 @@ $(document).ready(function(){
             }
 
             if ($(this).attr("id") == "modal-upload-avatar") {
-                if (modalFather.attr("id") == "modal-edit-user" && modalFather.attr("isPartner") == false ) {
+                if (modalFather.attr("id") == "modal-edit-user" && modalFather.attr("isPartner") == "no" ) {
                     var avatarID = $trigger.children().eq(0).attr("class").split(" ")[3].substr(-1);
                     $(this).find("#btnUploadAvatar").attr("data-avatarid", avatarID);
                 }
@@ -864,8 +865,10 @@ $(document).ready(function(){
      */
     function updateAvatarForDB(data, isAddMem) {
         var imgLink = data.data.link;
+		console.log("IS PARTNER: " + isPartner);
         if (isAddMem == 1) {
-			if (!isPartner)
+			console.log("ADD MEM: " + isPartner);
+			if (isPartner == "no")
 				$("#modal-add-user #info1 .memberModalAvatar").attr("src", imgLink);
 			else
 				$("#modal-add-user #partner1 .memberModalAvatar").attr("src", imgLink);
@@ -889,7 +892,7 @@ $(document).ready(function(){
                 },
                 dataType: 'json'
             }).done(function (data) {
-				if (!isPartner) {
+				if (isPartner == "no") {
 					if (avatarId == 0)
 						$("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
 					$("#modal-edit-user .memberModalAvatar" + avatarId).attr("src", imgLink);
@@ -913,6 +916,7 @@ $(document).ready(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
         avatarId = $(this).attr("data-avatarid");
 		isPartner = $(this).attr("data-isPartner");
+		console.log(isPartner);
         var isAddMem = $(this).attr("data-addmem");
         $.ajax({
             url: "https://api.imgur.com/3/upload",
