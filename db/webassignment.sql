@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2016 at 03:38 PM
+-- Generation Time: May 04, 2016 at 05:39 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -47,7 +47,10 @@ INSERT INTO `member` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `Bir
 (2, 1, 'Le Duc Qui', '1994-06-11', 'Bien Hoa', 'Ha Noi', 'male', NULL, 1, 1),
 (2, 5, 'Uzumaki Naruto', '2016-03-10', '333', '333', 'male', 1, 1, 0),
 (2, 6, 'Michael Jackson', '2016-08-12', '253 NewYork', '253 NewYork', 'female', 1, 1, 0),
-(2, 63, 'asdasd', '2222-02-22', 'asdasd', 'asdasd', 'male', 1, 1, 0);
+(2, 63, 'asdasd', '2222-02-22', 'asdasd', 'asdasd', 'male', 1, 1, 0),
+(3, 64, 'sdadsa', '1994-01-01', 'dfdsf', 'safsafasf', 'male', NULL, 1, 0),
+(3, 66, 'asassf', '1995-01-01', 'dasfsaf', 'asfsasaf', 'female', 64, 1, 1),
+(3, 67, 'asfsaf', '1996-01-01', 'asfsaf', 'safsafs', 'female', 66, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -65,15 +68,19 @@ CREATE TABLE `notfamilyperson` (
   `BirthPlace` varchar(255) DEFAULT NULL,
   `Gender` varchar(6) NOT NULL,
   `Father` int(11) DEFAULT NULL,
-  `Alive` tinyint(1) NOT NULL DEFAULT '1'
+  `Alive` tinyint(1) NOT NULL DEFAULT '1',
+  `Avatar` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `notfamilyperson`
 --
 
-INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `ID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Alive`) VALUES
-(2, 1, 1, 'Nguyen Phuong', '1994-12-03', 'Vung Tau', 'Vung Tau', 'male', NULL, 1);
+INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `ID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father`, `Alive`, `Avatar`) VALUES
+(2, 1, 1, 'Nguyen Phuong', '1994-12-03', 'Vung Tau', 'Vung Tau', 'male', NULL, 1, ''),
+(3, 64, 7, '', '0000-00-00', '', '', 'female', NULL, 1, ''),
+(3, 66, 9, '', '0000-00-00', '', '', 'female', NULL, 1, 'http://i.imgur.com/KEmU44J.png'),
+(3, 67, 10, 'safasf', '2014-01-01', 'zfsaf', 'asfasfas', 'female', NULL, 1, 'http://i.imgur.com/XsUBYKQ.jpg');
 
 -- --------------------------------------------------------
 
@@ -96,7 +103,8 @@ CREATE TABLE `person` (
 
 INSERT INTO `person` (`ID`, `Username`, `Email`, `Password`, `Name`, `Role`) VALUES
 (1, 'leducqui', 'leducqui@gmial.com', '123456', 'le duc qui', 'admin'),
-(2, 'nguyenthanhtam', 'nguyenthanhtam@gmail.com', '123456', 'nguyen thanh tam', 'user');
+(2, 'nguyenthanhtam', 'nguyenthanhtam@gmail.com', '123456', 'nguyen thanh tam', 'user'),
+(3, 'black', 'black@gmail.com', '123456', 'black man', 'user');
 
 --
 -- Indexes for dumped tables
@@ -135,17 +143,17 @@ ALTER TABLE `person`
 -- AUTO_INCREMENT for table `member`
 --
 ALTER TABLE `member`
-  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `MemberID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT for table `notfamilyperson`
 --
 ALTER TABLE `notfamilyperson`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `person`
 --
 ALTER TABLE `person`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
