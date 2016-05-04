@@ -144,7 +144,7 @@ class UserHandler
     public function getAllMembersForGuest($guestID)
     {
         // Use $guestID to get managedUserID first
-        $res = $this->conn->query("SELECT adminID FROM `user` WHERE ID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
+        $res = $this->conn->query("SELECT userID FROM `guestmanagement` WHERE guestID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
         $managedUserID = $res['adminID'];
         if( $managedUserID == null )
             return;
@@ -154,7 +154,7 @@ class UserHandler
     }
 
     public function getAllGuests($data){
-        $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT ID FROM `user` WHERE adminID = $data )");
+        $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT guestID FROM `guestmanagement` WHERE userID = $data )");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -169,7 +169,7 @@ class UserHandler
 
         $lastInsertId = $this->conn->lastInsertId();
 
-        $sql = "INSERT INTO `user` (`ID` , `adminID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
+        $sql = "INSERT INTO `guestmanagement` (`guestID` , `userID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
         $this->conn->exec($sql);
 
         // return new inserted member as JSON
@@ -180,7 +180,7 @@ class UserHandler
 
     public function deleteGuest($data)
     {
-        // Delete cascade , don't need to consider `user` table anymore
+        // Delete cascade , don't need to consider `guestmanagement` table anymore
         $sql = "DELETE FROM `person` WHERE `ID`= ".$data['ID'];
         $this->conn->exec($sql);
         echo "Success";
