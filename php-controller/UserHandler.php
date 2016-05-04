@@ -17,8 +17,8 @@ class UserHandler
     }
 
     public function addPartner($data){
-      // echo "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
-      $sql = "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
+      // echo "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
+      $sql = "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
       $stmt = $this->conn->prepare($sql);
       echo json_encode($stmt->execute());
     }
@@ -103,12 +103,20 @@ class UserHandler
 
     public function uploadAvatar($data)
     {
-        if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
-        $memberID = $data["MemberID"];
-        $xml = new DOMDocument();
-        $xml->load('../member_avatar/' . $memberID . '.xml');
-        $xml->getElementsByTagName("avatar")[$data["AvatarID"]]->nodeValue=$data['Avatar'];
-        $xml->save('../member_avatar/' . $memberID . '.xml');
+		if (!$data["IsPartner"]) {
+			if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
+			$memberID = $data["MemberID"];
+			$xml = new DOMDocument();
+			$xml->load('../member_avatar/' . $memberID . '.xml');
+			$xml->getElementsByTagName("avatar")[$data["AvatarID"]]->nodeValue=$data['Avatar'];
+			$xml->save('../member_avatar/' . $memberID . '.xml');
+		}
+		else {
+			$sql = "UPDATE `notfamilyperson` SET `Avatar` = '" . $data["Avatar"] . "' WHERE `userID` = " . $data["UserID"] . " AND `MemberID` = " . $data["MemberID"];
+			// use exec() because no results are returned
+			$this->conn->exec($sql);
+			
+		}
 
         $this->getMember($data['UserID'],$data['MemberID']);
     }

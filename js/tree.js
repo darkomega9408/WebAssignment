@@ -78,9 +78,18 @@ $(document).ready(function(){
             if ($(this).attr("id") == "modal-add-user")
                 currMemberID = 0;
             var $trigger = $(e.relatedTarget);
-            var modalFather = $trigger.parents().eq(8);
+			
+			var modalFather = null;
+			if ($trigger.attr("id") != "btnAddMember") {
+				modalFather = $trigger.parents().eq(10);
+				if ( ($trigger.parents().eq(6)).attr("id") == "partner" )
+					modalFather.attr("isPartner", true);
+				else
+					modalFather.attr("isPartner", false);
+			}
+			
+			if (modalFather != null) {
             if (modalFather.attr("id") == "modal-add-user") {
-                console.log("WWWTTFFFF");
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
             }
             else {
@@ -88,14 +97,16 @@ $(document).ready(function(){
             }
 
             if ($(this).attr("id") == "modal-upload-avatar") {
-                if (modalFather.attr("id") == "") {
+                if (modalFather.attr("id") == "modal-edit-user" && modalFather.attr("isPartner") == false ) {
                     var avatarID = $trigger.children().eq(0).attr("class").split(" ")[3].substr(-1);
                     $(this).find("#btnUploadAvatar").attr("data-avatarid", avatarID);
                 }
             }
 
             $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
+			$(this).find("#btnUploadAvatar").attr("data-isPartner", modalFather.attr("isPartner"));
             return;
+			}
         }
 
         // Hide error msg
@@ -192,6 +203,7 @@ $(document).ready(function(){
           $("#"+modalName+" #partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
           $("#"+modalName+" #partner .memberModalAddress").val(partnerinfo.Address);
           $("#"+modalName+" #partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
+		  $("#"+modalName+" #partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
           if( partnerinfo.Alive == "1" ) {
               $("#partner #edit-radio-alive").prop("checked", true);
               $("#partner #see-radio-alive").prop("checked", true);
@@ -288,6 +300,7 @@ $(document).ready(function(){
                     Alive : $("#modal-add-user #partner1 input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
                     Address : $("#modal-add-user #partner1 .memberModalAddress").val(),
                     Gender : $("#modal-add-user #partner1 .memberModalGender").val() ,
+					Avatar: $("#modal-add-user #partner1 .memberModalAvatar").attr("src")
               };
 
                 $.ajax({
@@ -804,6 +817,7 @@ $(document).ready(function(){
     var imgUrl = "";
     var memberUploadAvatarId;
     var avatarId;
+	var isPartner;
 
     $('#file-input').change(function(e) {
 
@@ -851,7 +865,10 @@ $(document).ready(function(){
     function updateAvatarForDB(data, isAddMem) {
         var imgLink = data.data.link;
         if (isAddMem == 1) {
-            $("#modal-add-user .memberModalAvatar").attr("src", imgLink);
+			if (!isPartner)
+				$("#modal-add-user #info1 .memberModalAvatar").attr("src", imgLink);
+			else
+				$("#modal-add-user #partner1 .memberModalAvatar").attr("src", imgLink);
             $('#modal-uploading').modal('hide');
         }
         else {
@@ -866,15 +883,21 @@ $(document).ready(function(){
                         Avatar : data.data.link,
                         UserID : 2,
                         MemberID : memberUploadAvatarId,
-                        AvatarID: avatarId
+                        AvatarID: avatarId,
+						IsPartner: isPartner
                     }
                 },
                 dataType: 'json'
             }).done(function (data) {
-                if (avatarId == 0)
-                    $("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
-                $("#modal-edit-user .memberModalAvatar" + avatarId).attr("src", imgLink);
-                $("#mem" + memberUploadAvatarId).data("memberinfo", data);
+				if (!isPartner) {
+					if (avatarId == 0)
+						$("#mem" + memberUploadAvatarId).find(".memberAvatar").attr("src", imgLink);
+					$("#modal-edit-user .memberModalAvatar" + avatarId).attr("src", imgLink);
+					$("#mem" + memberUploadAvatarId).data("memberinfo", data);
+				}
+				else {
+					$("#modal-edit-user .memberModalAvatar").attr("src", imgLink);
+				}
                 $('#modal-uploading').modal('hide');
             }).fail(function (err) {
                 console.log(err);
@@ -889,6 +912,7 @@ $(document).ready(function(){
     $("#btnUploadAvatar").click(function(){
         memberUploadAvatarId = $(this).attr("data-memid");
         avatarId = $(this).attr("data-avatarid");
+		isPartner = $(this).attr("data-isPartner");
         var isAddMem = $(this).attr("data-addmem");
         $.ajax({
             url: "https://api.imgur.com/3/upload",
