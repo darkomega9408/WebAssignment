@@ -22,23 +22,23 @@ $(document).ready(function(){
      * LOAD SOME COMMON FILE : NAVBAR , MEMBERCARD
      */
 
-    $("#modal-add-user input[type=radio][name=radioMarried]").change(function(){
-        if(this.value == 'No'){
-            $('#modal-add-user ul li a[href="#partner1"]').hide();
-        }
-        else {
-            $('#modal-add-user ul li a[href="#partner1"]').show();
-        }
-    });
+     $("#modal-add-user input[type=radio][name=radioMarried]").change(function(){
+      if(this.value == 'No'){
+         $('#modal-add-user ul li a[href="#partner1"]').hide();
+      }
+      else {
+        $('#modal-add-user ul li a[href="#partner1"]').show();
+       }
+     });
 
-    $("#modal-edit-user input[type=radio][name=radioMarried]").change(function(){
-        if(this.value == 'No'){
-            $('#modal-edit-user ul li a[href="#partner"]').hide();
-        }
-        else {
-            $('#modal-edit-user ul li a[href="#partner"]').show();
-        }
-    });
+     $("#modal-edit-user input[type=radio][name=radioMarried]").change(function(){
+      if(this.value == 'No'){
+         $('#modal-edit-user ul li a[href="#partner"]').hide();
+      }
+      else {
+        $('#modal-edit-user ul li a[href="#partner"]').show();
+       }
+     });
 
     // Load member card from another file and assign to '@memberCardObj'
     $('.tree').load('templates/membercard/membercard.html .membercard', function () {
@@ -199,20 +199,20 @@ $(document).ready(function(){
         }
 
         if(partnerinfo){
-            $("#"+modalName+" #partner .memberModalName").val(partnerinfo.Name);
-            $("#"+modalName+" #partner .memberModalGender").val(partnerinfo.Gender);
-            $("#"+modalName+" #partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
-            $("#"+modalName+" #partner .memberModalAddress").val(partnerinfo.Address);
-            $("#"+modalName+" #partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
-            $("#"+modalName+" #partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
-            if( partnerinfo.Alive == "1" ) {
-                $("#partner #edit-radio-alive").prop("checked", true);
-                $("#partner #see-radio-alive").prop("checked", true);
-            }
-            else {
-                $("#partner #edit-radio-dead").prop("checked", true);
-                $("#partner #see-radio-dead").prop("checked", true);
-            }
+          $("#"+modalName+" #partner .memberModalName").val(partnerinfo.Name);
+          $("#"+modalName+" #partner .memberModalGender").val(partnerinfo.Gender);
+          $("#"+modalName+" #partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
+          $("#"+modalName+" #partner .memberModalAddress").val(partnerinfo.Address);
+          $("#"+modalName+" #partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
+		  $("#"+modalName+" #partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
+          if( partnerinfo.Alive == "1" ) {
+              $("#partner #edit-radio-alive").prop("checked", true);
+              $("#partner #see-radio-alive").prop("checked", true);
+          }
+          else {
+              $("#partner #edit-radio-dead").prop("checked", true);
+              $("#partner #see-radio-dead").prop("checked", true);
+          }
         }
     }
 
@@ -420,7 +420,6 @@ $(document).ready(function(){
             dataType: 'json'
         }).done(function (data) {
             console.log(data);
-            //window.location.reload();
             $('#modal-uploading').modal('hide');
             // Hide 'edit' modal and update member info
             $("#modal-edit-user").modal('hide');
