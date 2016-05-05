@@ -78,7 +78,7 @@ $(document).ready(function(){
             if ($(this).attr("id") == "modal-add-user")
                 currMemberID = 0;
             var $trigger = $(e.relatedTarget);
-			
+
 			var modalFather = null;
 			if ($trigger.attr("id") != "btnAddMember") {
 				modalFather = $trigger.parents().eq(10);
@@ -88,7 +88,7 @@ $(document).ready(function(){
 				else
 					modalFather.attr("isPartner", "no");
 			}
-			
+
 			if (modalFather != null) {
             if (modalFather.attr("id") == "modal-add-user") {
                 $(this).find("#btnUploadAvatar").attr("data-addmem", 1);
@@ -376,7 +376,6 @@ $(document).ready(function(){
               Name: $("#modal-edit-user #partner .memberModalName").val(),
               BirthPlace : $("#modal-edit-user #partner .memberModalBirthPlace").val(),
               BirthDate : $("#modal-edit-user #partner .memberModalBirthDate").val(),
-              Gender : $("#modal-edit-user #partner .memberModalGender"),
               Alive : $("#modal-edit-user #partner input[name='radioStatus']:checked").val()=="Alive" ? 1 : 0,
               Address : $("#modal-edit-user #partner .memberModalAddress").val(),
               Gender : $("#modal-edit-user #partner .memberModalGender").val() ,
