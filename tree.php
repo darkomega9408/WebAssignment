@@ -288,7 +288,6 @@ else {
                                       <select class="memberModalGender form-control">
                                           <option value="male">Male</option>
                                           <option value="female" selected>Female</option>
-                                          <option value="undefined">Undefined</option>
                                       </select>
                                   </div>
                               </div>
@@ -367,7 +366,6 @@ else {
                                   <select class="memberModalGender form-control">
                                       <option value="male">Male</option>
                                       <option value="female">Female</option>
-                                      <option value="undefined" selected>Undefined</option>
                                   </select>
                               </div>
                           </div>
@@ -453,7 +451,7 @@ else {
                         <div class="form-group">
                             <label class="control-label col-sm-2">Gender: </label>
                             <div class="col-sm-10">
-                                <select disabled class="memberModalGender form-control">
+                                <select class="memberModalGender form-control">
                                     <option value="male">Male</option>
                                     <option value="female" selected>Female</option>
                                 </select>
@@ -535,7 +533,6 @@ else {
                                 <select class="memberModalGender form-control">
                                     <option value="male">Male</option>
                                     <option value="female" selected>Female</option>
-                                    <option value="undefined">Undefined</option>
                                 </select>
                             </div>
                         </div>

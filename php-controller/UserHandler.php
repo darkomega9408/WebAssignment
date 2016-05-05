@@ -97,8 +97,8 @@ class UserHandler
         $this->conn->exec($sql);
 
         // update avatar if needed
-        $data['AvatarID'] = 0;
-        $this->uploadAvatar($data);
+        //$data['AvatarID'] = 0;
+        //$this->uploadAvatar($data);
     }
 
     public function uploadAvatar($data)
@@ -145,7 +145,7 @@ class UserHandler
     {
         // Use $guestID to get managedUserID first
         $res = $this->conn->query("SELECT userID FROM `guestmanagement` WHERE guestID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
-        $managedUserID = $res['adminID'];
+        $managedUserID = $res['userID'];
         if( $managedUserID == null )
             return;
 
