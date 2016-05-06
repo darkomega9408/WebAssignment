@@ -67,121 +67,204 @@ else {
                 <button class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Someone's Information</h4>
             </div>
-            <form class="form-horizontal">
-                <div class="modal-body">
-                    <p class="error-msg"></p>
-                    <div class="member-modal-avatar">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#info2">Information</a></li>
+              <li><a data-toggle="tab" href="#partner2">Partner</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="info2" class="info tab-pane fade in active">
+                  <form class="form-horizontal">
+                      <div class="modal-body">
+                          <p class="error-msg"></p>
+                          <div class="member-modal-avatar">
 
-                        <div id="myGuestCarousel" class="carousel slide" data-ride="carousel">
-                            <!-- Indicators -->
-                            <ol class="carousel-indicators">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                                <li data-target="#myCarousel" data-slide-to="2"></li>
-                                <li data-target="#myCarousel" data-slide-to="3"></li>
-                            </ol>
+                              <div id="myGuestCarousel" class="carousel slide" data-ride="carousel">
+                                  <!-- Indicators -->
+                                  <ol class="carousel-indicators">
+                                      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                      <li data-target="#myCarousel" data-slide-to="1"></li>
+                                      <li data-target="#myCarousel" data-slide-to="2"></li>
+                                      <li data-target="#myCarousel" data-slide-to="3"></li>
+                                  </ol>
 
-                            <!-- Wrapper for slides -->
-                            <div class="carousel-inner" role="listbox">
-                                <div class="item active">
-                                    <a data-toggle="modal" >
-                                        <img src="images/avatar-default.png"
-                                             class="img-circle center-block img-responsive memberModalAvatar0"
-                                             width="300px"
-                                             height="300px"
-                                             alt="/*name*/">
-                                    </a>
-                                </div>
+                                  <!-- Wrapper for slides -->
+                                  <div class="carousel-inner" role="listbox">
+                                      <div class="item active">
+                                          <a data-toggle="modal" >
+                                              <img src="images/avatar-default.png"
+                                                   class="img-circle center-block img-responsive memberModalAvatar0"
+                                                   width="300px"
+                                                   height="300px"
+                                                   alt="/*name*/">
+                                          </a>
+                                      </div>
 
-                                <div class="item">
-                                    <a data-toggle="modal" >
-                                        <img src="images/avatar-default.png"
-                                             class="img-circle center-block img-responsive memberModalAvatar1"
-                                             width="300px"
-                                             height="300px"
-                                             alt="/*name*/">
-                                    </a>
-                                </div>
+                                      <div class="item">
+                                          <a data-toggle="modal" >
+                                              <img src="images/avatar-default.png"
+                                                   class="img-circle center-block img-responsive memberModalAvatar1"
+                                                   width="300px"
+                                                   height="300px"
+                                                   alt="/*name*/">
+                                          </a>
+                                      </div>
 
-                                <div class="item">
-                                    <a data-toggle="modal" >
-                                        <img src="images/avatar-default.png"
-                                             class="img-circle center-block img-responsive memberModalAvatar2"
-                                             width="300px"
-                                             height="300px"
-                                             alt="/*name*/">
-                                    </a>
-                                </div>
+                                      <div class="item">
+                                          <a data-toggle="modal" >
+                                              <img src="images/avatar-default.png"
+                                                   class="img-circle center-block img-responsive memberModalAvatar2"
+                                                   width="300px"
+                                                   height="300px"
+                                                   alt="/*name*/">
+                                          </a>
+                                      </div>
 
-                                <div class="item">
-                                    <a data-toggle="modal" >
-                                        <img src="images/avatar-default.png"
-                                             class="img-circle center-block img-responsive memberModalAvatar3"
-                                             width="300px"
-                                             height="300px"
-                                             alt="/*name*/">
-                                    </a>
-                                </div>
-                            </div>
+                                      <div class="item">
+                                          <a data-toggle="modal" >
+                                              <img src="images/avatar-default.png"
+                                                   class="img-circle center-block img-responsive memberModalAvatar3"
+                                                   width="300px"
+                                                   height="300px"
+                                                   alt="/*name*/">
+                                          </a>
+                                      </div>
+                                  </div>
 
-                            <!-- Left and right controls -->
-                            <a class="left carousel-control" href="#myGuestCarousel" role="button" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="right carousel-control" href="#myGuestCarousel" role="button" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </div>
-                    </div>
+                                  <!-- Left and right controls -->
+                                  <a class="left carousel-control" href="#myGuestCarousel" role="button" data-slide="prev">
+                                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                      <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="right carousel-control" href="#myGuestCarousel" role="button" data-slide="next">
+                                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
+                              </div>
+                          </div>
 
-                    <form role="form" class="form-horizontal">
-                        <div class="form-group">
-                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalName form-control "
-                                                          value="Nguyễn Xuân Thái" required disabled></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">Gender: </label>
-                            <div class="col-sm-10">
-                                <select class="memberModalGender form-control " disabled>
-                                    <option value="male">Male</option>
-                                    <option value="female" selected>Female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
-                            <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control " required disabled></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Address: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control "
-                                                          value="Too long, lazy to type" required disabled></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control" disabled
-                                                          value="HCMC"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Status: </label>
-                                    <span class="radio-inline "><input type="radio" name="radioStatus" value="Alive"
-                                                                      checked id="see-radio-alive" disabled>
-                                        <label for="edit-radio-alive">Alive</label></span>
-                                    <span class="radio-inline "><input type="radio" name="radioStatus" value="Dead"
-                                                                      id="see-radio-dead" disabled>
-                                        <label for="edit-radio-dead">Dead</label></span>
-                        </div>
-                    </form>
+                          <form role="form" class="form-horizontal">
+                              <div class="form-group">
+                                  <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                                  <div class="col-sm-10"><input type="text" class="memberModalName form-control "
+                                                                value="Nguyễn Xuân Thái" required disabled></div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-label col-sm-2">Gender: </label>
+                                  <div class="col-sm-10">
+                                      <select class="memberModalGender form-control " disabled>
+                                          <option value="male">Male</option>
+                                          <option value="female" selected>Female</option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                                  <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control " required disabled></div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">Address: </label>
+                                  <div class="col-sm-10"><input type="text" class="memberModalAddress form-control "
+                                                                value="Too long, lazy to type" required disabled></div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                                  <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control" disabled
+                                                                value="HCMC"></div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">Status: </label>
+                                          <span class="radio-inline "><input type="radio" name="radioStatus" value="Alive"
+                                                                            checked id="see-radio-alive" disabled>
+                                              <label for="edit-radio-alive">Alive</label></span>
+                                          <span class="radio-inline "><input type="radio" name="radioStatus" value="Dead"
+                                                                            id="see-radio-dead" disabled>
+                                              <label for="edit-radio-dead">Dead</label></span>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">Married: </label>
+                                              <span class="radio-inline"><input type="radio" name="radioMarried" value="Yes"
+                                                                                id="see-radio-yes" disabled>
+                                                  <label for="see-radio-yes">Yes</label></span>
+                                              <span class="radio-inline"><input type="radio" name="radioMarried" value="No"
+                                                                                checked id="see-radio-no" disabled>
+                                                  <label for="see-radio-no">No</label></span>
+                              </div>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                                  class="glyphicon glyphicon-remove"></span> Cancel
+                          </button>
+                      </div>
+                  </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                            class="glyphicon glyphicon-remove"></span> Cancel
-                    </button>
+
+                <div id="partner2" class="partner tab-pane fade">
+                  <form  class="form-horizontal">
+                      <div class="modal-body">
+                          <p class="error-msg"></p>
+                          <div class="member-modal-avatar">
+                              <div>
+                                  <div>
+                                      <div>
+                                          <a id="hrefChangeAvatar">
+                                              <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                                   alt="/*name*/">
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+
+
+                          <div class="form-group">
+                              <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalName form-control"
+                                                            placeholder="Enter Name here..." required disabled></div>
+                          </div>
+                          <div class="form-group">
+                              <label class="control-label col-sm-2">Gender: </label>
+                              <div class="col-sm-10">
+                                  <select class="memberModalGender form-control" disabled>
+                                      <option value="male">Male</option>
+                                      <option value="female">Female</option>
+                                  </select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                              <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
+                                                            required disabled></div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">Address: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                            placeholder="Enter Addess here..." required disabled></div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
+                                                            placeholder="Enter Birthplace here..." disabled></div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">Status: </label>
+                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
+                                                                            checked id="see-radio-alive" disabled>
+                                              <label for="see-radio-alive">Alive</label></span>
+                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
+                                                                            id="see-radio-dead" disabled>
+                                              <label for="see-radio-dead">Dead</label></span>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"><span
+                                  class="glyphicon glyphicon-remove"></span> Cancel
+                          </button>
+                      </div>
+                  </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -203,7 +286,7 @@ else {
             </ul>
 
             <div class="tab-content">
-                <div id="info" class="tab-pane fade in active">
+                <div id="info" class="info tab-pane fade in active">
                   <form class="form-horizontal">
                       <div class="modal-body">
                           <p class="error-msg"></p>
@@ -336,7 +419,7 @@ else {
                   </form>
                 </div>
 
-                <div id="partner" class="tab-pane fade">
+                <div id="partner" class="partner tab-pane fade">
                   <form  class="form-horizontal">
                       <div class="modal-body">
                           <p class="error-msg"></p>
@@ -426,7 +509,7 @@ else {
             </ul>
 
             <div class="tab-content">
-              <div id="info1" class="tab-pane fade in active">
+              <div id="info1" class="info tab-pane fade in active">
                 <form  class="form-horizontal">
                     <div class="modal-body">
                         <p class="error-msg"></p>
@@ -503,7 +586,7 @@ else {
                 </form>
               </div>
 
-              <div id="partner1" class="tab-pane fade">
+              <div id="partner1" class="partner tab-pane fade">
                 <form  class="form-horizontal">
                     <div class="modal-body">
                         <p class="error-msg"></p>

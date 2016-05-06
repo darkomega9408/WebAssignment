@@ -16,6 +16,15 @@ class UserHandler
         $this->conn = $dbConn;
     }
 
+    public function getUserID($data){
+      $sql = "SELECT userID FROM `guestmanagement` WHERE `guestID`=". $data['GuestID'];
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $stmt->fetchAll();
+      echo json_encode($result);
+    }
+
     public function addPartner($data){
       // echo "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
       $sql = "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
@@ -115,7 +124,7 @@ class UserHandler
 			$sql = "UPDATE `notfamilyperson` SET `Avatar` = '" . $data["Avatar"] . "' WHERE `userID` = " . $data["UserID"] . " AND `MemberID` = " . $data["MemberID"];
 			// use exec() because no results are returned
 			$this->conn->exec($sql);
-			
+
 		}
 
         $this->getMember($data['UserID'],$data['MemberID']);

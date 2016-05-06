@@ -7,13 +7,31 @@ $(document).ready(function(){
     var token = getCookie('token');
     var role = $("head").data("role");
     var managedUserID = $("head").data("managedUserID");
-    var guestID = $("head").data("guestID");
+    var guestID = $("head").data("id");
+    var userID = null;
 
 
     // Determine whether current user is guest or not -> choose appropriate navbar for them
     // Default is navbar of normal user
-    if (  role == 'guest' )
+    if (  role == 'guest' ) {
         navbarAdminPage();
+        $.ajax({
+            url:"php-controller/ServerHandler.php",
+            type: 'GET',
+            data: {
+                role: role,
+                operation: "getUserID",
+                sentData: {
+                    GuestID: guestID,
+                }
+            },
+            dataType: "json"
+        }).done(function(data){
+            console.log(data);
+            userID = data[0].userID;
+        })
+    }
+
     // ~~
 
 
@@ -142,10 +160,10 @@ $(document).ready(function(){
 
 
     function populateDataIntoModal (modalName) {
-        $('#modal-edit-user ul li:first').addClass('active');
-        $('#modal-edit-user #info').addClass('in active');
-        $('#modal-edit-user ul li:nth-child(2)').removeClass('active');
-        $('#modal-edit-user #partner').removeClass('in active');
+        $('#' + modalName + ' ul li:first').addClass('active');
+        $('#' + modalName + ' .info').addClass('in active');
+        $('#' + modalName + ' ul li:nth-child(2)').removeClass('active');
+        $('#' + modalName+ ' .partner').removeClass('in active');
 
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         var partnerinfo = $("#"+member + currMemberID).data("partnerinfo");
@@ -173,11 +191,11 @@ $(document).ready(function(){
         }).fail(function(err) {
             console.log(err);
         });
-        $("#"+modalName+" #info .memberModalName").val( memberinfo.Name);
-        $("#"+modalName+" #info .memberModalGender").val(memberinfo.Gender);
-        $("#"+modalName+" #info .memberModalBirthDate").val( memberinfo.BirthDate.substr(0, 10));
-        $("#"+modalName+" #info .memberModalAddress").val( memberinfo.Address);
-        $("#"+modalName+" #info .memberModalBirthPlace").val(memberinfo.BirthPlace);
+        $("#"+modalName+" .info .memberModalName").val( memberinfo.Name);
+        $("#"+modalName+" .info .memberModalGender").val(memberinfo.Gender);
+        $("#"+modalName+" .info .memberModalBirthDate").val( memberinfo.BirthDate.substr(0, 10));
+        $("#"+modalName+" .info .memberModalAddress").val( memberinfo.Address);
+        $("#"+modalName+" .info .memberModalBirthPlace").val(memberinfo.BirthPlace);
         if( memberinfo.Alive == "1" ) {
             $("#info #edit-radio-alive").prop("checked", true);
             $("#info #see-radio-alive").prop("checked", true);
@@ -186,8 +204,8 @@ $(document).ready(function(){
             $("#info #edit-radio-dead").prop("checked", true);
             $("#info #see-radio-dead").prop("checked", true);
         }
-        console.log(memberinfo);
-        if( memberinfo.Married == "1" ) {
+
+        if( memberinfo.Married == "1") {
             $("#info #edit-radio-yes").prop("checked", true);
             $('#modal-edit-user a[href="#partner"]').show();
             // $("#info #info #see-radio-yes").prop("checked", true);
@@ -198,13 +216,23 @@ $(document).ready(function(){
             // $("#info #info #see-radio-dead").prop("checked", true);
         }
 
+        if( memberinfo.Married == "1" && modalName == "modal-see-info-guest") {
+            $("#info2 #see-radio-yes").prop("checked", true);
+            $('#modal-see-info-guest a[href="#partner2"]').show();
+        }
+
+        if(memberinfo.Married == "0" && modalName == "modal-see-info-guest") {
+            $("#info2 #see-radio-no").prop("checked", true);
+            $('#modal-see-info-guest a[href="#partner2"]').hide();
+        }
+
         if(partnerinfo){
-          $("#"+modalName+" #partner .memberModalName").val(partnerinfo.Name);
-          $("#"+modalName+" #partner .memberModalGender").val(partnerinfo.Gender);
-          $("#"+modalName+" #partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
-          $("#"+modalName+" #partner .memberModalAddress").val(partnerinfo.Address);
-          $("#"+modalName+" #partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
-		  $("#"+modalName+" #partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
+          $("#"+modalName+" .partner .memberModalName").val(partnerinfo.Name);
+          $("#"+modalName+" .partner .memberModalGender").val(partnerinfo.Gender);
+          $("#"+modalName+" .partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
+          $("#"+modalName+" .partner .memberModalAddress").val(partnerinfo.Address);
+          $("#"+modalName+" .partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
+		      $("#"+modalName+" .partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
           if( partnerinfo.Alive == "1" ) {
               $("#partner #edit-radio-alive").prop("checked", true);
               $("#partner #see-radio-alive").prop("checked", true);
@@ -544,8 +572,7 @@ $(document).ready(function(){
         memberCard.find('.memberName').html(data.Name);
         memberCard.find('.memberBirthDate').html(data.BirthDate);
         memberCard.find('.memberBirthPlace').html(data.BirthPlace);
-
-
+        console.log(userID);
         if(data.Married == 1){
             $.ajax({
                 url:"php-controller/ServerHandler.php",
@@ -554,7 +581,8 @@ $(document).ready(function(){
                     role: role,
                     operation: "getPartner",
                     sentData: {
-                        MemberID: data.MemberID
+                        MemberID: data.MemberID,
+                        UserID: userID
                     }
                 },
                 dataType: "json"

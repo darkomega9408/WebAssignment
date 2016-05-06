@@ -67,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Call AdminHandler
     else if ( $role == 'admin' ){
         $adminHandler = new AdminHandler($dbConn->conn);
-
         // Classify actions client requested server
         if( isset($_GET['operation']) ){
+            $sentData['UserID'] = $id;
             if ( $_GET['operation'] == "delete" )
                 $adminHandler->deleteUser($sentData);
         }
@@ -85,6 +85,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if( isset($_GET['operation']) ){
             if ( $_GET['operation'] == "loadAvatar")
                 $userHandler->loadAvatar($sentData);
+            else if($_GET['operation'] == "getUserID")
+                $userHandler->getUserID($sentData);
+            else if($_GET['operation'] == "getPartner")
+                $userHandler->getPartner($sentData);
             else $userHandler->getAllMembersForGuest($id);
         }
         else
