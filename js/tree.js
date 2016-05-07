@@ -148,7 +148,8 @@ $(document).ready(function(){
         }
 
         // Assign some basic info to modal before display to user
-        populateDataIntoModal("modal-edit-user");
+		if (!$(this).attr("id") == "modal-delete-user")
+			populateDataIntoModal("modal-edit-user");
     });
     // ~~
 
