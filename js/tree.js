@@ -126,6 +126,7 @@ $(document).ready(function(){
                 $(this).find("#btnUploadAvatar").attr("data-isPartner", modalFather.attr("isPartner"));
                 return;
             }
+
         }
 
         // Hide error msg
@@ -148,7 +149,8 @@ $(document).ready(function(){
         }
 
         // Assign some basic info to modal before display to user
-		if (!$(this).attr("id") == "modal-delete-user")
+
+		if (!($(this).attr("id") == "modal-delete-user"))
 			populateDataIntoModal("modal-edit-user");
     });
     // ~~
