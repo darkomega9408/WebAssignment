@@ -225,6 +225,10 @@ else {
                         <input class="form-control userPassword" type="password" required>
                     </div>
                     <div class="form-group">
+                        <label><span class="requiredField">*</span>Confirm Password: </label>
+                        <input class="form-control userRePassword" type="password" required>
+                    </div>
+                    <div class="form-group">
                         <label><span class="requiredField">*</span>Email: </label>
                         <input class="form-control userEmail" type="email"
                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>

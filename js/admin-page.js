@@ -228,6 +228,8 @@ $(document).ready(function () {
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
             console.log("Failed to add new user!")
+            errMsg = "User or email has existed. Please try again!"
+            $('.error-msg').text(errMsg);
         });
     });
     // ~~
@@ -271,6 +273,8 @@ $(document).ready(function () {
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
+            errMsg = "User or email has existed. Please try again!"
+            $('.error-msg').text(errMsg);
         });
     });
     // ~~~
