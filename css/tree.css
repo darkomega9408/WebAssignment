@@ -155,3 +155,8 @@ right connector from last child*/
 #hrefChangeAvatar:hover .img-circle  {
     opacity:0.5;
 }
+
+
+.modal .modal body{
+    overflow-y: scroll;
+}

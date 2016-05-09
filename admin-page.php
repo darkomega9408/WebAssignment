@@ -59,7 +59,7 @@ else {
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
 
-<!--    <script src="js/admin-page.js"></script>-->
+    <!--    <script src="js/admin-page.js"></script>-->
     <script type="text/javascript" src="js/navbar.js"></script>
     <script type="text/javascript" src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
@@ -95,13 +95,19 @@ else {
 <!-- Page Content -->
 
 <main>
-    <div class="container">
+    <div class="container" style="margin-top: 3%">
 
-        <h1 class="thick-heading">
-            List Users
-        </h1>
+        <div class="row">
 
+            <h1 style="display: inline; padding-left: 1em">
+                List Users
+            </h1>
 
+            <button type="button" class="btn btn-info" style="float: right;margin: 0 auto; margin-right: 1em; margin-top: 1em" data-title='Add' data-toggle='modal' data-target='#add'>
+                <span class="glyphicon glyphicon-plus-sign"></span> Add User
+            </button>
+
+        </div>
         <!-- First Featurette -->
         <div class="featurette" id="about">
             <!------------------------code---------------start---------------->
@@ -143,9 +149,7 @@ else {
 
             </div>
 
-            <button type="button" class="btn btn-info" style="margin: 2em auto" data-title='Add' data-toggle='modal' data-target='#add'>
-                <span class="glyphicon glyphicon-plus-sign"></span> Add User
-            </button>
+
             <!-- End List User -->
 
 
