@@ -61,7 +61,7 @@ function clone(){
     var y = (parseFloat(target.getAttribute('data-y')) || 0);
 
     $('ul [data-toggle="modal"]').hide();
-    html2canvas(document.getElementsByClassName('tree')[0], {
+    html2canvas(target, {
         onrendered: function(canvas) {
             var a = document.createElement('a');
             a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
@@ -75,6 +75,8 @@ function clone(){
             $('#modal-uploading').modal('hide');
         },
         useCORS: true,
-        background: 'white'
+        background: 'white',
+        width: $('.tree').width()*scaleRate,
+        height: $('.tree').height()*scaleRate
     });
 }

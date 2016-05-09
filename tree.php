@@ -428,7 +428,8 @@ else {
                                   <div>
                                       <div>
                                           <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                                              <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                              <img src="images/avatar-default.png" class="img-circle center-block memberModalAvatar"
+													width="250px" height="250px"
                                                    alt="/*name*/">
                                           </a>
                                       </div>
@@ -518,7 +519,8 @@ else {
                                 <div>
                                     <div>
                                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                            <img src="images/avatar-default.png" class="img-circle memberModalAvatar"
+											width="250px" height="250px"
                                                  alt="/*name*/">
                                         </a>
                                     </div>
@@ -595,7 +597,8 @@ else {
                                 <div>
                                     <div>
                                         <a id="hrefChangeAvatar" data-toggle="modal" data-target="#modal-upload-avatar">
-                                            <img src="images/avatar-default.png" class="img-circle img-responsive memberModalAvatar"
+                                            <img src="images/avatar-default.png" class="img-circle memberModalAvatar"
+											width="250px" height="250px"
                                                  alt="/*name*/">
                                         </a>
                                     </div>
