@@ -16,9 +16,41 @@ class UserHandler
         $this->conn = $dbConn;
     }
 
+    public function getUserID($data){
+      $sql = "SELECT userID FROM `guestmanagement` WHERE `guestID`=". $data['GuestID'];
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $stmt->fetchAll();
+      echo json_encode($result);
+    }
+
+    public function addPartner($data){
+      // echo "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
+      $sql = "INSERT INTO `notfamilyperson` (`userID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Avatar`) VALUES (".$data['UserID']. "," . $data['MemberID'] . ", '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."', '". $data['Avatar'] ."')";
+      $stmt = $this->conn->prepare($sql);
+      echo json_encode($stmt->execute());
+    }
+
+    public function updatePartner($data){
+      $sql = "UPDATE `notfamilyperson` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+      $this->conn->exec($sql);
+      $this->getPartner($data);
+    }
+
+    public function getPartner($data){
+      $sql = "SELECT * FROM `notfamilyperson` WHERE `userID`=". $data['UserID'] ." AND `MemberID`= ". $data['MemberID'];
+      $stmt = $this->conn->prepare($sql);
+      $stmt->execute();
+      $stmt->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $stmt->fetchAll();
+
+      echo json_encode($result);
+    }
+
     public function getAllMembers($data)
     {
-        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive FROM `member` WHERE UserID = $data ORDER BY Father,BirthDate");
+        $stmt = $this->conn->prepare("SELECT MemberID, Name, BirthDate, Address, BirthPlace, Gender, Father, Alive, Married FROM `member` WHERE UserID = $data ORDER BY Father,BirthDate");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -29,9 +61,9 @@ class UserHandler
         $userID = $data['UserID'];
         $father = $data['Father'];
 		if ($father == 0)
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] ."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Married`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',NULL, '".$data['Alive'] . "','" . $data['Married'] . "')";
 		else
-			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] ."')";
+			$sql = "INSERT INTO `member` (`UserID`, `MemberID`, `Name`, `BirthDate`, `Address`, `BirthPlace`, `Gender`, `Father` ,`Alive`, `Married`) VALUES (".$userID.", NULL, '".$data['Name']."', '".$data['BirthDate']."', '".$data['Address']."', '".$data['BirthPlace']."', '".$data['Gender']."',". $father .", '".$data['Alive'] . "','" . $data['Married'] . "')";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -55,9 +87,7 @@ class UserHandler
             $xml->save('../member_avatar/' . $memberID . '.xml');
         }
 
-        // return new inserted member as JSON
         $this->getMember($userID,$this->conn->lastInsertId());
-
     }
 
     public function deleteMember($data)
@@ -70,24 +100,32 @@ class UserHandler
 
     public function updateMember($data)
     {
-        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
+        $sql = "UPDATE `member` SET `Name`='". $data['Name'] ."',`BirthDate`='". $data['BirthDate'] ."',`Address`='". $data['Address'] ."',`BirthPlace`='". $data['BirthPlace'] ."',`Gender`='". $data['Gender'] ."',`Alive`='". $data['Alive']. "',`Married`='" . $data['Married'] . "' WHERE `userID`=". $data['UserID'] ." AND `MemberID`=".$data['MemberID'];
 
         // use exec() because no results are returned
         $this->conn->exec($sql);
 
         // update avatar if needed
-        $data['AvatarID'] = 0;
-        $this->uploadAvatar($data);
+        //$data['AvatarID'] = 0;
+        //$this->uploadAvatar($data);
     }
 
     public function uploadAvatar($data)
     {
-        if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
-        $memberID = $data["MemberID"];
-        $xml = new DOMDocument();
-        $xml->load('../member_avatar/' . $memberID . '.xml');
-        $xml->getElementsByTagName("avatar")[$data["AvatarID"]]->nodeValue=$data['Avatar'];
-        $xml->save('../member_avatar/' . $memberID . '.xml');
+		if ($data["IsPartner"] == "no") {
+			if (!file_exists('../member_avatar/')) mkdir('../member_avatar/');
+			$memberID = $data["MemberID"];
+			$xml = new DOMDocument();
+			$xml->load('../member_avatar/' . $memberID . '.xml');
+			$xml->getElementsByTagName("avatar")[$data["AvatarID"]]->nodeValue=$data['Avatar'];
+			$xml->save('../member_avatar/' . $memberID . '.xml');
+		}
+		else {
+			$sql = "UPDATE `notfamilyperson` SET `Avatar` = '" . $data["Avatar"] . "' WHERE `userID` = " . $data["UserID"] . " AND `MemberID` = " . $data["MemberID"];
+			// use exec() because no results are returned
+			$this->conn->exec($sql);
+
+		}
 
         $this->getMember($data['UserID'],$data['MemberID']);
     }
@@ -115,8 +153,8 @@ class UserHandler
     public function getAllMembersForGuest($guestID)
     {
         // Use $guestID to get managedUserID first
-        $res = $this->conn->query("SELECT adminID FROM `user` WHERE ID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
-        $managedUserID = $res['adminID'];
+        $res = $this->conn->query("SELECT userID FROM `guestmanagement` WHERE guestID = ".$guestID)->fetch(PDO::FETCH_ASSOC);
+        $managedUserID = $res['userID'];
         if( $managedUserID == null )
             return;
 
@@ -125,7 +163,7 @@ class UserHandler
     }
 
     public function getAllGuests($data){
-        $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT ID FROM `user` WHERE adminID = $data )");
+        $stmt = $this->conn->prepare("SELECT * FROM `person` WHERE ID IN ( SELECT guestID FROM `guestmanagement` WHERE userID = $data )");
         $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         echo json_encode($stmt->fetchAll());
@@ -140,7 +178,7 @@ class UserHandler
 
         $lastInsertId = $this->conn->lastInsertId();
 
-        $sql = "INSERT INTO `user` (`ID` , `adminID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
+        $sql = "INSERT INTO `guestmanagement` (`guestID` , `userID`) VALUES ('".$lastInsertId."','".$managedUserID."')";
         $this->conn->exec($sql);
 
         // return new inserted member as JSON
@@ -151,7 +189,7 @@ class UserHandler
 
     public function deleteGuest($data)
     {
-        // Delete cascade , don't need to consider `user` table anymore
+        // Delete cascade , don't need to consider `guestmanagement` table anymore
         $sql = "DELETE FROM `person` WHERE `ID`= ".$data['ID'];
         $this->conn->exec($sql);
         echo "Success";

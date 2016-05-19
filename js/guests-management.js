@@ -198,10 +198,11 @@ $(document).ready(function () {
         var userName = $("#add .userName").val();
         var userID = $("#add .userID").val();
         var userPassword = $("#add .userPassword").val();
+        var userRePassword = $("#add .userRePassword").val();
         var userEmail = $("#add .userEmail").val();
 
         // Validate step here
-        if ( !validateModal("add",userName,userPassword,userPassword,userEmail) )
+        if ( !validateModal("add",userName,userPassword,userRePassword,userEmail) )
             return;
 
         var name = $("#add .name").val();
@@ -230,9 +231,11 @@ $(document).ready(function () {
             addUser($("#mytable tbody"),data[0]);
             $("#add").modal('hide');
             console.log("Add new guest successfully");
-        }).fail(function () {
+        }).fail(function (data) {
 			$('#modal-uploading').modal('hide');
             console.log("Failed to add new guest!")
+            errMsg = "User or email has existed. Please try again!"
+            $('.error-msg').text(errMsg);
         });
     });
     // ~~
@@ -275,6 +278,8 @@ $(document).ready(function () {
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
             console.log("Failed to update info member !")
+            errMsg = "User or email has existed. Please try again!"
+            $('.error-msg').text(errMsg);
         });
     });
     // ~~~
@@ -306,6 +311,9 @@ $(document).ready(function () {
      * Open modal trigger this event
      */
     $('.modal').on('show.bs.modal', function (e) {
+        // Clear all error message
+        $('.error-msg').text("");
+
         // Get memberID of current shown member
         try {
             var $trigger = $(e.relatedTarget);

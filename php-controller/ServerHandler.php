@@ -54,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 // Delete cascade
             else if( $_GET['operation'] == "deleteGuest" )
                 $userHandler->deleteGuest($sentData);
+            else if($_GET['operation'] == "getPartner")
+              $userHandler->getPartner($sentData);
+
         }
         else $userHandler->getAllMembers($id);
 
@@ -64,9 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Call AdminHandler
     else if ( $role == 'admin' ){
         $adminHandler = new AdminHandler($dbConn->conn);
-
         // Classify actions client requested server
         if( isset($_GET['operation']) ){
+            $sentData['UserID'] = $id;
             if ( $_GET['operation'] == "delete" )
                 $adminHandler->deleteUser($sentData);
         }
@@ -82,10 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if( isset($_GET['operation']) ){
             if ( $_GET['operation'] == "loadAvatar")
                 $userHandler->loadAvatar($sentData);
+            else if($_GET['operation'] == "getUserID")
+                $userHandler->getUserID($sentData);
+            else if($_GET['operation'] == "getPartner")
+                $userHandler->getPartner($sentData);
             else $userHandler->getAllMembersForGuest($id);
         }
         else
-        // $id here is guestID => 
+        // $id here is guestID =>
         $userHandler->getAllMembersForGuest($id);
     }
 }
@@ -109,6 +116,10 @@ else if ( $_SERVER['REQUEST_METHOD'] = 'POST'){
                 // Update cascade
             else if ( $_POST['operation'] == "updateGuest" )
                 $userHandler->updateGuest($sentData);
+            else if($_POST['operation'] == "updatePartner")
+                $userHandler->updatePartner($sentData);
+            else if($_POST['operation'] == "addPartner")
+                $userHandler->addPartner($sentData);
         }
 
     }
