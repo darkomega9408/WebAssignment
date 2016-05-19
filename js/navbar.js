@@ -60,7 +60,9 @@ function clone(){
     var x = (parseFloat(target.getAttribute('data-x')) || 0);
     var y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-    $('ul [data-toggle="modal"]').hide();
+    var role = $('head').attr('data-role');
+    if (role != 'guest')
+        $('ul [data-toggle="modal"]').hide();
     html2canvas(target, {
         onrendered: function(canvas) {
             var a = document.createElement('a');
