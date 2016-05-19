@@ -24,10 +24,10 @@
                     </ul>
                 </li>-->
                 <li class="family-tree-tab">
-                    <a href="tree.php"><i class="fa fa-fw fa-sitemap active"></i> Family Tree</a>
+                    <a href="tree"><i class="fa fa-fw fa-sitemap active"></i> Family Tree</a>
                 </li>
                 <li class="guests-man-tab">
-                    <a href="admin-page.php"><i class="fa fa-fw fa-users"></i> Guests Management</a>
+                    <a href="management"><i class="fa fa-fw fa-users"></i> Guests Management</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navbar-user-name" role="button" aria-expanded="false"><?php echo $name;?> <span class="caret"></span></a>
