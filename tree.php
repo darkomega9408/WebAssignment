@@ -380,8 +380,35 @@ else {
                               </div>
                               <div class="form-group">
                                   <label class="col-sm-2 control-label">Address: </label>
-                                  <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                                value="Too long, lazy to type" required></div>
+                                  <div class="col-sm-10">
+                                      <select class="memberModalAddress form-control">
+                                          <option value="quan1">Quan 1</option>
+                                          <option value="quan2">Quan 2</option>
+                                          <option value="quan3">Quan 3</option>
+                                          <option value="quan4">Quan 4</option>
+                                          <option value="quan5">Quan 5</option>
+                                          <option value="quan6">Quan 6</option>
+                                          <option value="quan7">Quan 7</option>
+                                          <option value="quan8">Quan 8</option>
+                                          <option value="quan9">Quan 9</option>
+                                          <option value="quan10">Quan 10</option>
+                                          <option value="bienhoa">Bien Hoa</option>
+                                          <option value="hochiminh">Ho Chi Minh</option>
+                                          <option value="quangninh">Quang Ninh</option>
+                                          <option value="hanoi">Ha Noi</option>
+                                          <option value="quangngai">Quang Ngai</option>
+                                          <option value="sapa">Sapa</option>
+                                          <option value="hue">Hue</option>
+                                          <option value="danang">Da Nang</option>
+                                          <option value="nhatrang">Nha Trang</option>
+                                          <option value="phanthiet">Phan Thiet</option>
+                                          <option value="haiphong">Hai Phong</option>
+                                          <option value="namdinh">Nam Dinh</option>
+                                          <option value="honai">Ho Nai</option>
+                                      </select>
+                                  </div>
+                                  <!-- <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                                value="Too long, lazy to type" required></div> -->
                               </div>
                               <div class="form-group">
                                   <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
@@ -460,8 +487,35 @@ else {
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 control-label">Address: </label>
-                              <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                            placeholder="Enter Addess here..." required></div>
+                              <div class="col-sm-10">
+                                  <select class="memberModalAddress form-control">
+                                      <option value="quan1">Quan 1</option>
+                                      <option value="quan2">Quan 2</option>
+                                      <option value="quan3">Quan 3</option>
+                                      <option value="quan4">Quan 4</option>
+                                      <option value="quan5">Quan 5</option>
+                                      <option value="quan6">Quan 6</option>
+                                      <option value="quan7">Quan 7</option>
+                                      <option value="quan8">Quan 8</option>
+                                      <option value="quan9">Quan 9</option>
+                                      <option value="quan10">Quan 10</option>
+                                      <option value="bienhoa">Bien Hoa</option>
+                                      <option value="hochiminh">Ho Chi Minh</option>
+                                      <option value="quangninh">Quang Ninh</option>
+                                      <option value="hanoi">Ha Noi</option>
+                                      <option value="quangngai">Quang Ngai</option>
+                                      <option value="sapa">Sapa</option>
+                                      <option value="hue">Hue</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="nhatrang">Nha Trang</option>
+                                      <option value="phanthiet">Phan Thiet</option>
+                                      <option value="haiphong">Hai Phong</option>
+                                      <option value="namdinh">Nam Dinh</option>
+                                      <option value="honai">Ho Nai</option>
+                                  </select>
+                              </div>
+                              <!-- <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                            placeholder="Enter Addess here..." required></div> -->
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
@@ -549,8 +603,35 @@ else {
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Address: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                          placeholder="Enter Addess here..." required></div>
+                            <div class="col-sm-10">
+                                <select class="memberModalAddress form-control">
+                                    <option value="quan1">Quan 1</option>
+                                    <option value="quan2">Quan 2</option>
+                                    <option value="quan3">Quan 3</option>
+                                    <option value="quan4">Quan 4</option>
+                                    <option value="quan5">Quan 5</option>
+                                    <option value="quan6">Quan 6</option>
+                                    <option value="quan7">Quan 7</option>
+                                    <option value="quan8">Quan 8</option>
+                                    <option value="quan9">Quan 9</option>
+                                    <option value="quan10">Quan 10</option>
+                                    <option value="bienhoa">Bien Hoa</option>
+                                    <option value="hochiminh">Ho Chi Minh</option>
+                                    <option value="quangninh">Quang Ninh</option>
+                                    <option value="hanoi">Ha Noi</option>
+                                    <option value="quangngai">Quang Ngai</option>
+                                    <option value="sapa">Sapa</option>
+                                    <option value="hue">Hue</option>
+                                    <option value="danang">Da Nang</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="phanthiet">Phan Thiet</option>
+                                    <option value="haiphong">Hai Phong</option>
+                                    <option value="namdinh">Nam Dinh</option>
+                                    <option value="honai">Ho Nai</option>
+                                </select>
+                            </div>
+                            <!-- <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                          placeholder="Enter Addess here..." required></div> -->
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
@@ -629,8 +710,35 @@ else {
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Address: </label>
-                            <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                          placeholder="Enter Addess here..." required></div>
+                            <div class="col-sm-10">
+                                <select class="memberModalAddress form-control">
+                                    <option value="quan1">Quan 1</option>
+                                    <option value="quan2">Quan 2</option>
+                                    <option value="quan3">Quan 3</option>
+                                    <option value="quan4">Quan 4</option>
+                                    <option value="quan5">Quan 5</option>
+                                    <option value="quan6">Quan 6</option>
+                                    <option value="quan7">Quan 7</option>
+                                    <option value="quan8">Quan 8</option>
+                                    <option value="quan9">Quan 9</option>
+                                    <option value="quan10">Quan 10</option>
+                                    <option value="bienhoa">Bien Hoa</option>
+                                    <option value="hochiminh">Ho Chi Minh</option>
+                                    <option value="quangninh">Quang Ninh</option>
+                                    <option value="hanoi">Ha Noi</option>
+                                    <option value="quangngai">Quang Ngai</option>
+                                    <option value="sapa">Sapa</option>
+                                    <option value="hue">Hue</option>
+                                    <option value="danang">Da Nang</option>
+                                    <option value="nhatrang">Nha Trang</option>
+                                    <option value="phanthiet">Phan Thiet</option>
+                                    <option value="haiphong">Hai Phong</option>
+                                    <option value="namdinh">Nam Dinh</option>
+                                    <option value="honai">Ho Nai</option>
+                                </select>
+                            </div>
+                            <!-- <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
+                                                          placeholder="Enter Addess here..." required></div> -->
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
