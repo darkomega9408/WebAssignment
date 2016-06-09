@@ -1,6 +1,7 @@
 .membercard{
     position: relative;
     width: 150px;
+    height: 185px;
     box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
     display: inline-block;
     z-index : 100;
@@ -8,6 +9,14 @@
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
+}
+
+.membercard .info {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  overflow: hidden;
 }
 
 .panel-heading{

@@ -9,3 +9,7 @@
 .modal .error-msg{
     color:red;
 }
+
+.modal label {
+  word-wrap: normal;
+}
