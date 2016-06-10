@@ -1,6 +1,12 @@
 <?php
 require('./../../i18n/i18n.php');
-$i18n = new i18n('vi');
+if (!isset($_COOKIE['lang'])) {
+  setcookie('lang', 'en');
+  $i18n = new i18n("en");
+}
+else {
+  $i18n = new i18n($_COOKIE['lang']);
+}
 ?>
 <!-- membercard -->
 <div class ='membercard-wrapper' >

@@ -12,7 +12,13 @@ if (isset($_COOKIE['token'])) {
   if ($role == 'admin') header('Location: management');
   else header('Location: tree');
 }
-$i18n = new I18n("vi");
+if (!isset($_COOKIE['lang'])) {
+  setcookie('lang', 'en');
+  $i18n = new i18n("en");
+}
+else {
+  $i18n = new i18n($_COOKIE['lang']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,14 +32,24 @@ $i18n = new I18n("vi");
     <script src="js/cookie-management.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/lang.js"></script>
 
     <link rel="stylesheet" href="css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
 	<link rel="stylesheet" href="css/index.css"/>
     <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/lang.css" rel="stylesheet">
 </head>
 <body>
+    <ul class="language show">
+        <li class="lang <?php if ($_COOKIE['lang'] == 'en') echo 'active'; ?>" data-lang="en">
+            <img src="images/lang/uk-flag.png" title="English">
+        </li>
+        <li class="lang <?php if ($_COOKIE['lang'] == 'vi') echo 'active'; ?>" data-lang="vi">
+            <img src="images/lang/vi-flag.jpg" title="Vietnamese">
+        </li>
+    </ul>
     <div class="container-fluid">
         <div class="jumbotron flexcenter">
             <div id="index_content" class="text-center">

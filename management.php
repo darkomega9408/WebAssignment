@@ -21,7 +21,13 @@ else {
     }
     $name = $personData['name'];
 }
-$i18n = new I18n("vi");
+if (!isset($_COOKIE['lang'])) {
+  setcookie('lang', 'en');
+  $i18n = new i18n("en");
+}
+else {
+  $i18n = new i18n($_COOKIE['lang']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,12 +66,14 @@ $i18n = new I18n("vi");
     <link rel="stylesheet" type="text/css" href="css/border-effect.css"/>
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/navbar.css" rel="stylesheet">
+    <link href="css/lang.css" rel="stylesheet">
 
     <!--    <script src="js/admin-page.js"></script>-->
     <script type="text/javascript" src="js/navbar.js"></script>
     <script type="text/javascript" src="bower_components/selectize/dist/js/standalone/selectize.js"></script>
     <script type="text/javascript" src="js/search.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/lang.js"></script>
 
     <!--  Dynamically load js file corresponding to role , such as : admin or user  -->
     <script>

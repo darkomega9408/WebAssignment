@@ -11,7 +11,13 @@ else {
     $name = $personData['name'];
     $id = $personData['id'];
 }
-$i18n = new I18n("vi");
+if (!isset($_COOKIE['lang'])) {
+  setcookie('lang', 'en');
+  $i18n = new i18n("en");
+}
+else {
+  $i18n = new i18n($_COOKIE['lang']);
+}
 ?>
 <!DOCTYPE html>
 
@@ -32,6 +38,7 @@ $i18n = new I18n("vi");
     <link rel="stylesheet" type="text/css" href="css/modal.css">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
+    <link href="css/lang.css" rel="stylesheet">
 
     <script>var name=<?php echo json_encode($name); ?></script>
     <script src="js/bootstrap.min.js"></script>
@@ -44,6 +51,7 @@ $i18n = new I18n("vi");
     <script src="js/search.js"></script>
     <script src="js/render/html2canvas.js"></script>
     <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/lang.js"></script>
 
 </head>
 <body>

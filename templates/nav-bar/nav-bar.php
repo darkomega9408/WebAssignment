@@ -11,6 +11,14 @@
             <a class="navbar-brand" href="#">
                 <img class="img-responsive" src="../../images/family-tree-logo.png" >
             </a>
+            <ul class="language show">
+                <li class="lang <?php if ($_COOKIE['lang'] == 'en') echo 'active'; ?>" data-lang="en">
+                    <img src="images/lang/uk-flag.png" title="English">
+                </li>
+                <li class="lang <?php if ($_COOKIE['lang'] == 'vi') echo 'active'; ?>" data-lang="vi">
+                    <img src="images/lang/vi-flag.jpg" title="Vietnamese">
+                </li>
+            </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav navbar-right">
