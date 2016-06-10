@@ -12,9 +12,6 @@ $(document).ready(function() {
     // Change logo relative path
     $(".navbar-brand>img").attr("src","images/family-tree-logo.png");
 
-    // Change role & append new caret
-    $("#navbar-user-name").prepend("Hi, ");
-
     // As default, we choose family tree tab when user logon successfully
     //$("nav.navbar-findcond ul.navbar-nav a.active").css("border-color", "#7ECC00");
     chooseFamilyTreeTab();

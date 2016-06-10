@@ -1,0 +1,25 @@
+.language {
+  	list-style:none;
+  	position:absolute;
+  	z-index:5;
+  	padding:0;
+  	right:0;
+  	width:70px;
+  	top:5px;
+}
+.language li {
+  	display:inline-block;
+  	width:35%;
+  	padding:0 2px;
+}
+.language li:not(.active) {
+  	cursor:pointer;
+}
+.language li:not(.active) img {
+  	-webkit-filter:grayscale(90%);
+  	-moz-filter:grayscale(90%);
+  	filter:grayscale(90%);
+}
+.language li img {
+  	width:100%;
+}

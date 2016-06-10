@@ -59,7 +59,8 @@ $(document).ready(function(){
      });
 
     // Load member card from another file and assign to '@memberCardObj'
-    $('.tree').load('templates/membercard/membercard.html .membercard', function () {
+    $('.tree').load('templates/membercard/membercard.php .membercard', function (err) {
+        console.log(err);
         memberCardObj = $(this).clone();
 
         // Turn on SEE ONLY mode for guest
@@ -138,14 +139,7 @@ $(document).ready(function(){
             $('#modal-add-user ul li:nth-child(2)').removeClass('active');
             $('#modal-add-user ul li:first').addClass('active');
             $('#modal-add-user ul li a[href="#partner1"]').hide();
-            if (currMemberID == 0)
-                $(".modal-title").html("New member");
-            else $(".modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
             return;
-        }
-        // Change title of UPLOAD AVATAR modal
-        else if(  $(this).attr("id") != "modal-upload-avatar"){
-            $("#modal-upload-avatar .modal-title").html("Upload Image");
         }
 
         // Assign some basic info to modal before display to user
