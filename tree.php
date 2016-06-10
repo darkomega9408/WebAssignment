@@ -472,7 +472,7 @@ $i18n = new I18n("vi");
                           <div class="form-group">
                               <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                               <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                            placeholder="Enter Name here..." required></div>
+                                                            required></div>
                           </div>
                           <div class="form-group">
                               <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
@@ -558,11 +558,11 @@ $i18n = new I18n("vi");
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title"><?php echo $i18n->new_member(); ?></h4>
             </div>
             <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#info1">Information</a></li>
-              <li><a data-toggle="tab" href="#partner1">Partner</a></li>
+              <li class="active"><a data-toggle="tab" href="#info1"><?php echo $i18n->information(); ?></a></li>
+              <li><a data-toggle="tab" href="#partner1"><?php echo $i18n->partner(); ?></a></li>
             </ul>
 
             <div class="tab-content">
@@ -587,7 +587,7 @@ $i18n = new I18n("vi");
                         <div class="form-group">
                             <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                          placeholder="Enter Name here..." required></div>
+                                                          required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
@@ -638,7 +638,7 @@ $i18n = new I18n("vi");
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
-                                                          placeholder="Enter Birthplace here..."></div>
+                                                          ></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
@@ -693,7 +693,7 @@ $i18n = new I18n("vi");
                         <div class="form-group">
                             <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                          placeholder="Enter Name here..." required></div>
+                                                        required></div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
@@ -744,7 +744,7 @@ $i18n = new I18n("vi");
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
-                                                          placeholder="Enter Birthplace here..."></div>
+                                                          ></div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>

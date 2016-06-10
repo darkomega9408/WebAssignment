@@ -139,9 +139,6 @@ $(document).ready(function(){
             $('#modal-add-user ul li:nth-child(2)').removeClass('active');
             $('#modal-add-user ul li:first').addClass('active');
             $('#modal-add-user ul li a[href="#partner1"]').hide();
-            if (currMemberID == 0)
-                $("#modal-add-user .modal-title").html("New member");
-            else $("#modal-add-user .modal-title").html("New child of " + $("#"+member+currMemberID).data("memberinfo").Name);
             return;
         }
 

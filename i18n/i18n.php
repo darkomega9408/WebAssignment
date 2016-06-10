@@ -234,6 +234,12 @@ class i18n {
       elseif ($this->lang == "en") return "Add";
     }
 
+    //modal-add-member
+    public function new_member() {
+      if ($this->lang == "vi") return "Thành viên mới";
+      elseif ($this->lang == "en") return "New member";
+    }
+
     // modal-delete-user
     public function delete_prompt() {
       if ($this->lang == "vi") return "Bạn có chắc muốn xóa người này?";
