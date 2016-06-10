@@ -1,6 +1,7 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 require("lib/vendor/firebase/php-jwt/src/JWT.php");
+require("i18n/i18n.php");
 use Firebase\JWT\JWT;
 if (isset($_COOKIE['token'])) {
   $token = $_COOKIE['token'];
@@ -11,11 +12,12 @@ if (isset($_COOKIE['token'])) {
   if ($role == 'admin') header('Location: management');
   else header('Location: tree');
 }
+$i18n = new I18n("vi");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Homepage</title>
+    <title><?php echo $i18n->homepage(); ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -35,21 +37,21 @@ if (isset($_COOKIE['token'])) {
     <div class="container-fluid">
         <div class="jumbotron flexcenter">
             <div id="index_content" class="text-center">
-                <h1>GENEALOGY WEBSITE</h1>
-                <p>Connect Generations</p>
+                <h1><?php echo $i18n->web_name(); ?></h1>
+                <p><?php echo $i18n->slogan(); ?></p>
                 <div class="login-form">
                     <form role="form" method="post" action="" id="formLogin">
                         <div class="form-group">
                             <input type="text"
                                    class="form-control input-lg"
-                                   placeholder="Username"
+                                   placeholder="<?php echo $i18n->username(); ?>"
                                    id="inputUsername"
                                    name="username" required/>
                         </div>
                         <div class="form-group">
                             <input type="password"
                                    class="form-control input-lg"
-                                   placeholder="Password"
+                                   placeholder="<?php echo $i18n->password(); ?>"
                                    id="inputPassword"
                                    name="password" required/>
                         </div>
@@ -57,16 +59,16 @@ if (isset($_COOKIE['token'])) {
                         <div class="form-group">
                             <button type="submit"
                                     class="btn btn-primary form-control input-lg">
-                                LOGIN
+                                <?php echo mb_strtoupper($i18n->login()); ?>
                             </button>
                         </div>
 
 <!--           SIGN UP BUTTON             -->
-                        <hr><p>OR</p>
+                        <hr><p><?php echo mb_strtoupper($i18n->str_or()); ?></p>
                         <div class="form-group">
                             <button type="button" id="btnSignUp"
                                     class="btn btn-danger form-control input-lg" data-title="Sign Up" data-toggle="modal" data-target="#signUp">
-                                SIGN UP
+                                <?php echo mb_strtoupper($i18n->signup()); ?>
                             </button>
                         </div>
                     </form>
@@ -77,49 +79,49 @@ if (isset($_COOKIE['token'])) {
     </div>
     <div class="container-fluid text-center">
         <div class="row" id="service_row">
-            <h2 id="service_header">SERVICES</h2>
-            <h4>What we offer</h4>
+            <h2 id="service_header"><?php echo mb_strtoupper($i18n->services()); ?></h2>
+            <h4><?php echo $i18n->what_we_offer(); ?></h4>
             <br>
             <div class="row">
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-plus logo"></span></span>
-                    <h4>CREATE</h4>
-                    <p>Create your own family tree</p>
+                    <h4><?php echo mb_strtoupper($i18n->create()); ?></h4>
+                    <p><?php echo $i18n->create_family_tree(); ?></p>
                 </div>
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-pencil logo"></span>
-                    <h4>MODIFY</h4>
-                    <p>Modify your family tree</p>
+                    <h4><?php echo mb_strtoupper($i18n->modify()); ?></h4>
+                    <p><?php echo $i18n->modify_family_tree(); ?></p>
                 </div>
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-search logo"></span>
-                    <h4>SEARCH</h4>
-                    <p>Search member in your family</p>
+                    <h4><?php echo mb_strtoupper($i18n->search()); ?></h4>
+                    <p><?php echo $i18n->search_family_tree(); ?></p>
                 </div>
             </div>
             <br><br>
             <div class="row">
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-globe logo"></span>
-                    <h4>GLOBE</h4>
-                    <p>Find member address on map</p>
+                    <h4><?php echo mb_strtoupper($i18n->globe()); ?></h4>
+                    <p><?php echo $i18n->globe_member(); ?></p>
                 </div>
                 <div class="col-sm-4">
                     <span class="glyphicon glyphicon-user logo"></span>
-                    <h4>AVATAR</h4>
-                    <p>Upload member avatar</p>
+                    <h4><?php echo mb_strtoupper($i18n->avatar()); ?></h4>
+                    <p><?php echo $i18n->upload_avatar(); ?></p>
                 </div>
                 <div class="col-sm-4">
                     <span class="	glyphicon glyphicon-paperclip logo"></span>
-                    <h4>EXPORT</h4>
-                    <p>Export your family tree</p>
+                    <h4><?php echo mb_strtoupper($i18n->export()); ?></h4>
+                    <p><?php echo $i18n->export_family_tree(); ?></p>
                 </div>
             </div>
         </div>
         <div class="row" id="about_row">
             <div class="col-sm-7">
                 <div class="pull-right">
-                    <h1 id="about_header">About Us</h1>
+                    <h1 id="about_header"><?php echo $i18n->about_us(); ?></h1>
                     <div class="col-sm-3">
                         <div class="thumbnail">
                             <img src="images/AboutUs/Thai.jpg"
@@ -168,22 +170,22 @@ if (isset($_COOKIE['token'])) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading" >Sign Up Form</h4>
+                <h4 class="modal-title custom_align Heading" ><?php echo $i18n->signup(); ?></h4>
             </div>
 
             <form class="form-horizontal">
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="form-group">
-                        <label> <span class="requiredField">*</span>UserName: </label>
+                        <label> <span class="requiredField">*</span><?php echo $i18n->username(); ?>: </label>
                         <input class="form-control userName" type="text" required>
                     </div>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>Password: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->password(); ?>: </label>
                         <input class="form-control userPassword" type="password" required>
                     </div>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>Re-enter Password: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->confirm_password(); ?>: </label>
                         <input class="form-control userRePassword" type="password" required>
                     </div>
                     <div class="form-group">
@@ -192,13 +194,13 @@ if (isset($_COOKIE['token'])) {
                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     </div>
                     <div class="form-group">
-                        <label>Full Name: </label>
+                        <label><?php echo $i18n->member_name(); ?>: </label>
                         <input class="form-control name" type="text">
                     </div>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" id="modal-sign-up-btn" class="btn btn-warning btn-lg" style="width: 100%;">
-                        <span class="glyphicon glyphicon-ok-circle"></span> Submit
+                        <span class="glyphicon glyphicon-ok-circle"></span> <?php echo $i18n->signup(); ?>
                     </button>
                 </div>
             </form>

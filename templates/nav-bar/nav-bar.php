@@ -24,22 +24,22 @@
                     </ul>
                 </li>-->
                 <li class="family-tree-tab">
-                    <a href="tree"><i class="fa fa-fw fa-sitemap active"></i> Family Tree</a>
+                    <a href="tree"><i class="fa fa-fw fa-sitemap active"></i> <?php echo $i18n->tree_tab(); ?></a>
                 </li>
                 <li class="guests-man-tab">
-                    <a href="management"><i class="fa fa-fw fa-users"></i> Guests Management</a>
+                    <a href="management"><i class="fa fa-fw fa-users"></i> <?php echo $i18n->management_tab(); ?></a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="navbar-user-name" role="button" aria-expanded="false"><?php echo $name;?> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a id="hrefExport" href="#">Export tree</a></li>
+                        <li><a id="hrefExport" href="#"><?php echo $i18n->export(); ?></a></li>
                         <li class="divider"></li>
-                        <li><a id="hrefLogOut" href="#exit">Log out</a></li>
+                        <li><a id="hrefLogOut" href="#exit"><?php echo $i18n->logout(); ?></a></li>
                     </ul>
                 </li>
             </ul>
             <form class="navbar-form navbar-right search-form" role="search">
-                <input  multiple style="width:15em" class="form-control" type="text"  id="search"  placeholder="Search">
+                <input  multiple style="width:15em" class="form-control" type="text"  id="search"  placeholder="<?php echo $i18n->search(); ?>">
             </form>
         </div>
     </div>

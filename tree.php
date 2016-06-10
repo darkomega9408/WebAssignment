@@ -1,6 +1,7 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 require("lib/vendor/firebase/php-jwt/src/JWT.php");
+require("i18n/i18n.php");
 use Firebase\JWT\JWT;
 if (!isset($_COOKIE['token'])) header('Location: /');
 else {
@@ -10,12 +11,13 @@ else {
     $name = $personData['name'];
     $id = $personData['id'];
 }
+$i18n = new I18n("vi");
 ?>
 <!DOCTYPE html>
 
 <html>
 <head data-role="<?php echo $personData['role'] ; ?>" data-id="<?php echo $personData['id'] ?>">
-    <title><?php echo $name; ?> 's tree</title>
+    <title><?php echo $i18n->tree_owner($name); ?></title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +56,9 @@ else {
 </header>
 
 <div class="tree-container">
-    <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">Add Member</button>
+    <button id="btnAddMember" data-toggle="modal" data-target="#modal-add-user" type="button" class="btn btn-success center-block">
+      <?php echo $i18n->add_member(); ?>
+    </button>
     <div class="tree clearfix"></div>
 </div>
 
@@ -68,8 +72,8 @@ else {
                 <h4 class="modal-title">Someone's Information</h4>
             </div>
             <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#info2">Information</a></li>
-              <li><a data-toggle="tab" href="#partner2">Partner</a></li>
+              <li class="active"><a data-toggle="tab" href="#info2"><?php echo $i18n->information(); ?></a></li>
+              <li><a data-toggle="tab" href="#partner2"><?php echo $i18n->partner(); ?></a></li>
             </ul>
             <div class="tab-content">
                 <div id="info2" class="info tab-pane fade in active">
@@ -144,56 +148,56 @@ else {
 
                           <form role="form" class="form-horizontal">
                               <div class="form-group">
-                                  <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                                  <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                                   <div class="col-sm-10"><input type="text" class="memberModalName form-control "
                                                                 value="Nguyễn Xuân Thái" required disabled></div>
                               </div>
                               <div class="form-group">
-                                  <label class="control-label col-sm-2">Gender: </label>
+                                  <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                                   <div class="col-sm-10">
                                       <select class="memberModalGender form-control " disabled>
-                                          <option value="male">Male</option>
-                                          <option value="female" selected>Female</option>
+                                          <option value="male"><?php echo $i18n->male(); ?></option>
+                                          <option value="female" selected><?php echo $i18n->female(); ?></option>
                                       </select>
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
                                   <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control " required disabled></div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Address: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
                                   <div class="col-sm-10"><input type="text" class="memberModalAddress form-control "
                                                                 value="Too long, lazy to type" required disabled></div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                                   <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control" disabled
                                                                 value="HCMC"></div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Status: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
                                           <span class="radio-inline "><input type="radio" name="radioStatus" value="Alive"
                                                                             checked id="see-radio-alive" disabled>
-                                              <label for="edit-radio-alive">Alive</label></span>
+                                              <label for="edit-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
                                           <span class="radio-inline "><input type="radio" name="radioStatus" value="Dead"
                                                                             id="see-radio-dead" disabled>
-                                              <label for="edit-radio-dead">Dead</label></span>
+                                              <label for="edit-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Married: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->marital_status(); ?>: </label>
                                               <span class="radio-inline"><input type="radio" name="radioMarried" value="Yes"
                                                                                 id="see-radio-yes" disabled>
-                                                  <label for="see-radio-yes">Yes</label></span>
+                                                  <label for="see-radio-yes"><?php echo $i18n->marital_status_married(); ?></label></span>
                                               <span class="radio-inline"><input type="radio" name="radioMarried" value="No"
                                                                                 checked id="see-radio-no" disabled>
-                                                  <label for="see-radio-no">No</label></span>
+                                                  <label for="see-radio-no"><?php echo $i18n->marital_status_single(); ?></label></span>
                               </div>
                           </form>
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                                  class="glyphicon glyphicon-remove"></span> Cancel
+                                  class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                           </button>
                       </div>
                   </form>
@@ -219,42 +223,41 @@ else {
 
 
                           <div class="form-group">
-                              <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
-                              <div class="col-sm-10"><input type="text" class="memberModalName form-control"
-                                                            placeholder="Enter Name here..." required disabled></div>
+                              <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalName form-control "
+                                                            value="Nguyễn Xuân Thái" required disabled></div>
                           </div>
                           <div class="form-group">
-                              <label class="control-label col-sm-2">Gender: </label>
+                              <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                               <div class="col-sm-10">
-                                  <select class="memberModalGender form-control" disabled>
-                                      <option value="male">Male</option>
-                                      <option value="female">Female</option>
+                                  <select class="memberModalGender form-control " disabled>
+                                      <option value="male"><?php echo $i18n->male(); ?></option>
+                                      <option value="female" selected><?php echo $i18n->female(); ?></option>
                                   </select>
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
-                              <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
-                                                            required disabled></div>
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
+                              <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control " required disabled></div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">Address: </label>
-                              <div class="col-sm-10"><input type="text" class="memberModalAddress form-control"
-                                                            placeholder="Enter Addess here..." required disabled></div>
+                              <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalAddress form-control "
+                                                            value="Too long, lazy to type" required disabled></div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
-                              <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
-                                                            placeholder="Enter Birthplace here..." disabled></div>
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
+                              <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control" disabled
+                                                            value="HCMC"></div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">Status: </label>
-                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
-                                                                            checked id="see-radio-alive" disabled>
-                                              <label for="see-radio-alive">Alive</label></span>
-                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
-                                                                            id="see-radio-dead" disabled>
-                                              <label for="see-radio-dead">Dead</label></span>
+                              <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
+                                      <span class="radio-inline "><input type="radio" name="radioStatus" value="Alive"
+                                                                        checked id="see-radio-alive" disabled>
+                                          <label for="edit-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
+                                      <span class="radio-inline "><input type="radio" name="radioStatus" value="Dead"
+                                                                        id="see-radio-dead" disabled>
+                                          <label for="edit-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                           </div>
                       </div>
                       <div class="modal-footer">
@@ -281,8 +284,8 @@ else {
             </div>
 
             <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#info">Information</a></li>
-              <li><a data-toggle="tab" href="#partner">Partner</a></li>
+              <li class="active"><a data-toggle="tab" href="#info"><?php echo $i18n->information(); ?></a></li>
+              <li><a data-toggle="tab" href="#partner"><?php echo $i18n->partner(); ?></a></li>
             </ul>
 
             <div class="tab-content">
@@ -361,25 +364,25 @@ else {
 
                           <form role="form" class="form-horizontal">
                               <div class="form-group">
-                                  <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                                  <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                                   <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                                 value="Nguyễn Xuân Thái" required></div>
                               </div>
                               <div class="form-group">
-                                  <label class="control-label col-sm-2">Gender: </label>
+                                  <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                                   <div class="col-sm-10">
                                       <select class="memberModalGender form-control">
-                                          <option value="male">Male</option>
-                                          <option value="female" selected>Female</option>
+                                          <option value="male"><?php echo $i18n->male(); ?></option>
+                                          <option value="female" selected><?php echo $i18n->female(); ?></option>
                                       </select>
                                   </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
                                   <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control" required></div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Address: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
                                   <div class="col-sm-10">
                                       <select class="memberModalAddress form-control">
                                           <option value="quan1">Quan 1</option>
@@ -411,36 +414,36 @@ else {
                                                                 value="Too long, lazy to type" required></div> -->
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                                  <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                                   <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
                                                                 value="HCMC"></div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Status: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
                                           <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
                                                                             checked id="edit-radio-alive">
-                                              <label for="edit-radio-alive">Alive</label></span>
+                                              <label for="edit-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
                                           <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
                                                                             id="edit-radio-dead">
-                                              <label for="edit-radio-dead">Dead</label></span>
+                                              <label for="edit-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                               </div>
                               <div class="form-group">
-                                  <label class="col-sm-2 control-label">Married: </label>
+                                  <label class="col-sm-2 control-label"><?php echo $i18n->marital_status(); ?>: </label>
                                               <span class="radio-inline"><input type="radio" name="radioMarried" value="Yes"
                                                                                 id="edit-radio-yes">
-                                                  <label for="edit-radio-yes">Yes</label></span>
+                                                  <label for="edit-radio-yes"><?php echo $i18n->marital_status_married(); ?></label></span>
                                               <span class="radio-inline"><input type="radio" name="radioMarried" value="No"
                                                                                 checked id="edit-radio-no">
-                                                  <label for="edit-radio-no">No</label></span>
+                                                  <label for="edit-radio-no"><?php echo $i18n->marital_status_single(); ?></label></span>
                               </div>
                           </form>
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btnUpdate btn btn-success" id="btnUpdate"><span
-                                  class="glyphicon glyphicon-upload"></span> Update
+                                  class="glyphicon glyphicon-upload"></span> <?php echo $i18n->update(); ?>
                           </button>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                                  class="glyphicon glyphicon-remove"></span> Cancel
+                                  class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                           </button>
                       </div>
                   </form>
@@ -467,26 +470,26 @@ else {
 
 
                           <div class="form-group">
-                              <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                              <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                               <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                             placeholder="Enter Name here..." required></div>
                           </div>
                           <div class="form-group">
-                              <label class="control-label col-sm-2">Gender: </label>
+                              <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                               <div class="col-sm-10">
                                   <select class="memberModalGender form-control">
-                                      <option value="male">Male</option>
-                                      <option value="female">Female</option>
+                                      <option value="male"><?php echo $i18n->male(); ?></option>
+                                      <option value="female"><?php echo $i18n->female(); ?></option>
                                   </select>
                               </div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
                               <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
                                                             required></div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">Address: </label>
+                              <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
                               <div class="col-sm-10">
                                   <select class="memberModalAddress form-control">
                                       <option value="quan1">Quan 1</option>
@@ -518,27 +521,27 @@ else {
                                                             placeholder="Enter Addess here..." required></div> -->
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                              <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                               <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
-                                                            placeholder="Enter Birthplace here..."></div>
+                                                            value="HCMC"></div>
                           </div>
                           <div class="form-group">
-                              <label class="col-sm-2 control-label">Status: </label>
-                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
-                                                                            checked id="edit-radio-alive">
-                                              <label for="edit-radio-alive">Alive</label></span>
-                                          <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
-                                                                            id="edit-radio-dead">
-                                              <label for="edit-radio-dead">Dead</label></span>
+                              <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
+                                      <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
+                                                                        checked id="edit-radio-alive">
+                                          <label for="edit-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
+                                      <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
+                                                                        id="edit-radio-dead">
+                                          <label for="edit-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                           </div>
 
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btnUpdate btn btn-success" id="btnUpdate"><span
-                                  class="glyphicon glyphicon-upload"></span> Update
+                                  class="glyphicon glyphicon-upload"></span> <?php echo $i18n->update(); ?>
                           </button>
                           <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                                  class="glyphicon glyphicon-remove"></span> Cancel
+                                  class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                           </button>
                       </div>
                   </form>
@@ -549,8 +552,7 @@ else {
 </div>
 <!-- ~~ Member-info-modal -->
 
-
-
+<!--Member-add-modal -->
 <div id="modal-add-user" class="modal fade" role="dialog" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -583,26 +585,26 @@ else {
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                            <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                           placeholder="Enter Name here..." required></div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Gender: </label>
+                            <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                             <div class="col-sm-10">
                                 <select class="memberModalGender form-control">
-                                    <option value="male">Male</option>
-                                    <option value="female" selected>Female</option>
+                                    <option value="male"><?php echo $i18n->male(); ?></option>
+                                    <option value="female" selected><?php echo $i18n->female(); ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
                             <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
                                                           required></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Address: </label>
+                            <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
                             <div class="col-sm-10">
                                 <select class="memberModalAddress form-control">
                                     <option value="quan1">Quan 1</option>
@@ -634,36 +636,36 @@ else {
                                                           placeholder="Enter Addess here..." required></div> -->
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
                                                           placeholder="Enter Birthplace here..."></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Status: </label>
+                            <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
                                         <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
                                                                           checked id="add-radio-alive">
-                                            <label for="add-radio-alive">Alive</label></span>
+                                            <label for="add-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
                                         <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
                                                                           id="add-radio-dead">
-                                            <label for="add-radio-dead">Dead</label></span>
+                                            <label for="add-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Married: </label>
+                            <label class="col-sm-2 control-label"><?php echo $i18n->marital_status(); ?>: </label>
                                         <span class="radio-inline"><input type="radio" name="radioMarried" value="Yes"
                                                                           id="add-radio-yes">
-                                            <label for="add-radio-yes">Yes</label></span>
+                                            <label for="add-radio-yes"><?php echo $i18n->marital_status_married(); ?></label></span>
                                         <span class="radio-inline"><input type="radio" name="radioMarried" value="No"
                                                                           checked id="add-radio-no">
-                                            <label for="add-radio-no">No</label></span>
+                                            <label for="add-radio-no"><?php echo $i18n->marital_status_single(); ?></label></span>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btnAdd btn btn-success" id="btnAdd"><span
-                                class="glyphicon glyphicon-plus"></span> Add
+                                class="glyphicon glyphicon-plus"></span> <?php echo $i18n->add(); ?>
                         </button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                                class="glyphicon glyphicon-remove"></span> Cancel
+                                class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                         </button>
                     </div>
                 </form>
@@ -689,27 +691,26 @@ else {
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2"><span class="requiredField">*</span>Name: </label>
+                            <label class="control-label col-sm-2"><span class="requiredField">*</span><?php echo $i18n->member_name(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalName form-control"
                                                           placeholder="Enter Name here..." required></div>
                         </div>
-
                         <div class="form-group">
-                            <label class="control-label col-sm-2">Gender: </label>
+                            <label class="control-label col-sm-2"><?php echo $i18n->member_gender(); ?>: </label>
                             <div class="col-sm-10">
                                 <select class="memberModalGender form-control">
-                                    <option value="male">Male</option>
-                                    <option value="female" selected>Female</option>
+                                    <option value="male"><?php echo $i18n->male(); ?></option>
+                                    <option value="female" selected><?php echo $i18n->female(); ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Date of birth: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_date(); ?>: </label>
                             <div class="col-sm-10"><input type="date" class="memberModalBirthDate form-control"
                                                           required></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Address: </label>
+                            <label class="col-sm-2 control-label"><?php echo $i18n->address(); ?>: </label>
                             <div class="col-sm-10">
                                 <select class="memberModalAddress form-control">
                                     <option value="quan1">Quan 1</option>
@@ -741,27 +742,27 @@ else {
                                                           placeholder="Enter Addess here..." required></div> -->
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><span class="requiredField">*</span>Birthplace: </label>
+                            <label class="col-sm-2 control-label"><span class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
                             <div class="col-sm-10"><input type="text" class="memberModalBirthPlace form-control"
                                                           placeholder="Enter Birthplace here..."></div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Status: </label>
+                            <label class="col-sm-2 control-label"><?php echo $i18n->status(); ?>: </label>
                                         <span class="radio-inline"><input type="radio" name="radioStatus" value="Alive"
                                                                           checked id="add-radio-alive">
-                                            <label for="add-radio-alive">Alive</label></span>
+                                            <label for="add-radio-alive"><?php echo $i18n->status_alive(); ?></label></span>
                                         <span class="radio-inline"><input type="radio" name="radioStatus" value="Dead"
                                                                           id="add-radio-dead">
-                                            <label for="add-radio-dead">Dead</label></span>
+                                            <label for="add-radio-dead"><?php echo $i18n->status_dead(); ?></label></span>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btnAdd btn btn-success" id="btnAdd"><span
-                                class="glyphicon glyphicon-plus"></span> Add
+                                class="glyphicon glyphicon-plus"></span> <?php echo $i18n->add(); ?>
                         </button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                                class="glyphicon glyphicon-remove"></span> Cancel
+                                class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                         </button>
                     </div>
                 </form>
@@ -770,7 +771,7 @@ else {
         </div>
     </div>
 </div>
-
+<!-- ~~Member-add-modal -->
 
 <!-- Modal Delete  -->
 <div class="modal fade" id="modal-delete-user" tabindex="-1" role="dialog" aria-labelledby="edit"
@@ -780,26 +781,26 @@ else {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
                         class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading">Delete this entry</h4>
+                <h4 class="modal-title custom_align Heading"><?php echo $i18n->delete(); ?></h4>
             </div>
             <div class="modal-body">
 
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure
-                    you want to delete this member?
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $i18n->delete_prompt(); ?>
                 </div>
 
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-success" id="btnDelete" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-ok-sign"></span> Yes
+                        class="glyphicon glyphicon-ok-sign"></span> <?php echo $i18n->yes(); ?>
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-remove"></span> No
+                        class="glyphicon glyphicon-remove"></span> <?php echo $i18n->no(); ?>
                 </button>
             </div>
         </div>
     </div>
 </div>
+
 <!-- ~~ Modal Delete -->
 
 <!-- Modal Upload Avatar  -->
@@ -810,7 +811,7 @@ else {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
                         class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading">Change Avatar</h4>
+                <h4 class="modal-title custom_align Heading">Image upload</h4>
             </div>
             <div class="modal-body">
                 <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
@@ -826,10 +827,10 @@ else {
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-success" id="btnUploadAvatar" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-ok-sign"></span> Upload
+                        class="glyphicon glyphicon-ok-sign"></span> <?php echo $i18n->upload(); ?>
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span
-                        class="glyphicon glyphicon-remove"></span> Cancel
+                        class="glyphicon glyphicon-remove"></span> <?php echo $i18n->cancel(); ?>
                 </button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <?php
 require("lib/vendor/firebase/php-jwt/src/JWT.php");
 require($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+require("i18n/i18n.php");
 use Firebase\JWT\JWT;
 if (!isset($_COOKIE['token'])) header('Location: /');
 else {
@@ -20,6 +21,7 @@ else {
     }
     $name = $personData['name'];
 }
+$i18n = new I18n("vi");
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +36,7 @@ else {
     <meta name="author" content="">
 
     <title>
-        Admin Page
+        <?php echo $i18n->admin_page(); ?>
     </title>
 
 
@@ -100,11 +102,18 @@ else {
         <div class="row">
 
             <h1 style="display: inline; padding-left: 1em">
-                List Users
+                <?php
+                if ($role == 'admin') echo $i18n->list_users();
+                else echo $i18n->list_guests();
+                ?>
             </h1>
 
             <button type="button" class="btn btn-info" style="float: right;margin: 0 auto; margin-right: 1em; margin-top: 1em" data-title='Add' data-toggle='modal' data-target='#add'>
-                <span class="glyphicon glyphicon-plus-sign"></span> Add User
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                <?php
+                if ($role == 'admin') echo $i18n->add_user();
+                else echo $i18n->add_guest();
+                ?>
             </button>
 
         </div>
@@ -128,11 +137,11 @@ else {
                             <input type="checkbox" id="checkall"  title="checkall"/>
                         </th>
                         <th>ID</th>
-                        <th>UserName</th>
+                        <th><?php echo $i18n->username(); ?></th>
                         <th>Email</th>
-                        <th>Name</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th><?php echo $i18n->member_name(); ?></th>
+                        <th></th>
+                        <th></th>
                         </thead>
 
                         <tbody>
@@ -169,7 +178,7 @@ else {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading" >Edit User Detail</h4>
+                <h4 class="modal-title custom_align Heading" ><?php echo $i18n->modal_edit_user(); ?></h4>
             </div>
             <form  class="form-horizontal">
                 <div class="modal-body">
@@ -179,7 +188,7 @@ else {
                         <input class="form-control userID" type="text" readonly>
                     </div>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>UserName: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->username(); ?>: </label>
                         <input class="form-control userName" type="text" required>
                     </div>
                     <div class="form-group">
@@ -187,13 +196,13 @@ else {
                         <input class="form-control userEmail" type="text" required>
                     </div>
                     <div class="form-group">
-                        <label>Name: </label>
+                        <label><?php echo $i18n->member_name(); ?>: </label>
                         <input class="form-control name" type="text">
                     </div>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnUpdate"
-                    ><span class="glyphicon glyphicon-ok-sign"></span> Update
+                    ><span class="glyphicon glyphicon-ok-sign"></span> <?php echo $i18n->update(); ?>
                     </button>
                 </div>
             </form>
@@ -211,21 +220,21 @@ else {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading" >New User</h4>
+                <h4 class="modal-title custom_align Heading" ><?php echo $i18n->modal_add_user() ?></h4>
             </div>
             <form  class="form-horizontal">
                 <div class="modal-body">
                     <p class="error-msg"></p>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>UserName: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->username() ?>: </label>
                         <input class="form-control userName" type="text" required>
                     </div>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>Password: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->password() ?>: </label>
                         <input class="form-control userPassword" type="password" required>
                     </div>
                     <div class="form-group">
-                        <label><span class="requiredField">*</span>Confirm Password: </label>
+                        <label><span class="requiredField">*</span><?php echo $i18n->confirm_password() ?>: </label>
                         <input class="form-control userRePassword" type="password" required>
                     </div>
                     <div class="form-group">
@@ -234,13 +243,13 @@ else {
                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
                     </div>
                     <div class="form-group">
-                        <label>Name: </label>
+                        <label><?php echo $i18n->member_name() ?>: </label>
                         <input class="form-control name" type="text">
                     </div>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" id="btnAdd"
-                    ><span class="glyphicon glyphicon-plus-sign"></span> Add
+                    ><span class="glyphicon glyphicon-plus-sign"></span> <?php echo $i18n->add() ?>
                     </button>
                 </div>
             </form>
@@ -258,14 +267,14 @@ else {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align Heading" >Delete this entry</h4>
+                <h4 class="modal-title custom_align Heading" ><?php echo $i18n->delete(); ?></h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div>
+                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> <?php echo $i18n->delete_prompt(); ?></div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-success" id="btnDelete" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+                <button type="button" class="btn btn-success" id="btnDelete" ><span class="glyphicon glyphicon-ok-sign"></span> <?php echo $i18n->yes(); ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> <?php echo $i18n->no(); ?></button>
             </div>
         </div>
     </div>
