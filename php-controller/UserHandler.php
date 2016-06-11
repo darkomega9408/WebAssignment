@@ -185,7 +185,7 @@ class UserHandler
         $this->getUser($lastInsertId);
 
 
-    }
+    }   
 
     public function deleteGuest($data)
     {
