@@ -160,3 +160,22 @@ right connector from last child*/
 .modal .modal body{
     overflow-y: scroll;
 }
+
+/*CSS for color of carousel's indicator */
+.carousel-indicators li {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    margin: 10px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);    
+}
+.carousel-indicators .active {
+    width: 48px;
+    height: 48px;
+    margin: 10px;
+    background-color: green !important;
+}

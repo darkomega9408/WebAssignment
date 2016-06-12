@@ -78,7 +78,7 @@ class UserHandler
             else
                 $xml_initAvatar->nodeValue = "empty";
             $xml_avatars->appendChild($xml_initAvatar);
-            for ($i = 1; $i <= 4; $i++) {
+            for ($i = 1; $i <= 3; $i++) {
                 $xml_avatar = $xml->createElement("avatar");
                 $xml_avatar->nodeValue = "empty";
                 $xml_avatars->appendChild($xml_avatar);

@@ -1,4 +1,34 @@
 $(document).ready(function(){
+	
+	$.fn.removeItemInCarousel = function(i) {
+
+        var e = this.get(i);
+
+        var d = this.dimension(e);
+
+        if (i < this.first) this.list.css(this.lt, $jc.intval(this.list.css(this.lt)) + d + 'px');
+
+        e.remove();
+        this.options.size--;
+
+        var di = this.options.visible != null ? Math.ceil(this.clipping() / this.options.visible) : null;
+        var li = this.list.children('li');
+        var self = this;
+
+        if (li.size() > 0) {
+            var wh = 0, i = this.options.offset;
+            li.each(function() {
+                self.format(this, i++);
+                wh += self.dimension(this, di);
+            });
+
+            this.list.css(this.wh, wh + 'px');            
+        }
+
+        this.scroll(0,true);
+        this.buttons();
+
+    };
 
     // Some variables
     var memberCardObj = "";
@@ -121,6 +151,9 @@ $(document).ready(function(){
                         var avatarID = $trigger.children().eq(0).attr("class").split(" ")[3].substr(-1);
                         $(this).find("#btnUploadAvatar").attr("data-avatarid", avatarID);
                     }
+					
+					var parentImage = $trigger.find("img");
+					$(this).find("img").attr("src", parentImage.attr("src"));
                 }
 
                 $(this).find("#btnUploadAvatar").attr("data-memid", modalFather.attr("data-memid"));
@@ -181,6 +214,7 @@ $(document).ready(function(){
         }).done(function(xmldata) {
             var avatars = $(xmldata).find("avatar");
             $(avatars).each(function (index, val) {
+				console.log("Index: " + index);
                 if (val.childNodes[0].data != "empty")
                     $("#"+modalName+" .memberModalAvatar" + index).attr("src", val.childNodes[0].data);
             })

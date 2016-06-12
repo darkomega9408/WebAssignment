@@ -310,13 +310,13 @@ else {
                                                                alt="/*name*/">
                                                       </a>-->
 
-                              <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                              <div id="myCarousel" class="carousel slide" interval="false" data-ride="carousel" data-interval="false">
                                   <!-- Indicators -->
                                   <ol class="carousel-indicators">
-                                      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                      <li data-target="#myCarousel" data-slide-to="1"></li>
-                                      <li data-target="#myCarousel" data-slide-to="2"></li>
-                                      <li data-target="#myCarousel" data-slide-to="3"></li>
+                                      <li data-target="#myCarousel" data-slide-to="0" class="active indicator0"></li>
+                                      <li data-target="#myCarousel" data-slide-to="1" class="indicator1"></li>
+                                      <li data-target="#myCarousel" data-slide-to="2" class="indicator2"></li>
+                                      <li data-target="#myCarousel" data-slide-to="3" class="indicator3"></li>
                                   </ol>
 
                                   <!-- Wrapper for slides -->
@@ -814,7 +814,7 @@ else {
 <!-- Modal Upload Avatar  -->
 <div class="modal fade" id="modal-upload-avatar" tabindex="-1" role="dialog" aria-labelledby="edit"
      aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
@@ -822,9 +822,10 @@ else {
                 <h4 class="modal-title custom_align Heading">Image upload</h4>
             </div>
             <div class="modal-body">
-                <img width="300px" height="300px" class="img-circle center-block" id="imgNewAvatar"
+                <img class="img-responsive" id="imgNewAvatar"
                      src="images/avatar-default.png"
-                     alt="New Avatar">
+                     alt="New Avatar"
+					 style="margin:0 auto">
                 <div class="row" style="margin-top:2em">
                     <div class="col-md-4"></div>
                     <div class="col-md-4">
