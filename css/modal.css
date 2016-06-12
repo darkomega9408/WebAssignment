@@ -13,3 +13,9 @@
 .modal label {
   word-wrap: normal;
 }
+
+.label-for-guest {
+    position: relative;
+    bottom: -0.5em;
+    color: gray;
+}

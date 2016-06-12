@@ -4,6 +4,7 @@ $(document).ready(function () {
     navbarAdminPage();
 
     var user = "user";
+    var lang = $("head").data("lang");
 
     /**
      * Load all users
@@ -197,7 +198,7 @@ $(document).ready(function () {
         var userEmail = $("#add .userEmail").val();
 
         // Validate step here
-        if ( !validateModal("add",userName,userPassword,userPassword,userEmail) )
+        if ( !validateModal(lang,"add .error-msg",userName,userPassword,userPassword,userEmail) )
             return;
 
         var name = $("#add .name").val();
@@ -227,8 +228,8 @@ $(document).ready(function () {
             console.log("Add new user successfully");
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to add new user!")
-            errMsg = "User or email has existed. Please try again!"
+            console.log("Failed to add new user!");
+            errMsg = msg[lang]['user_already_exist'];
             $('.error-msg').text(errMsg);
         });
     });
@@ -246,7 +247,7 @@ $(document).ready(function () {
         var name = $("#edit .name").val();
 
         // Validate step here
-        if ( !validateModal("edit",userName,"","",userEmail) )
+        if ( !validateModal(lang,"edit .error-msg",userName,"","",userEmail) )
             return;
 
 
@@ -272,8 +273,8 @@ $(document).ready(function () {
             $("#edit").modal('hide');
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to update info member !")
-            errMsg = "User or email has existed. Please try again!"
+            console.log("Failed to update info member !");
+            errMsg = msg[lang]['user_already_exist'];
             $('.error-msg').text(errMsg);
         });
     });

@@ -22,7 +22,7 @@ else {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head data-lang="<?php echo $i18n->getLang(); ?>">
     <title><?php echo $i18n->homepage(); ?></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

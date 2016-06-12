@@ -5,6 +5,11 @@ class i18n {
         $this->lang = $lang;
     }
 
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
     // common
     public function web_name() {
       return "Family Tree";

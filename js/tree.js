@@ -9,6 +9,7 @@ $(document).ready(function(){
     var managedUserID = $("head").data("managedUserID");
     var guestID = $("head").data("id");
     var userID = null;
+    var lang = $("head").data("lang");
 
 
     // Determine whether current user is guest or not -> choose appropriate navbar for them
@@ -31,7 +32,6 @@ $(document).ready(function(){
             userID = data[0].userID;
         })
     }
-
     // ~~
 
 
@@ -152,9 +152,77 @@ $(document).ready(function(){
 
     $('#modal-see-info-guest').on('show.bs.modal', function (e) {
         currMemberID = $(e.relatedTarget).attr('id').substr(member.length);
-        populateDataIntoModal("modal-see-info-guest");
+        populateDataIntoModalGuestInfo();
     });
 
+    function populateDataIntoModalGuestInfo(){
+        var modalName = 'modal-see-info-guest';
+
+        $('#' + modalName + ' ul li:first').addClass('active');
+        $('#' + modalName + ' .info').addClass('in active');
+        $('#' + modalName + ' ul li:nth-child(2)').removeClass('active');
+        $('#' + modalName+ ' .partner').removeClass('in active');
+
+        var memberinfo = $("#"+member + currMemberID).data("memberinfo");
+        var partnerinfo = $("#"+member + currMemberID).data("partnerinfo");
+
+        $("#"+modalName+" .modal-title").html(memberinfo.Name);
+        $.ajax({
+            url: 'php-controller/ServerHandler.php',
+            type: 'GET',
+            data: {
+                role: role,
+                operation: "loadAvatar",
+                sentData: {
+                    MemberID: currMemberID
+                }
+            }
+        }).done(function(xmldata) {
+            var avatars = $(xmldata).find("avatar");
+            $(avatars).each(function (index, val) {
+                if (val.childNodes[0].data != "empty")
+                    $("#"+modalName+" .memberModalAvatar" + index).attr("src", val.childNodes[0].data);
+            })
+
+        }).fail(function(err) {
+            console.log(err);
+        });
+        $("#"+modalName+" .info .memberModalName").html( memberinfo.Name);
+        $("#"+modalName+" .info .memberModalGender").html(memberinfo.Gender);
+        $("#"+modalName+" .info .memberModalBirthDate").html( memberinfo.BirthDate.substr(0, 10));
+        $("#"+modalName+" .info .memberModalAddress").html( memberinfo.Address);
+        $("#"+modalName+" .info .memberModalBirthPlace").html(memberinfo.BirthPlace);
+
+        // Set status for label
+        if( memberinfo.Alive == "1" )
+            $("#"+modalName+" .info .memberModalStatus").html($("#"+modalName+" .memberModalStatus").data('alive'));
+        else
+            $("#"+modalName+" .info .memberModalStatus").html($("#"+modalName+" .memberModalStatus").data('dead'));
+
+        // Set marital status for label
+        if( memberinfo.Married == "1") {
+            $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('married'));
+            $('#modal-edit-user a[href="#partner"]').show();
+        }
+        else {
+            $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('single'));
+            $('#modal-edit-user a[href="#partner"]').hide();
+        }
+
+        // Adjust the content inside #Partner tab
+        if(partnerinfo){
+            $("#"+modalName+" .partner .memberModalName").html(partnerinfo.Name);
+            $("#"+modalName+" .partner .memberModalGender").html(partnerinfo.Gender);
+            $("#"+modalName+" .partner .memberModalBirthDate").html(partnerinfo.BirthDate.substr(0, 10));
+            $("#"+modalName+" .partner .memberModalAddress").html(partnerinfo.Address);
+            $("#"+modalName+" .partner .memberModalBirthPlace").html(partnerinfo.BirthPlace);
+            $("#"+modalName+" .partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
+            if( partnerinfo.Alive == "1" )
+                $("#"+modalName+" .partner .memberModalStatus").html($("#"+modalName+" .memberModalStatus").data('alive'));
+            else
+                $("#"+modalName+" .partner .memberModalStatus").html($("#"+modalName+" .memberModalStatus").data('dead'));
+        }
+    }
 
     function populateDataIntoModal (modalName) {
         $('#' + modalName + ' ul li:first').addClass('active');
@@ -164,10 +232,8 @@ $(document).ready(function(){
 
         var memberinfo = $("#"+member + currMemberID).data("memberinfo");
         var partnerinfo = $("#"+member + currMemberID).data("partnerinfo");
-        console.log(partnerinfo);
-        console.log(memberinfo);
-        $("#"+modalName+" .modal-title").html(memberinfo.Name + " Information");
-        //$("#"+modalName+" .memberModalAvatar").attr("src", memberinfo.Avatar);
+
+        $("#"+modalName+" .modal-title").html(memberinfo.Name);
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
@@ -205,22 +271,10 @@ $(document).ready(function(){
         if( memberinfo.Married == "1") {
             $("#info #edit-radio-yes").prop("checked", true);
             $('#modal-edit-user a[href="#partner"]').show();
-            // $("#info #info #see-radio-yes").prop("checked", true);
         }
         else {
             $("#info #edit-radio-no").prop("checked", true);
             $('#modal-edit-user a[href="#partner"]').hide();
-            // $("#info #info #see-radio-dead").prop("checked", true);
-        }
-
-        if( memberinfo.Married == "1" && modalName == "modal-see-info-guest") {
-            $("#info2 #see-radio-yes").prop("checked", true);
-            $('#modal-see-info-guest a[href="#partner2"]').show();
-        }
-
-        if(memberinfo.Married == "0" && modalName == "modal-see-info-guest") {
-            $("#info2 #see-radio-no").prop("checked", true);
-            $('#modal-see-info-guest a[href="#partner2"]').hide();
         }
 
         if(partnerinfo){
@@ -240,7 +294,6 @@ $(document).ready(function(){
           }
         }
     }
-
 
 
     /**
@@ -272,7 +325,6 @@ $(document).ready(function(){
         });
     });
     // ~~
-
 
 
     /**
@@ -371,6 +423,7 @@ $(document).ready(function(){
      * Update member info
      */
     $('.btnUpdate').click(function () {
+        console.log("Click btutton Update");
         // Validate
         var name = $("#modal-edit-user #info .memberModalName").val();
         var birthPlace = $("#modal-edit-user #info .memberModalBirthPlace").val();
@@ -395,7 +448,6 @@ $(document).ready(function(){
         };
 
         if( $("#modal-edit-user #info input[name='radioMarried']:checked").val()=="Yes" ? 1 : 0){
-            console.log("qui");
             var partnerData = {
                 MemberID: currMemberID,
                 Name: $("#modal-edit-user #partner .memberModalName").val(),
@@ -427,7 +479,7 @@ $(document).ready(function(){
                 $('#modal-uploading').modal('hide');
                 console.log("Failed to update info member !")
             });
-            //window.location.reload();
+
         }
 
         /**
@@ -478,18 +530,6 @@ $(document).ready(function(){
         $('.modal input').prop('disabled', false);
         $('.modal select').prop('disabled', false);
     });
-
-    /**
-     * Open modal edit user set everything as default
-     */
-    // $('#modal-edit-user').on('show.bs.modal', function () {
-    //     $('.modal input').prop('disabled', true);
-    //     $('.modal select').prop('disabled', true);
-    //     $('#modal-edit-user .modal-footer button').hide();
-    //     $('#btnEdit').show();
-    //     $('#modal-edit-user .item>a').attr('data-target', '');
-    // });
-
 
     /**
      * Load tree
@@ -731,25 +771,24 @@ $(document).ready(function(){
      */
     function validateModal(modal , name, birthPlace, birthDate) {
         // Validate
-        console.log(birthDate);
-        var isValid = true;
-        var errMsg = "";
-        if( name == "" ){
-            errMsg = ("Please fill in 'Name' field");
-            isValid = false;
-        }
-        else if ( birthPlace == "" ){
-            errMsg= ("Please fill in 'BirthPlace' field");
-            isValid = false;
-        }
-        else if( currMemberID != 0 ){
-            if( !checkChildBirthDate(modal,currMemberID,birthDate) ) {
-                errMsg= ("Child can't be older than parent");
-                isValid = false;
-            }
 
+        var isValid = false;
+        var errMsg = "";
+
+        if( name == "" )
+            errMsg = msg[lang]["fill_in_name_field"];
+        else if (!validateText(name))
+            errMsg = msg[lang]["name_field_allow_letters_numbers"];
+        else if ( birthPlace == "" )
+            errMsg= msg[lang]["fill_in_birth_place_field"];
+        else if (!validateText(birthPlace))
+            errMsg = msg[lang]["birth_place_field_allow_letters_numbers"];
+        else if( currMemberID != 0 && !checkChildBirthDate(modal,currMemberID,birthDate))
+            errMsg= msg[lang]["child_can_not_old_than_parent"];
+        else {
+            isValid = true;
+            $("#modal-add-user .error-msg").html();
         }
-        else $("#modal-add-user .error-msg").html();
 
         // Log error msg and return immediately if any
         if( modal == "add" )

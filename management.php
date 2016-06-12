@@ -33,7 +33,7 @@ else {
 <!DOCTYPE html>
 <html lang="en">
 
-<head data-role="<?php echo $personData['role'] ; ?>" data-id="<?php echo $personData['id'] ?>">
+<head data-role="<?php echo $personData['role'] ; ?>" data-id="<?php echo $personData['id'] ?>" data-lang="<?php echo $i18n->getLang(); ?>">
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -191,9 +191,9 @@ else {
             <form  class="form-horizontal">
                 <div class="modal-body">
                     <p class="error-msg"></p>
-                    <div class="form-group">
+                    <div class="form-group" style="display: none;">
                         <label><span class="requiredField">*</span>ID: </label>
-                        <input class="form-control userID" type="text" readonly>
+                        <label class="form-control userID" type="text" readonly>
                     </div>
                     <div class="form-group">
                         <label><span class="requiredField">*</span><?php echo $i18n->username(); ?>: </label>
