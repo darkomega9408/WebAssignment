@@ -12,28 +12,42 @@ function validateEmail($email) {
     return emailReg.test( $email );
 }
 
+function validateText($text) {
+    var nameReg = /^[^\[\]/\\()~!@#$%^&*{«»„““”‘’|\n\t….,;`^"<>'}+:?®©]*$/;
+    return nameReg.test($text);
+}
+
 /**
  * Validate modal
  * @returns {boolean}
  */
-function validateModal(modal,userName,userPwd, userRePwd , userEmail ) {
+function validateModal(lang,id,userName,userPwd, userRePwd , userEmail ) {
     // Validate
     var isValid = false;
     var errMsg = "";
     if( userName == "" )
-        errMsg = "Please fill in 'User Name' field";
+        errMsg = msg[lang]["fill_in_user_name_field"];
+    else if ( !validateText(userName) )
+        errMsg = msg[lang]["user_name_field_allow_letters_numbers"];
+    else if ( userName.length >= 25 )
+        errMsg = msg[lang]["user_name_field_is_too_long"];
     else if ( userPwd == "" )
-        errMsg= "Please fill in 'Password' field";
+        errMsg= msg[lang]["fill_in_pass_field"];
+    else if ( !validateText(userPwd) )
+        errMsg = msg[lang]["pass_field_allow_letters_numbers"];
+    else if ( userPwd.length >= 25 )
+        errMsg = msg[lang]["pass_field_is_too_long"];
     else if ( userPwd != userRePwd )
-        errMsg = "The confirmation password does not match the password you first entered";
+        errMsg = msg[lang]["confirm_pass_not_match"];
     else if( userEmail == "" )
-        errMsg = "Please fill in 'Email' field";
+        errMsg = msg[lang]["fill_in_email_field"];
     else if ( !validateEmail(userEmail) )
-        errMsg = "Invalid email";
+        errMsg = msg[lang]["invalid_email_format"];
     else isValid = true;
 
     // Log error msg and return immediately if any
-    $("#" + modal +" .error-msg").html(errMsg);
+    $("#" + id).html(errMsg);
 
     return isValid;
 }
+

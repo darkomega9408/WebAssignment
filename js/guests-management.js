@@ -4,6 +4,8 @@ $(document).ready(function () {
     navbarGuestPage();
 
     var user = "user";
+    var lang = $("head").data("lang");
+    
 
     /**
      * Load all users
@@ -21,7 +23,6 @@ $(document).ready(function () {
 		$('#modal-uploading').modal('hide');
         createTable(data);
         search(data);
-        //navbarGuestPage();
         console.log("Load guests successfully");
     }).fail(function () {
 		$('#modal-uploading').modal('hide');
@@ -130,8 +131,6 @@ $(document).ready(function () {
         // Cache user info
         $("#" + user + data.ID).data(user, data);
 
-        // Force reload page is the fastest way
-        //location.reload();
     }
     // ~~
 
@@ -142,8 +141,6 @@ $(document).ready(function () {
      */
     function deleteUser() {
         $("#" + user + currGuestID).remove();
-        // Force reload page is the fastest way
-        //location.reload();
     }
     // ~~
 
@@ -202,7 +199,7 @@ $(document).ready(function () {
         var userEmail = $("#add .userEmail").val();
 
         // Validate step here
-        if ( !validateModal("add",userName,userPassword,userRePassword,userEmail) )
+        if ( !validateModal(lang,"add .error-msg",userName,userPassword,userRePassword,userEmail) )
             return;
 
         var name = $("#add .name").val();
@@ -233,9 +230,8 @@ $(document).ready(function () {
             console.log("Add new guest successfully");
         }).fail(function (data) {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to add new guest!")
-            errMsg = "User or email has existed. Please try again!"
-            $('.error-msg').text(errMsg);
+            console.log("Failed to add new guest!");
+            $('.error-msg').text(msg[lang]["user_already_exist"]);
         });
     });
     // ~~
@@ -252,7 +248,7 @@ $(document).ready(function () {
         var name = $("#edit .name").val();
 
         // Validate step here
-        if ( !validateModal("edit",userName,userName,userName,userEmail) )
+        if ( !validateModal(lang, "edit .error-msg",userName,userName,userName,userEmail) )
             return;
 
         var sentData = {
@@ -277,8 +273,8 @@ $(document).ready(function () {
             $("#edit").modal('hide');
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            console.log("Failed to update info member !")
-            errMsg = "User or email has existed. Please try again!"
+            console.log("Failed to update info member !");
+            errMsg = msg[lang]['user_already_exist'];
             $('.error-msg').text(errMsg);
         });
     });

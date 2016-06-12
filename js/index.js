@@ -1,6 +1,9 @@
 $(document).ready(function(){
+    var lang = $("head").data("lang");
+
     $('.login-form').submit(function(e) {
         e.preventDefault();
+
         var username = $('#inputUsername').val();
         var password = $('#inputPassword').val();
         $.ajax({
@@ -19,7 +22,8 @@ $(document).ready(function(){
                 console.log(document.location.href);
             }
             else if (res.status == 'user_not_found') {
-                $('#warning').html('<i class="fa fa-fw fa-exclamation-circle fa-2x"></i><span>Username or password is incorrect</span>');
+                $('#warning').html('<i class="fa fa-fw fa-exclamation-circle fa-2x"></i><span>'+
+                    msg[lang]["user_or_pass_incorrect"]+'</span>');
             }
         }).fail(function(err) {
             $('#modal-uploading').modal('hide');
@@ -30,7 +34,7 @@ $(document).ready(function(){
 
 
     $("#modal-sign-up-btn").click(function (e) {
-        //$("#signUp .form-horizontal").preventDefault();
+        
         var userName = $("#signUp .userName").val();
         var userID = $("#signUp .userID").val();
         var userPassword = $("#signUp .userPassword").val();
@@ -38,7 +42,7 @@ $(document).ready(function(){
         var userEmail = $("#signUp .userEmail").val();
 
         // Validate step here
-        if ( !validateModal("signUp",userName,userPassword,userRePassword,userEmail) )
+        if ( !validateModal(lang,'warning',userName,userPassword,userRePassword,userEmail) )
             return;
 
         var name = $("#signUp .name").val();
@@ -59,11 +63,9 @@ $(document).ready(function(){
                 sentData: sentData
             },
             dataType: 'json'
-        }).done(function (data) {
+        }).done(function () {
 			$('#modal-uploading').modal('hide');
             $("#signUp").modal('hide');
-            //alert("Sign up successfully. Now you can login and enjoy the rest !")
-            console.log("Add new user successfully");
 
             // Auto login
             $('#inputUsername').val(userName);
@@ -72,7 +74,8 @@ $(document).ready(function(){
 
         }).fail(function () {
 			$('#modal-uploading').modal('hide');
-            alert("User already existed. Please try new username or email instead...")
+            $('#warning').html('<i class="fa fa-fw fa-exclamation-circle fa-2x"></i><span>'+
+                msg[lang]["user_already_exist"]+'</span>');
             console.log("Failed to add new user!")
         });
     });
