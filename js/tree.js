@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	
+
 	$.fn.removeItemInCarousel = function(i) {
 
         var e = this.get(i);
@@ -22,7 +22,7 @@ $(document).ready(function(){
                 wh += self.dimension(this, di);
             });
 
-            this.list.css(this.wh, wh + 'px');            
+            this.list.css(this.wh, wh + 'px');
         }
 
         this.scroll(0,true);
@@ -151,7 +151,7 @@ $(document).ready(function(){
                         var avatarID = $trigger.children().eq(0).attr("class").split(" ")[3].substr(-1);
                         $(this).find("#btnUploadAvatar").attr("data-avatarid", avatarID);
                     }
-					
+
 					var parentImage = $trigger.find("img");
 					$(this).find("img").attr("src", parentImage.attr("src"));
                 }
@@ -235,11 +235,11 @@ $(document).ready(function(){
         // Set marital status for label
         if( memberinfo.Married == "1") {
             $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('married'));
-            $('#modal-edit-user a[href="#partner"]').show();
+            $('#modal-see-info-guest a[href="#partner2"]').show();
         }
         else {
             $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('single'));
-            $('#modal-edit-user a[href="#partner"]').hide();
+            $('#modal-see-info-guest a[href="#partner2"]').hide();
         }
 
         // Adjust the content inside #Partner tab
@@ -755,7 +755,7 @@ $(document).ready(function(){
         // Set width for tree
         var numOfLeaf = $('.tree').find('li:not(:has(ul))').length;
         console.log(numOfLeaf);
-        $(".tree").width((numOfLeaf * 170) + "px");
+        $(".tree").width((numOfLeaf * 200) + "px");
 
         makeTreeDraggable();
     }
