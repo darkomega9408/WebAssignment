@@ -93,11 +93,11 @@ class i18n {
       elseif ($this->lang == "en") return "Upload member avatar";
     }
     public function export() {
-      if ($this->lang == "vi") return "Xuất khẩu";
+      if ($this->lang == "vi") return "Xuất ảnh";
       elseif ($this->lang == "en") return "Export";
     }
     public function export_family_tree() {
-      if ($this->lang == "vi") return "Xuất khẩu gia phả thành file ảnh";
+      if ($this->lang == "vi") return "Xuất file ảnh của gia phả";
       elseif ($this->lang == "en") return "Export your family tree image";
     }
     public function about_us() {
@@ -152,9 +152,9 @@ class i18n {
     }
 
     //membercard
-    public function detail() {
-      if ($this->lang == "vi") return "Chi tiết";
-      elseif ($this->lang == "en") return "Detail";
+    public function edit() {
+      if ($this->lang == "vi") return "Chỉnh sửa";
+      elseif ($this->lang == "en") return "Edit";
     }
     public function add_child() {
       if ($this->lang == "vi") return "Thêm con cái";
@@ -231,7 +231,7 @@ class i18n {
       elseif ($this->lang == "en") return "Update";
     }
     public function cancel() {
-      if ($this->lang == "vi") return "Hủy";
+      if ($this->lang == "vi") return "Đóng";
       elseif ($this->lang == "en") return "Cancel";
     }
     public function add() {

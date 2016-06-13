@@ -167,7 +167,9 @@ else {
                                     <label class="control-label col-sm-4"><?php echo $i18n->member_gender(); ?>
                                         : </label>
                                     <div class="col-sm-8">
-                                        <label class="memberModalGender label-for-guest "></label>
+                                        <label class="memberModalGender label-for-guest"
+                                               data-female="<?php echo $i18n->female(); ?>"
+                                               data-male="<?php echo $i18n->male(); ?>"></label>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -241,7 +243,9 @@ else {
                                     <label class="control-label col-sm-4"><?php echo $i18n->member_gender(); ?>
                                         : </label>
                                     <div class="col-sm-8">
-                                        <label class="memberModalGender label-for-guest "></label>
+                                        <label class="memberModalGender label-for-guest"
+                                               data-female="<?php echo $i18n->female(); ?>"
+                                               data-male="<?php echo $i18n->male(); ?>"></label>
                                     </div>
                                 </div>
                                 <div class="form-group">

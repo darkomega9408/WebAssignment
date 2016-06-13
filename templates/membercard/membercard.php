@@ -21,7 +21,7 @@ else {
             </div>
             <div>
                 <p>
-                    <a href="#"><i class="fa fa-fw fa-eye fa-2x"></i><span><?php echo $i18n->detail(); ?></span></a>
+                    <a href="#"><i class="fa fa-fw fa-pencil fa-2x"></i><span><?php echo $i18n->edit(); ?></span></a>
                     <a href="#"><i class="fa fa-fw fa-plus fa-2x"></i><span><?php echo $i18n->add_child(); ?></span></a>
                     <a href="#"><i class="fa fa-fw fa-times fa-2x"></i><span><?php echo $i18n->delete(); ?></span></a>
                 </p>

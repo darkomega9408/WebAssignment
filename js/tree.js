@@ -221,10 +221,15 @@ $(document).ready(function(){
             console.log(err);
         });
         $("#"+modalName+" .info .memberModalName").html( memberinfo.Name);
-        $("#"+modalName+" .info .memberModalGender").html(memberinfo.Gender);
-        $("#"+modalName+" .info .memberModalBirthDate").html( memberinfo.BirthDate.substr(0, 10));
+        $("#"+modalName+" .info .memberModalBirthDate").html( memberinfo.BirthDate);
         $("#"+modalName+" .info .memberModalAddress").html( memberinfo.Address);
         $("#"+modalName+" .info .memberModalBirthPlace").html(memberinfo.BirthPlace);
+
+        // Set gender for label
+        if ( memberinfo.Gender == "female" )
+            $("#"+modalName+" .info .memberModalGender").html($("#"+modalName+" .memberModalGender").data('female'));
+        else
+            $("#"+modalName+" .info .memberModalGender").html($("#"+modalName+" .memberModalGender").data('male'));
 
         // Set status for label
         if( memberinfo.Alive == "1" )
@@ -245,11 +250,16 @@ $(document).ready(function(){
         // Adjust the content inside #Partner tab
         if(partnerinfo){
             $("#"+modalName+" .partner .memberModalName").html(partnerinfo.Name);
-            $("#"+modalName+" .partner .memberModalGender").html(partnerinfo.Gender);
-            $("#"+modalName+" .partner .memberModalBirthDate").html(partnerinfo.BirthDate.substr(0, 10));
+            $("#"+modalName+" .partner .memberModalBirthDate").html(partnerinfo.BirthDate);
             $("#"+modalName+" .partner .memberModalAddress").html(partnerinfo.Address);
             $("#"+modalName+" .partner .memberModalBirthPlace").html(partnerinfo.BirthPlace);
             $("#"+modalName+" .partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
+
+            if ( memberinfo.Gender == "female" )
+                $("#"+modalName+" .partner .memberModalGender").html($("#"+modalName+" .memberModalGender").data('female'));
+            else
+                $("#"+modalName+" .partner .memberModalGender").html($("#"+modalName+" .memberModalGender").data('male'));
+
             if( partnerinfo.Alive == "1" )
                 $("#"+modalName+" .partner .memberModalStatus").html($("#"+modalName+" .memberModalStatus").data('alive'));
             else
@@ -290,7 +300,7 @@ $(document).ready(function(){
         });
         $("#"+modalName+" .info .memberModalName").val( memberinfo.Name);
         $("#"+modalName+" .info .memberModalGender").val(memberinfo.Gender);
-        $("#"+modalName+" .info .memberModalBirthDate").val( memberinfo.BirthDate.substr(0, 10));
+        $("#"+modalName+" .info .memberModalBirthDate").val( memberinfo.BirthDate);
         $("#"+modalName+" .info .memberModalAddress").val( memberinfo.Address);
         $("#"+modalName+" .info .memberModalBirthPlace").val(memberinfo.BirthPlace);
         if( memberinfo.Alive == "1" ) {
@@ -314,7 +324,7 @@ $(document).ready(function(){
         if(partnerinfo){
           $("#"+modalName+" .partner .memberModalName").val(partnerinfo.Name);
           $("#"+modalName+" .partner .memberModalGender").val(partnerinfo.Gender);
-          $("#"+modalName+" .partner .memberModalBirthDate").val(partnerinfo.BirthDate.substr(0, 10));
+          $("#"+modalName+" .partner .memberModalBirthDate").val(partnerinfo.BirthDate);
           $("#"+modalName+" .partner .memberModalAddress").val(partnerinfo.Address);
           $("#"+modalName+" .partner .memberModalBirthPlace").val(partnerinfo.BirthPlace);
 		      $("#"+modalName+" .partner .memberModalAvatar").attr("src", partnerinfo.Avatar);
@@ -613,10 +623,6 @@ $(document).ready(function(){
             memberCard.css('background-repeat','no-repeat');
         }
 
-        // Set default avatar
-        /*        if( data.Avatar != null )
-         memberCard.find(".memberAvatar").attr("src", data.Avatar);*/
-
         $.ajax({
             url: 'php-controller/ServerHandler.php',
             type: 'GET',
@@ -872,13 +878,13 @@ $(document).ready(function(){
 
                 var parentIdSelector = $("#" + member + childId).parents().eq(1).siblings(".membercard").attr("id");
 
-                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").BirthDate.substr(0, 10);
+                parentBirthDate = $("#" + parentIdSelector).data("memberinfo").BirthDate;
             } catch (e) {
                 // It occurred when we modify the root member
             }
         }
         else if (modal == "add")
-            parentBirthDate = $("#" + member + currMemberID).data("memberinfo").BirthDate.substr(0, 10);
+            parentBirthDate = $("#" + member + currMemberID).data("memberinfo").BirthDate;
         else console.log("Invalid modal");
 
         // Second check
