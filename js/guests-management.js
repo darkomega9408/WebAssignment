@@ -27,7 +27,6 @@ $(document).ready(function () {
     }).fail(function () {
 		$('#modal-uploading').modal('hide');
         console.log("Load guests failed");
-        //navbarGuestPage();
     });
     // ~~
 

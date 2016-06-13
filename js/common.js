@@ -7,7 +7,7 @@
  * @param $email
  * @returns {boolean}
  */
-function validateEmail($email) {
+    function validateEmail($email) {
     var emailReg = /^([\w_]+@([\w]+\.)+[\w]{2,4})$/;
     return emailReg.test( $email );
 }

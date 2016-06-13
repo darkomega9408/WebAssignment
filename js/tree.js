@@ -1,34 +1,4 @@
 $(document).ready(function(){
-	
-	$.fn.removeItemInCarousel = function(i) {
-
-        var e = this.get(i);
-
-        var d = this.dimension(e);
-
-        if (i < this.first) this.list.css(this.lt, $jc.intval(this.list.css(this.lt)) + d + 'px');
-
-        e.remove();
-        this.options.size--;
-
-        var di = this.options.visible != null ? Math.ceil(this.clipping() / this.options.visible) : null;
-        var li = this.list.children('li');
-        var self = this;
-
-        if (li.size() > 0) {
-            var wh = 0, i = this.options.offset;
-            li.each(function() {
-                self.format(this, i++);
-                wh += self.dimension(this, di);
-            });
-
-            this.list.css(this.wh, wh + 'px');            
-        }
-
-        this.scroll(0,true);
-        this.buttons();
-
-    };
 
     // Some variables
     var memberCardObj = "";
@@ -235,11 +205,11 @@ $(document).ready(function(){
         // Set marital status for label
         if( memberinfo.Married == "1") {
             $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('married'));
-            $('#modal-edit-user a[href="#partner"]').show();
+            $('#modal-see-info-guest a[href="#partner2"]').show();
         }
         else {
             $("#"+modalName+" .info .memberModalMaritalStatus").html($("#"+modalName+" .memberModalMaritalStatus").data('single'));
-            $('#modal-edit-user a[href="#partner"]').hide();
+            $('#modal-see-info-guest a[href="#partner2"]').hide();
         }
 
         // Adjust the content inside #Partner tab
@@ -612,10 +582,6 @@ $(document).ready(function(){
             memberCard.css('background-image','');
             memberCard.css('background-repeat','no-repeat');
         }
-
-        // Set default avatar
-        /*        if( data.Avatar != null )
-         memberCard.find(".memberAvatar").attr("src", data.Avatar);*/
 
         $.ajax({
             url: 'php-controller/ServerHandler.php',
