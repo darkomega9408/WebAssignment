@@ -398,37 +398,78 @@ else {
                                     <label class="col-sm-3 control-label"><?php echo $i18n->address(); ?>: </label>
                                     <div class="col-sm-9">
                                         <select class="memberModalAddress form-control">
-                                            <option value="quan1">Quan 1</option>
-                                            <option value="quan2">Quan 2</option>
-                                            <option value="quan3">Quan 3</option>
-                                            <option value="quan4">Quan 4</option>
-                                            <option value="quan5">Quan 5</option>
-                                            <option value="quan6">Quan 6</option>
-                                            <option value="quan7">Quan 7</option>
-                                            <option value="quan8">Quan 8</option>
-                                            <option value="quan9">Quan 9</option>
-                                            <option value="quan10">Quan 10</option>
-                                            <option value="bienhoa">Bien Hoa</option>
-                                            <option value="hochiminh">Ho Chi Minh</option>
-                                            <option value="quangninh">Quang Ninh</option>
-                                            <option value="hanoi">Ha Noi</option>
-                                            <option value="quangngai">Quang Ngai</option>
-                                            <option value="sapa">Sapa</option>
-                                            <option value="hue">Hue</option>
+                                            <option value="angiang">An Giang</option>
+                                            <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                            <option value="baclieu">Bạc Liêu</option>
+                                            <option value="backan">Bắc Kan</option>
+                                            <option value="bacgiang">Bắc Giang</option>
+                                            <option value="bacninh">Bắc ninh</option>
+                                            <option value="bentre">Bến Tre</option>
+                                            <option value="binhduong">Bình Dương</option>
+                                            <option value="binhdinh">Bình Định</option>
+                                            <option value="binhphuoc">Bình Phước</option>
+                                            <option value="binhthuan">Bình Thuận</option>
+                                            <option value="camau">Cà Mau</option>
+                                            <option value="caobang">Cao Bằng</option>
+                                            <option value="cantho">Cần Thơ</option>
+                                            <option value="danang">Đà Nẵng</option>
+                                            <option value="daklak">Dacklak</option>
+                                            <option value="daknong">DakNong</option>
+                                            <option value="dongnai">Đồng Nai</option>
+                                            <option value="dongthap">Đông Tháp</option>
+                                            <option value="dienbien">Điện Biên</option>
+                                            <option value="gialai">Gia Lai</option>
+                                            <option value="hagiang">Hà Giang</option>
+                                            <option value="hanam">Hà Nam</option>
+                                            <option value="hanoi">Hà Nội</option>
+                                            <option value="hatinh">Hà Tỉnh</option>
+                                            <option value="haiduong">Hải Dương</option>
                                             <option value="danang">Da Nang</option>
-                                            <option value="nhatrang">Nha Trang</option>
-                                            <option value="phanthiet">Phan Thiet</option>
-                                            <option value="haiphong">Hai Phong</option>
-                                            <option value="namdinh">Nam Dinh</option>
-                                            <option value="honai">Ho Nai</option>
+                                            <option value="dongthap">Đông Tháp</option>
+                                            <option value="dienbien">Điện Biên</option>
+                                            <option value="gialai">Gia Lai</option>
+                                            <option value="hagiang">Hà Giang</option>
+                                            <option value="hanam">Hà Nam</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"><span
                                             class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
-                                    <div class="col-sm-9"><input type="text" class="memberModalBirthPlace form-control"
-                                                                  value="HCMC"></div>
+                                    <div class="col-sm-9"><select class="memberModalBirthPlace form-control">
+                                        <option value="angiang">An Giang</option>
+                                        <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                        <option value="baclieu">Bạc Liêu</option>
+                                        <option value="backan">Bắc Kan</option>
+                                        <option value="bacgiang">Bắc Giang</option>
+                                        <option value="bacninh">Bắc ninh</option>
+                                        <option value="bentre">Bến Tre</option>
+                                        <option value="binhduong">Bình Dương</option>
+                                        <option value="binhdinh">Bình Định</option>
+                                        <option value="binhphuoc">Bình Phước</option>
+                                        <option value="binhthuan">Bình Thuận</option>
+                                        <option value="camau">Cà Mau</option>
+                                        <option value="caobang">Cao Bằng</option>
+                                        <option value="cantho">Cần Thơ</option>
+                                        <option value="danang">Đà Nẵng</option>
+                                        <option value="daklak">Dacklak</option>
+                                        <option value="daknong">DakNong</option>
+                                        <option value="dongnai">Đồng Nai</option>
+                                        <option value="dongthap">Đông Tháp</option>
+                                        <option value="dienbien">Điện Biên</option>
+                                        <option value="gialai">Gia Lai</option>
+                                        <option value="hagiang">Hà Giang</option>
+                                        <option value="hanam">Hà Nam</option>
+                                        <option value="hanoi">Hà Nội</option>
+                                        <option value="hatinh">Hà Tỉnh</option>
+                                        <option value="haiduong">Hải Dương</option>
+                                        <option value="danang">Da Nang</option>
+                                        <option value="dongthap">Đông Tháp</option>
+                                        <option value="dienbien">Điện Biên</option>
+                                        <option value="gialai">Gia Lai</option>
+                                        <option value="hagiang">Hà Giang</option>
+                                        <option value="hanam">Hà Nam</option>
+                                    </select></div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label"><?php echo $i18n->status(); ?>: </label>
@@ -487,7 +528,7 @@ else {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="control-label col-sm-3"><?php echo $i18n->member_name(); ?>: </label>
                                 <div class="col-sm-9"><input type="text" class="memberModalName form-control"></div>
@@ -508,37 +549,80 @@ else {
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->address(); ?>: </label>
                                 <div class="col-sm-9">
-                                    <select class="memberModalAddress form-control">
-                                        <option value="quan1">Quan 1</option>
-                                        <option value="quan2">Quan 2</option>
-                                        <option value="quan3">Quan 3</option>
-                                        <option value="quan4">Quan 4</option>
-                                        <option value="quan5">Quan 5</option>
-                                        <option value="quan6">Quan 6</option>
-                                        <option value="quan7">Quan 7</option>
-                                        <option value="quan8">Quan 8</option>
-                                        <option value="quan9">Quan 9</option>
-                                        <option value="quan10">Quan 10</option>
-                                        <option value="bienhoa">Bien Hoa</option>
-                                        <option value="hochiminh">Ho Chi Minh</option>
-                                        <option value="quangninh">Quang Ninh</option>
-                                        <option value="hanoi">Ha Noi</option>
-                                        <option value="quangngai">Quang Ngai</option>
-                                        <option value="sapa">Sapa</option>
-                                        <option value="hue">Hue</option>
-                                        <option value="danang">Da Nang</option>
-                                        <option value="nhatrang">Nha Trang</option>
-                                        <option value="phanthiet">Phan Thiet</option>
-                                        <option value="haiphong">Hai Phong</option>
-                                        <option value="namdinh">Nam Dinh</option>
-                                        <option value="honai">Ho Nai</option>
-                                    </select>
+                                  <select class="memberModalAddress form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->birth_place(); ?>: </label>
-                                <div class="col-sm-9"><input type="text" class="memberModalBirthPlace form-control"
-                                                              value="HCMC"></div>
+                                <div class="col-sm-9">
+                                  <select class="memberModalBirthPlace form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->status(); ?>: </label>
@@ -627,31 +711,40 @@ else {
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->address(); ?>: </label>
                                 <div class="col-sm-9">
-                                    <select class="memberModalAddress form-control">
-                                        <option value="quan1">Quan 1</option>
-                                        <option value="quan2">Quan 2</option>
-                                        <option value="quan3">Quan 3</option>
-                                        <option value="quan4">Quan 4</option>
-                                        <option value="quan5">Quan 5</option>
-                                        <option value="quan6">Quan 6</option>
-                                        <option value="quan7">Quan 7</option>
-                                        <option value="quan8">Quan 8</option>
-                                        <option value="quan9">Quan 9</option>
-                                        <option value="quan10">Quan 10</option>
-                                        <option value="bienhoa">Bien Hoa</option>
-                                        <option value="hochiminh">Ho Chi Minh</option>
-                                        <option value="quangninh">Quang Ninh</option>
-                                        <option value="hanoi">Ha Noi</option>
-                                        <option value="quangngai">Quang Ngai</option>
-                                        <option value="sapa">Sapa</option>
-                                        <option value="hue">Hue</option>
-                                        <option value="danang">Da Nang</option>
-                                        <option value="nhatrang">Nha Trang</option>
-                                        <option value="phanthiet">Phan Thiet</option>
-                                        <option value="haiphong">Hai Phong</option>
-                                        <option value="namdinh">Nam Dinh</option>
-                                        <option value="honai">Ho Nai</option>
-                                    </select>
+                                  <select class="memberModalAddress form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
                                 </div>
                                 <!-- <div class="col-sm-9"><input type="text" class="memberModalAddress form-control"
                                                               placeholder="Enter Addess here..." required></div> -->
@@ -659,8 +752,42 @@ else {
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><span
                                         class="requiredField">*</span><?php echo $i18n->birth_place(); ?>: </label>
-                                <div class="col-sm-9"><input type="text" class="memberModalBirthPlace form-control"
-                                    ></div>
+                                <div class="col-sm-9">
+                                  <select class="memberModalBirthPlace form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->status(); ?>: </label>
@@ -738,37 +865,81 @@ else {
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->address(); ?>: </label>
                                 <div class="col-sm-9">
-                                    <select class="memberModalAddress form-control">
-                                        <option value="quan1">Quan 1</option>
-                                        <option value="quan2">Quan 2</option>
-                                        <option value="quan3">Quan 3</option>
-                                        <option value="quan4">Quan 4</option>
-                                        <option value="quan5">Quan 5</option>
-                                        <option value="quan6">Quan 6</option>
-                                        <option value="quan7">Quan 7</option>
-                                        <option value="quan8">Quan 8</option>
-                                        <option value="quan9">Quan 9</option>
-                                        <option value="quan10">Quan 10</option>
-                                        <option value="bienhoa">Bien Hoa</option>
-                                        <option value="hochiminh">Ho Chi Minh</option>
-                                        <option value="quangninh">Quang Ninh</option>
-                                        <option value="hanoi">Ha Noi</option>
-                                        <option value="quangngai">Quang Ngai</option>
-                                        <option value="sapa">Sapa</option>
-                                        <option value="hue">Hue</option>
-                                        <option value="danang">Da Nang</option>
-                                        <option value="nhatrang">Nha Trang</option>
-                                        <option value="phanthiet">Phan Thiet</option>
-                                        <option value="haiphong">Hai Phong</option>
-                                        <option value="namdinh">Nam Dinh</option>
-                                        <option value="honai">Ho Nai</option>
-                                    </select>
+                                  <select class="memberModalAddress form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->birth_place(); ?>: </label>
-                                <div class="col-sm-9"><input type="text" class="memberModalBirthPlace form-control"
-                                    ></div>
+                                <div class="col-sm-9">
+                                  <!-- <nput type="text" class="memberModalBirthPlace form-control"> -->
+                                  <select class="memberModalBirthPlace form-control">
+                                      <option value="angiang">An Giang</option>
+                                      <option value="vungtau">Bà Rịa - Vũng Tàu</option>
+                                      <option value="baclieu">Bạc Liêu</option>
+                                      <option value="backan">Bắc Kan</option>
+                                      <option value="bacgiang">Bắc Giang</option>
+                                      <option value="bacninh">Bắc ninh</option>
+                                      <option value="bentre">Bến Tre</option>
+                                      <option value="binhduong">Bình Dương</option>
+                                      <option value="binhdinh">Bình Định</option>
+                                      <option value="binhphuoc">Bình Phước</option>
+                                      <option value="binhthuan">Bình Thuận</option>
+                                      <option value="camau">Cà Mau</option>
+                                      <option value="caobang">Cao Bằng</option>
+                                      <option value="cantho">Cần Thơ</option>
+                                      <option value="danang">Đà Nẵng</option>
+                                      <option value="daklak">Dacklak</option>
+                                      <option value="daknong">DakNong</option>
+                                      <option value="dongnai">Đồng Nai</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                      <option value="hanoi">Hà Nội</option>
+                                      <option value="hatinh">Hà Tỉnh</option>
+                                      <option value="haiduong">Hải Dương</option>
+                                      <option value="danang">Da Nang</option>
+                                      <option value="dongthap">Đông Tháp</option>
+                                      <option value="dienbien">Điện Biên</option>
+                                      <option value="gialai">Gia Lai</option>
+                                      <option value="hagiang">Hà Giang</option>
+                                      <option value="hanam">Hà Nam</option>
+                                  </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo $i18n->status(); ?>: </label>
